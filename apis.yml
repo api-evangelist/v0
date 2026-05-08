@@ -1,0 +1,29 @@
+aid: v0
+url: https://raw.githubusercontent.com/api-evangelist/v0/refs/heads/main/apis.yml
+name: v0
+x-type: company
+description: >-
+  v0 is Vercel's generative UI tool. Generates React + Tailwind components and full pages from prompts; integrates with the Vercel AI SDK and shadcn/ui.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - No-Code
+  - UI Generation
+  - React
+  - Vercel
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://v0.app/
+  - type: Plans
+    url: plans/v0-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/v0-rate-limits.yml
+  - type: FinOps
+    url: finops/v0-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
