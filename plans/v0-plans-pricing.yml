@@ -5,37 +5,94 @@ provider: v0
 providerId: v0
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
-- No-Code
-- UI Generation
-- React
+- App Builder
 - Vercel
 - Plans
-description: Placeholder plans/pricing artifact for v0. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+description: v0 is sold by Vercel as a usage-based AI builder. Plans bundle monthly credits used by chat generations and deployments. Platform API access requires a Premium or Team plan.
+notes: Pricing reflects publicly documented tiers. Verify against v0.app/pricing for current credit allotments.
 sources:
 - https://v0.app/
+- https://v0.app/pricing
+- https://vercel.com/docs/v0/api
 plans:
-- id: v0-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers once pricing is reconciled.
+- id: v0-free
+  name: Free
+  type: free
+  description: Free tier with limited monthly credits for the v0 web product. No Platform API access.
   entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
-    limit: -1
-    timeFrame: usage
+  - label: Monthly Credits
+    name: monthly_credits
+    type: included
+    metric: credits
+    limit: 5
+    timeFrame: month
     geo: global
     unit: 1
-    price: see https://v0.app/
+    price: 0
     userMultiplied: false
   elements:
-  - name: Pending Reconciliation
+  - name: v0 Web Product
+  - name: Public Projects
+- id: v0-premium
+  name: Premium
+  type: paid
+  description: Individual paid plan with substantially more monthly credits and Platform API access.
+  entries:
+  - label: Monthly Subscription
+    name: monthly_subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 20
+    userMultiplied: false
+  elements:
+  - name: Platform API Access
+  - name: Private Projects
+  - name: Higher Credit Allotment
+- id: v0-team
+  name: Team
+  type: paid
+  description: Team plan with shared seats, pooled credits, and Platform API.
+  entries:
+  - label: Per Seat
+    name: per_seat
+    type: flat
+    metric: seat
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 30
+    userMultiplied: true
+  elements:
+  - name: Shared Workspaces
+  - name: Pooled Credits
+  - name: Platform API Access
+- id: v0-enterprise
+  name: Enterprise
+  type: enterprise
+  description: Custom enterprise contracts with SSO, SOC 2, and dedicated support.
+  entries:
+  - label: Custom
+    name: custom
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: SSO
+  - name: SOC 2
+  - name: Dedicated Support
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

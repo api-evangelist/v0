@@ -5,31 +5,36 @@ provider: v0
 providerId: v0
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
-- No-Code
-- UI Generation
-- React
+- App Builder
 - Vercel
 - Rate Limiting
-- Quotas
-- Throttling
-description: Placeholder rate-limit artifact for v0. Replace with real limits once researched.
-notes: Initial scaffold — limits have not yet been reconciled.
+description: v0 Platform API enforces per-API-key request rate limits and a monthly credit quota tied to the active plan. The Platform API surfaces a /rate-limits endpoint clients should consult.
+notes: Specific request-per-second limits are managed dynamically by Vercel; clients should call the rate-limits endpoint and respect 429 + Retry-After.
 sources:
 - https://v0.app/
+- https://vercel.com/docs/v0/api
+- https://api.v0.app/openapi.json
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: Plan Monthly Credits
   scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  metric: credits
+  limit: tied to active plan
+  notes: Each chat generation, deployment, and supported operation deducts credits.
+- name: Per-Key Request Rate
+  scope: api_key
+  metric: requests
+  limit: enforced server-side; consult /rate-limits endpoint
+  notes: Returns 429 with Retry-After when exceeded.
 policies:
 - name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  description: Exponential backoff with jitter on 429; honor Retry-After.
+- name: Programmatic Quota Check
+  description: Use the Platform API rate-limits endpoint to inspect remaining credits and request budget before kicking off batch jobs.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

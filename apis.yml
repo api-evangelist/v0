@@ -3,21 +3,46 @@ url: https://raw.githubusercontent.com/api-evangelist/v0/refs/heads/main/apis.ym
 name: v0
 x-type: company
 description: >-
-  v0 is Vercel's generative UI tool. Generates React + Tailwind components and full pages from prompts; integrates with the Vercel AI SDK and shadcn/ui.
+  v0 is Vercel's AI-powered application builder. The v0 Platform API exposes the same chat, project, deployment, and code-generation primitives that power the v0 web product so AI tools, IDEs, and pipelines can drive v0 programmatically. An OpenAPI 3.1 spec is published at https://api.v0.app/openapi.json and a v0-sdk package is available for TypeScript.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
-  - No-Code
-  - UI Generation
-  - React
+  - App Builder
   - Vercel
+  - Code Generation
+  - Platform API
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: v0:platform-api
+    name: v0 Platform API
+    description: >-
+      REST API for v0 chats, messages, projects, deployments, hooks, integrations, scopes, and rate-limit/usage. Authenticated with API keys (V0_API_KEY) issued from the v0 dashboard. Requires a Premium or Team plan.
+    humanURL: https://vercel.com/docs/v0/api
+    baseURL: https://api.v0.dev/v1
+    tags:
+      - AI
+      - Platform
+      - Chats
+      - Projects
+      - Deployments
+    properties:
+      - type: Documentation
+        url: https://vercel.com/docs/v0/api
+      - type: OpenAPI
+        url: openapi/v0-platform-openapi.json
+      - type: SDK
+        url: https://www.npmjs.com/package/v0-sdk
 common:
   - type: Website
     url: https://v0.app/
+  - type: Documentation
+    url: https://v0.app/docs
+  - type: Pricing
+    url: https://v0.app/pricing
+  - type: SDK
+    url: https://www.npmjs.com/package/v0-sdk
   - type: Plans
     url: plans/v0-plans-pricing.yml
   - type: RateLimits
