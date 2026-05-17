@@ -1,7 +1,7 @@
 aid: v0
 url: https://raw.githubusercontent.com/api-evangelist/v0/refs/heads/main/apis.yml
 name: v0
-x-type: company
+kind: company
 description: >-
   v0 is Vercel's AI-powered application builder. The v0 Platform API exposes the same chat, project, deployment, and code-generation primitives that power the v0 web product so AI tools, IDEs, and pipelines can drive v0 programmatically. An OpenAPI 3.1 spec is published at https://api.v0.app/openapi.json and a v0-sdk package is available for TypeScript.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
