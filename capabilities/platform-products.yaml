@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — products
+  description: 'v0 App API — products. 1 operations. Lead operation: List Available Products. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - products
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-products
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — products business capability. Self-contained, no shared references.
+    resources:
+    - name: products
+      path: /products
+      operations:
+      - name: productsfind
+        method: GET
+        description: List Available Products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-products-rest
+    port: 8080
+    description: REST adapter for v0 App API — products. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/products
+      name: products
+      description: REST surface for products.
+      operations:
+      - method: GET
+        name: productsfind
+        description: List Available Products
+        call: platform-products.productsfind
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-products-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — products. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-products
+      description: List Available Products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-products.productsfind
+      outputParameters:
+      - type: object
+        mapping: $.

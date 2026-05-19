@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — agent
+  description: 'v0 App API — agent. 1 operations. Lead operation: Send Agent Runtime Error. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - agent
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-agent
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — agent business capability. Self-contained, no shared references.
+    resources:
+    - name: agent-runtime-errors
+      path: /agent/runtime-errors
+      operations:
+      - name: agentruntimeerrorssend
+        method: POST
+        description: Send Agent Runtime Error
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-agent-rest
+    port: 8080
+    description: REST adapter for v0 App API — agent. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/agent/runtime-errors
+      name: agent-runtime-errors
+      description: REST surface for agent-runtime-errors.
+      operations:
+      - method: POST
+        name: agentruntimeerrorssend
+        description: Send Agent Runtime Error
+        call: platform-agent.agentruntimeerrorssend
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-agent-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — agent. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: send-agent-runtime-error
+      description: Send Agent Runtime Error
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-agent.agentruntimeerrorssend
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

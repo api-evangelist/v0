@@ -1,0 +1,93 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — chatScreenshots
+  description: 'v0 App API — chatScreenshots. 1 operations. Lead operation: chatScreenshots. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - chatScreenshots
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-chatscreenshots
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — chatScreenshots business capability. Self-contained, no shared references.
+    resources:
+    - name: chat-screenshots
+      path: /chat-screenshots
+      operations:
+      - name: chatscreenshotsfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: number
+          description: Query parameter "limit"
+        - name: offset
+          in: query
+          type: number
+          description: Query parameter "offset"
+        - name: device
+          in: query
+          type: string
+          description: Query parameter "device"
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-chatscreenshots-rest
+    port: 8080
+    description: REST adapter for v0 App API — chatScreenshots. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/chat-screenshots
+      name: chat-screenshots
+      description: REST surface for chat-screenshots.
+      operations:
+      - method: GET
+        name: chatscreenshotsfind
+        description: chatscreenshotsfind
+        call: platform-chatscreenshots.chatscreenshotsfind
+        with:
+          limit: rest.limit
+          offset: rest.offset
+          device: rest.device
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-chatscreenshots-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — chatScreenshots. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: chatscreenshotsfind
+      description: chatscreenshotsfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chatscreenshots.chatscreenshotsfind
+      with:
+        limit: tools.limit
+        offset: tools.offset
+        device: tools.device
+      outputParameters:
+      - type: object
+        mapping: $.

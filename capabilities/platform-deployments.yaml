@@ -1,0 +1,298 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — deployments
+  description: 'v0 App API — deployments. 6 operations. Lead operation: Find Deployments. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - deployments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-deployments
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — deployments business capability. Self-contained, no shared references.
+    resources:
+    - name: deployments
+      path: /deployments
+      operations:
+      - name: deploymentsfind
+        method: GET
+        description: Find Deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: query
+          type: string
+          description: The ID of the project to find deployments for
+        - name: chatId
+          in: query
+          type: string
+          description: The ID of the chat to find deployments for
+          required: true
+        - name: versionId
+          in: query
+          type: string
+          description: The ID of the version to find deployments for
+          required: true
+      - name: deploymentscreate
+        method: POST
+        description: Create Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: deployments-deploymentId
+      path: /deployments/{deploymentId}
+      operations:
+      - name: deploymentsgetbyid
+        method: GET
+        description: Get Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deploymentId
+          in: path
+          type: string
+          description: Path parameter "deploymentId"
+          required: true
+      - name: deploymentsdelete
+        method: DELETE
+        description: Delete Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deploymentId
+          in: path
+          type: string
+          description: Path parameter "deploymentId"
+          required: true
+    - name: deployments-deploymentId-errors
+      path: /deployments/{deploymentId}/errors
+      operations:
+      - name: deploymentsfinderrors
+        method: GET
+        description: Find Deployment Errors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deploymentId
+          in: path
+          type: string
+          description: The unique identifier of the deployment to inspect for errors. Provided as a path parameter.
+          required: true
+    - name: deployments-deploymentId-logs
+      path: /deployments/{deploymentId}/logs
+      operations:
+      - name: deploymentsfindlogs
+        method: GET
+        description: Find Deployment Logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deploymentId
+          in: path
+          type: string
+          description: The unique identifier of the deployment to retrieve logs for. Provided as a path parameter.
+          required: true
+        - name: since
+          in: query
+          type: number
+          description: A UNIX timestamp (in seconds) used to filter logs. Returns only log entries generated after the specified
+            time.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-deployments-rest
+    port: 8080
+    description: REST adapter for v0 App API — deployments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/deployments
+      name: deployments
+      description: REST surface for deployments.
+      operations:
+      - method: GET
+        name: deploymentsfind
+        description: Find Deployments
+        call: platform-deployments.deploymentsfind
+        with:
+          projectId: rest.projectId
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: deploymentscreate
+        description: Create Deployment
+        call: platform-deployments.deploymentscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/deployments/{deploymentid}
+      name: deployments-deploymentid
+      description: REST surface for deployments-deploymentId.
+      operations:
+      - method: GET
+        name: deploymentsgetbyid
+        description: Get Deployment
+        call: platform-deployments.deploymentsgetbyid
+        with:
+          deploymentId: rest.deploymentId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deploymentsdelete
+        description: Delete Deployment
+        call: platform-deployments.deploymentsdelete
+        with:
+          deploymentId: rest.deploymentId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/deployments/{deploymentid}/errors
+      name: deployments-deploymentid-errors
+      description: REST surface for deployments-deploymentId-errors.
+      operations:
+      - method: GET
+        name: deploymentsfinderrors
+        description: Find Deployment Errors
+        call: platform-deployments.deploymentsfinderrors
+        with:
+          deploymentId: rest.deploymentId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/deployments/{deploymentid}/logs
+      name: deployments-deploymentid-logs
+      description: REST surface for deployments-deploymentId-logs.
+      operations:
+      - method: GET
+        name: deploymentsfindlogs
+        description: Find Deployment Logs
+        call: platform-deployments.deploymentsfindlogs
+        with:
+          deploymentId: rest.deploymentId
+          since: rest.since
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-deployments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — deployments. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: find-deployments
+      description: Find Deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-deployments.deploymentsfind
+      with:
+        projectId: tools.projectId
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-deployment
+      description: Create Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-deployments.deploymentscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-deployment
+      description: Get Deployment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-deployments.deploymentsgetbyid
+      with:
+        deploymentId: tools.deploymentId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-deployment
+      description: Delete Deployment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-deployments.deploymentsdelete
+      with:
+        deploymentId: tools.deploymentId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-deployment-errors
+      description: Find Deployment Errors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-deployments.deploymentsfinderrors
+      with:
+        deploymentId: tools.deploymentId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-deployment-logs
+      description: Find Deployment Logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-deployments.deploymentsfindlogs
+      with:
+        deploymentId: tools.deploymentId
+        since: tools.since
+      outputParameters:
+      - type: object
+        mapping: $.

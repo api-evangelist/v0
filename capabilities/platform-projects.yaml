@@ -1,0 +1,670 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — projects
+  description: 'v0 App API — projects. 14 operations. Lead operation: Get Project by Chat ID. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - projects
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-projects
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — projects business capability. Self-contained, no shared references.
+    resources:
+    - name: chats-chatId-project
+      path: /chats/{chatId}/project
+      operations:
+      - name: projectsgetbychatid
+        method: GET
+        description: Get Project by Chat ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat to retrieve the associated project for.
+          required: true
+    - name: projects
+      path: /projects
+      operations:
+      - name: projectsfind
+        method: GET
+        description: Find Projects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: projectscreate
+        method: POST
+        description: Create Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId
+      path: /projects/{projectId}
+      operations:
+      - name: projectsgetbyid
+        method: GET
+        description: Get Project by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project to retrieve.
+          required: true
+      - name: projectsupdate
+        method: PATCH
+        description: Update Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project to update. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: projectsdelete
+        method: DELETE
+        description: Delete Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project to delete. This must be passed as a path parameter in the URL.
+          required: true
+        - name: deleteAllChats
+          in: query
+          type: string
+          description: If true, deletes all the chats associated with the given project ID. Deleting is permanent. Defaults
+            to false.
+    - name: projects-projectId-assign
+      path: /projects/{projectId}/assign
+      operations:
+      - name: projectsassign
+        method: POST
+        description: Assign Project to Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The ID of the project to assign.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-env-vars
+      path: /projects/{projectId}/env-vars
+      operations:
+      - name: projectsfindenvvars
+        method: GET
+        description: Find Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project whose environment variables should be retrieved.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+      - name: projectscreateenvvars
+        method: POST
+        description: Create Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project where environment variables should be created.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: projectsupdateenvvars
+        method: PATCH
+        description: Update Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project whose environment variables should be updated.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-env-vars-delete
+      path: /projects/{projectId}/env-vars/delete
+      operations:
+      - name: projectsdeleteenvvars
+        method: POST
+        description: Delete Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project whose environment variables should be deleted.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-env-vars-environmentVariableId
+      path: /projects/{projectId}/env-vars/{environmentVariableId}
+      operations:
+      - name: projectsgetenvvar
+        method: GET
+        description: Get Environment Variable
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: projectId
+          in: path
+          type: string
+          description: The unique identifier of the project that owns the environment variable.
+          required: true
+        - name: environmentVariableId
+          in: path
+          type: string
+          description: The unique identifier of the environment variable to retrieve.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+    - name: projects-vercelProjectId-integrations
+      path: /projects/{vercelProjectId}/integrations
+      operations:
+      - name: projectslistintegrations
+        method: GET
+        description: List Vercel Project Integrations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vercelProjectId
+          in: path
+          type: string
+          description: The Vercel project ID to list integrations for.
+          required: true
+    - name: projects-vercelProjectId-integrations-integrationId
+      path: /projects/{vercelProjectId}/integrations/{integrationId}
+      operations:
+      - name: projectsconnectintegration
+        method: POST
+        description: Connect Vercel Project to Integration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: vercelProjectId
+          in: path
+          type: string
+          description: The Vercel project ID to link to the integration.
+          required: true
+        - name: integrationId
+          in: path
+          type: string
+          description: The ID of the integration to link to the project.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-projects-rest
+    port: 8080
+    description: REST adapter for v0 App API — projects. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/chats/{chatid}/project
+      name: chats-chatid-project
+      description: REST surface for chats-chatId-project.
+      operations:
+      - method: GET
+        name: projectsgetbychatid
+        description: Get Project by Chat ID
+        call: platform-projects.projectsgetbychatid
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects
+      name: projects
+      description: REST surface for projects.
+      operations:
+      - method: GET
+        name: projectsfind
+        description: Find Projects
+        call: platform-projects.projectsfind
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: projectscreate
+        description: Create Project
+        call: platform-projects.projectscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}
+      name: projects-projectid
+      description: REST surface for projects-projectId.
+      operations:
+      - method: GET
+        name: projectsgetbyid
+        description: Get Project by ID
+        call: platform-projects.projectsgetbyid
+        with:
+          projectId: rest.projectId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: projectsupdate
+        description: Update Project
+        call: platform-projects.projectsupdate
+        with:
+          projectId: rest.projectId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: projectsdelete
+        description: Delete Project
+        call: platform-projects.projectsdelete
+        with:
+          projectId: rest.projectId
+          deleteAllChats: rest.deleteAllChats
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/assign
+      name: projects-projectid-assign
+      description: REST surface for projects-projectId-assign.
+      operations:
+      - method: POST
+        name: projectsassign
+        description: Assign Project to Chat
+        call: platform-projects.projectsassign
+        with:
+          projectId: rest.projectId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/env-vars
+      name: projects-projectid-env-vars
+      description: REST surface for projects-projectId-env-vars.
+      operations:
+      - method: GET
+        name: projectsfindenvvars
+        description: Find Environment Variables
+        call: platform-projects.projectsfindenvvars
+        with:
+          projectId: rest.projectId
+          decrypted: rest.decrypted
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: projectscreateenvvars
+        description: Create Environment Variables
+        call: platform-projects.projectscreateenvvars
+        with:
+          projectId: rest.projectId
+          decrypted: rest.decrypted
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: projectsupdateenvvars
+        description: Update Environment Variables
+        call: platform-projects.projectsupdateenvvars
+        with:
+          projectId: rest.projectId
+          decrypted: rest.decrypted
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/env-vars/delete
+      name: projects-projectid-env-vars-delete
+      description: REST surface for projects-projectId-env-vars-delete.
+      operations:
+      - method: POST
+        name: projectsdeleteenvvars
+        description: Delete Environment Variables
+        call: platform-projects.projectsdeleteenvvars
+        with:
+          projectId: rest.projectId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/env-vars/{environmentvariableid}
+      name: projects-projectid-env-vars-environmentvariableid
+      description: REST surface for projects-projectId-env-vars-environmentVariableId.
+      operations:
+      - method: GET
+        name: projectsgetenvvar
+        description: Get Environment Variable
+        call: platform-projects.projectsgetenvvar
+        with:
+          projectId: rest.projectId
+          environmentVariableId: rest.environmentVariableId
+          decrypted: rest.decrypted
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{vercelprojectid}/integrations
+      name: projects-vercelprojectid-integrations
+      description: REST surface for projects-vercelProjectId-integrations.
+      operations:
+      - method: GET
+        name: projectslistintegrations
+        description: List Vercel Project Integrations
+        call: platform-projects.projectslistintegrations
+        with:
+          vercelProjectId: rest.vercelProjectId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{vercelprojectid}/integrations/{integrationid}
+      name: projects-vercelprojectid-integrations-integrationid
+      description: REST surface for projects-vercelProjectId-integrations-integrationId.
+      operations:
+      - method: POST
+        name: projectsconnectintegration
+        description: Connect Vercel Project to Integration
+        call: platform-projects.projectsconnectintegration
+        with:
+          vercelProjectId: rest.vercelProjectId
+          integrationId: rest.integrationId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-projects-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — projects. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-project-chat-id
+      description: Get Project by Chat ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsgetbychatid
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-projects
+      description: Find Projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-project
+      description: Create Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-projects.projectscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-project-id
+      description: Get Project by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsgetbyid
+      with:
+        projectId: tools.projectId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-project
+      description: Update Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsupdate
+      with:
+        projectId: tools.projectId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-project
+      description: Delete Project
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-projects.projectsdelete
+      with:
+        projectId: tools.projectId
+        deleteAllChats: tools.deleteAllChats
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: assign-project-chat
+      description: Assign Project to Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-projects.projectsassign
+      with:
+        projectId: tools.projectId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-environment-variables
+      description: Find Environment Variables
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsfindenvvars
+      with:
+        projectId: tools.projectId
+        decrypted: tools.decrypted
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-environment-variables
+      description: Create Environment Variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-projects.projectscreateenvvars
+      with:
+        projectId: tools.projectId
+        decrypted: tools.decrypted
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-environment-variables
+      description: Update Environment Variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsupdateenvvars
+      with:
+        projectId: tools.projectId
+        decrypted: tools.decrypted
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-environment-variables
+      description: Delete Environment Variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-projects.projectsdeleteenvvars
+      with:
+        projectId: tools.projectId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-environment-variable
+      description: Get Environment Variable
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectsgetenvvar
+      with:
+        projectId: tools.projectId
+        environmentVariableId: tools.environmentVariableId
+        decrypted: tools.decrypted
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-vercel-project-integrations
+      description: List Vercel Project Integrations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-projects.projectslistintegrations
+      with:
+        vercelProjectId: tools.vercelProjectId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: connect-vercel-project-integration
+      description: Connect Vercel Project to Integration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-projects.projectsconnectintegration
+      with:
+        vercelProjectId: tools.vercelProjectId
+        integrationId: tools.integrationId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

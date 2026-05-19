@@ -1,0 +1,95 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — nativeVersion
+  description: 'v0 App API — nativeVersion. 1 operations. Lead operation: nativeVersion. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - nativeVersion
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-nativeversion
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — nativeVersion business capability. Self-contained, no shared references.
+    resources:
+    - name: native-version
+      path: /native-version
+      operations:
+      - name: nativeversionfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: version
+          in: query
+          type: string
+          description: Query parameter "version"
+          required: true
+        - name: buildNumber
+          in: query
+          type: number
+          description: Query parameter "buildNumber"
+        - name: distribution
+          in: query
+          type: string
+          description: Query parameter "distribution"
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-nativeversion-rest
+    port: 8080
+    description: REST adapter for v0 App API — nativeVersion. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/native-version
+      name: native-version
+      description: REST surface for native-version.
+      operations:
+      - method: GET
+        name: nativeversionfind
+        description: nativeversionfind
+        call: platform-nativeversion.nativeversionfind
+        with:
+          version: rest.version
+          buildNumber: rest.buildNumber
+          distribution: rest.distribution
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-nativeversion-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — nativeVersion. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: nativeversionfind
+      description: nativeversionfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-nativeversion.nativeversionfind
+      with:
+        version: tools.version
+        buildNumber: tools.buildNumber
+        distribution: tools.distribution
+      outputParameters:
+      - type: object
+        mapping: $.

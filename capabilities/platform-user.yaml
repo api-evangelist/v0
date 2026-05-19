@@ -1,0 +1,360 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — user
+  description: 'v0 App API — user. 9 operations. Lead operation: Get User. Self-contained Naftiko capability covering one
+    V0 business surface.'
+  tags:
+  - V0
+  - user
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-user
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — user business capability. Self-contained, no shared references.
+    resources:
+    - name: user
+      path: /user
+      operations:
+      - name: userget
+        method: GET
+        description: Get User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: user-activity
+      path: /user/activity
+      operations:
+      - name: usergetactivity
+        method: GET
+        description: Get User Activity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: year
+          in: query
+          type: string
+          description: Optional year to filter activity data (e.g., "2024"). If not provided, returns the last 52 weeks of
+            activity.
+    - name: user-activity-years
+      path: /user/activity-years
+      operations:
+      - name: usergetactivityyears
+        method: GET
+        description: Get User Activity Years
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: user-billing
+      path: /user/billing
+      operations:
+      - name: usergetbilling
+        method: GET
+        description: Get Billing
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scope
+          in: query
+          type: string
+          description: Filters billing data by a specific scope, such as a project ID or slug.
+    - name: user-billing-redeem-usage-code
+      path: /user/billing/redeem-usage-code
+      operations:
+      - name: userbillingredeemusagecodecreate
+        method: POST
+        description: Redeem a usage code
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: user-plan
+      path: /user/plan
+      operations:
+      - name: usergetplan
+        method: GET
+        description: Get Plan
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: user-preferences
+      path: /user/preferences
+      operations:
+      - name: userpreferencesfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: userpreferencescreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: user-scopes
+      path: /user/scopes
+      operations:
+      - name: usergetscopes
+        method: GET
+        description: Get User Scopes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-user-rest
+    port: 8080
+    description: REST adapter for v0 App API — user. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/user
+      name: user
+      description: REST surface for user.
+      operations:
+      - method: GET
+        name: userget
+        description: Get User
+        call: platform-user.userget
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/activity
+      name: user-activity
+      description: REST surface for user-activity.
+      operations:
+      - method: GET
+        name: usergetactivity
+        description: Get User Activity
+        call: platform-user.usergetactivity
+        with:
+          year: rest.year
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/activity-years
+      name: user-activity-years
+      description: REST surface for user-activity-years.
+      operations:
+      - method: GET
+        name: usergetactivityyears
+        description: Get User Activity Years
+        call: platform-user.usergetactivityyears
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/billing
+      name: user-billing
+      description: REST surface for user-billing.
+      operations:
+      - method: GET
+        name: usergetbilling
+        description: Get Billing
+        call: platform-user.usergetbilling
+        with:
+          scope: rest.scope
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/billing/redeem-usage-code
+      name: user-billing-redeem-usage-code
+      description: REST surface for user-billing-redeem-usage-code.
+      operations:
+      - method: POST
+        name: userbillingredeemusagecodecreate
+        description: Redeem a usage code
+        call: platform-user.userbillingredeemusagecodecreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/plan
+      name: user-plan
+      description: REST surface for user-plan.
+      operations:
+      - method: GET
+        name: usergetplan
+        description: Get Plan
+        call: platform-user.usergetplan
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/preferences
+      name: user-preferences
+      description: REST surface for user-preferences.
+      operations:
+      - method: GET
+        name: userpreferencesfind
+        description: userpreferencesfind
+        call: platform-user.userpreferencesfind
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: userpreferencescreate
+        description: userpreferencescreate
+        call: platform-user.userpreferencescreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/user/scopes
+      name: user-scopes
+      description: REST surface for user-scopes.
+      operations:
+      - method: GET
+        name: usergetscopes
+        description: Get User Scopes
+        call: platform-user.usergetscopes
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-user-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — user. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-user
+      description: Get User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.userget
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-activity
+      description: Get User Activity
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.usergetactivity
+      with:
+        year: tools.year
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-activity-years
+      description: Get User Activity Years
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.usergetactivityyears
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-billing
+      description: Get Billing
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.usergetbilling
+      with:
+        scope: tools.scope
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: redeem-usage-code
+      description: Redeem a usage code
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-user.userbillingredeemusagecodecreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-plan
+      description: Get Plan
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.usergetplan
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: userpreferencesfind
+      description: userpreferencesfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.userpreferencesfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: userpreferencescreate
+      description: userpreferencescreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-user.userpreferencescreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-scopes
+      description: Get User Scopes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-user.usergetscopes
+      outputParameters:
+      - type: object
+        mapping: $.

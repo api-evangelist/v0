@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — magicLink
+  description: 'v0 App API — magicLink. 1 operations. Lead operation: magicLink. Self-contained Naftiko capability covering
+    one V0 business surface.'
+  tags:
+  - V0
+  - magicLink
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-magiclink
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — magicLink business capability. Self-contained, no shared references.
+    resources:
+    - name: magic-link
+      path: /magic-link
+      operations:
+      - name: magiclinkcreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-magiclink-rest
+    port: 8080
+    description: REST adapter for v0 App API — magicLink. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/magic-link
+      name: magic-link
+      description: REST surface for magic-link.
+      operations:
+      - method: POST
+        name: magiclinkcreate
+        description: magiclinkcreate
+        call: platform-magiclink.magiclinkcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-magiclink-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — magicLink. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: magiclinkcreate
+      description: magiclinkcreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-magiclink.magiclinkcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

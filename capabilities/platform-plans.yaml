@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — plans
+  description: 'v0 App API — plans. 1 operations. Lead operation: plans. Self-contained Naftiko capability covering one V0
+    business surface.'
+  tags:
+  - V0
+  - plans
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-plans
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — plans business capability. Self-contained, no shared references.
+    resources:
+    - name: plans
+      path: /plans
+      operations:
+      - name: plansfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-plans-rest
+    port: 8080
+    description: REST adapter for v0 App API — plans. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/plans
+      name: plans
+      description: REST surface for plans.
+      operations:
+      - method: GET
+        name: plansfind
+        description: plansfind
+        call: platform-plans.plansfind
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-plans-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — plans. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: plansfind
+      description: plansfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-plans.plansfind
+      outputParameters:
+      - type: object
+        mapping: $.

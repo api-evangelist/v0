@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — reports
+  description: 'v0 App API — reports. 2 operations. Lead operation: Get Usage Report. Self-contained Naftiko capability covering
+    one V0 business surface.'
+  tags:
+  - V0
+  - reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-reports
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — reports business capability. Self-contained, no shared references.
+    resources:
+    - name: reports-usage
+      path: /reports/usage
+      operations:
+      - name: reportsgetusage
+        method: GET
+        description: Get Usage Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Query parameter "startDate"
+        - name: endDate
+          in: query
+          type: string
+          description: Query parameter "endDate"
+        - name: chatId
+          in: query
+          type: string
+          description: Query parameter "chatId"
+        - name: messageId
+          in: query
+          type: string
+          description: Query parameter "messageId"
+        - name: userId
+          in: query
+          type: string
+          description: Query parameter "userId"
+        - name: limit
+          in: query
+          type: number
+          description: Query parameter "limit"
+        - name: cursor
+          in: query
+          type: string
+          description: Base64 encoded cursor containing pagination data
+    - name: reports-user-activity
+      path: /reports/user-activity
+      operations:
+      - name: reportsgetuseractivity
+        method: GET
+        description: Get User Activity Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: startDate
+          in: query
+          type: string
+          description: Query parameter "startDate"
+        - name: endDate
+          in: query
+          type: string
+          description: Query parameter "endDate"
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-reports-rest
+    port: 8080
+    description: REST adapter for v0 App API — reports. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/reports/usage
+      name: reports-usage
+      description: REST surface for reports-usage.
+      operations:
+      - method: GET
+        name: reportsgetusage
+        description: Get Usage Report
+        call: platform-reports.reportsgetusage
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+          chatId: rest.chatId
+          messageId: rest.messageId
+          userId: rest.userId
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reports/user-activity
+      name: reports-user-activity
+      description: REST surface for reports-user-activity.
+      operations:
+      - method: GET
+        name: reportsgetuseractivity
+        description: Get User Activity Report
+        call: platform-reports.reportsgetuseractivity
+        with:
+          startDate: rest.startDate
+          endDate: rest.endDate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — reports. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-usage-report
+      description: Get Usage Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-reports.reportsgetusage
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+        chatId: tools.chatId
+        messageId: tools.messageId
+        userId: tools.userId
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-user-activity-report
+      description: Get User Activity Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-reports.reportsgetuseractivity
+      with:
+        startDate: tools.startDate
+        endDate: tools.endDate
+      outputParameters:
+      - type: object
+        mapping: $.

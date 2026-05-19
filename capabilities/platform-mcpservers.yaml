@@ -1,0 +1,240 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — mcpServers
+  description: 'v0 App API — mcpServers. 5 operations. Lead operation: List MCP Servers. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - mcpServers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-mcpservers
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — mcpServers business capability. Self-contained, no shared references.
+    resources:
+    - name: mcp-servers
+      path: /mcp-servers
+      operations:
+      - name: mcpserverslist
+        method: GET
+        description: List MCP Servers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: mcp-servers-mcpServerId
+      path: /mcp-servers/{mcpServerId}
+      operations:
+      - name: mcpserversgetbyid
+        method: GET
+        description: Get MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mcpServerId
+          in: path
+          type: string
+          description: The ID of the MCP server to retrieve.
+          required: true
+      - name: mcpserversupdate
+        method: PATCH
+        description: Update MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mcpServerId
+          in: path
+          type: string
+          description: The ID of the MCP server to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: mcpserversdelete
+        method: DELETE
+        description: Delete MCP Server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mcpServerId
+          in: path
+          type: string
+          description: The ID of the MCP server to delete.
+          required: true
+    - name: mcp-servers-mcpServerId-oauth-authorize
+      path: /mcp-servers/{mcpServerId}/oauth/authorize
+      operations:
+      - name: mcpserverscreateoauthauthorizationurl
+        method: POST
+        description: Create MCP Server OAuth Authorization URL
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mcpServerId
+          in: path
+          type: string
+          description: The ID of the OAuth MCP server to authorize.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-mcpservers-rest
+    port: 8080
+    description: REST adapter for v0 App API — mcpServers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/mcp-servers
+      name: mcp-servers
+      description: REST surface for mcp-servers.
+      operations:
+      - method: GET
+        name: mcpserverslist
+        description: List MCP Servers
+        call: platform-mcpservers.mcpserverslist
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}
+      name: mcp-servers-mcpserverid
+      description: REST surface for mcp-servers-mcpServerId.
+      operations:
+      - method: GET
+        name: mcpserversgetbyid
+        description: Get MCP Server
+        call: platform-mcpservers.mcpserversgetbyid
+        with:
+          mcpServerId: rest.mcpServerId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: mcpserversupdate
+        description: Update MCP Server
+        call: platform-mcpservers.mcpserversupdate
+        with:
+          mcpServerId: rest.mcpServerId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: mcpserversdelete
+        description: Delete MCP Server
+        call: platform-mcpservers.mcpserversdelete
+        with:
+          mcpServerId: rest.mcpServerId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/mcp-servers/{mcpserverid}/oauth/authorize
+      name: mcp-servers-mcpserverid-oauth-authorize
+      description: REST surface for mcp-servers-mcpServerId-oauth-authorize.
+      operations:
+      - method: POST
+        name: mcpserverscreateoauthauthorizationurl
+        description: Create MCP Server OAuth Authorization URL
+        call: platform-mcpservers.mcpserverscreateoauthauthorizationurl
+        with:
+          mcpServerId: rest.mcpServerId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-mcpservers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — mcpServers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-mcp-servers
+      description: List MCP Servers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-mcpservers.mcpserverslist
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-mcp-server
+      description: Get MCP Server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-mcpservers.mcpserversgetbyid
+      with:
+        mcpServerId: tools.mcpServerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-mcp-server
+      description: Update MCP Server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-mcpservers.mcpserversupdate
+      with:
+        mcpServerId: tools.mcpServerId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-mcp-server
+      description: Delete MCP Server
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-mcpservers.mcpserversdelete
+      with:
+        mcpServerId: tools.mcpServerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-mcp-server-oauth-authorization
+      description: Create MCP Server OAuth Authorization URL
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-mcpservers.mcpserverscreateoauthauthorizationurl
+      with:
+        mcpServerId: tools.mcpServerId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

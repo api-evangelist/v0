@@ -1,0 +1,81 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — rateLimits
+  description: 'v0 App API — rateLimits. 1 operations. Lead operation: Find Rate Limit. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - rateLimits
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-ratelimits
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — rateLimits business capability. Self-contained, no shared references.
+    resources:
+    - name: rate-limits
+      path: /rate-limits
+      operations:
+      - name: ratelimitsfind
+        method: GET
+        description: Find Rate Limit
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scope
+          in: query
+          type: string
+          description: The context or namespace to check rate limits for (e.g., a project slug or feature area).
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-ratelimits-rest
+    port: 8080
+    description: REST adapter for v0 App API — rateLimits. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/rate-limits
+      name: rate-limits
+      description: REST surface for rate-limits.
+      operations:
+      - method: GET
+        name: ratelimitsfind
+        description: Find Rate Limit
+        call: platform-ratelimits.ratelimitsfind
+        with:
+          scope: rest.scope
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-ratelimits-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — rateLimits. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: find-rate-limit
+      description: Find Rate Limit
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-ratelimits.ratelimitsfind
+      with:
+        scope: tools.scope
+      outputParameters:
+      - type: object
+        mapping: $.

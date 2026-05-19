@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — feedback
+  description: 'v0 App API — feedback. 1 operations. Lead operation: Send Feedback. Self-contained Naftiko capability covering
+    one V0 business surface.'
+  tags:
+  - V0
+  - feedback
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-feedback
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — feedback business capability. Self-contained, no shared references.
+    resources:
+    - name: send-feedback
+      path: /send-feedback
+      operations:
+      - name: feedbacksend
+        method: POST
+        description: Send Feedback
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-feedback-rest
+    port: 8080
+    description: REST adapter for v0 App API — feedback. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/send-feedback
+      name: send-feedback
+      description: REST surface for send-feedback.
+      operations:
+      - method: POST
+        name: feedbacksend
+        description: Send Feedback
+        call: platform-feedback.feedbacksend
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-feedback-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — feedback. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: send-feedback
+      description: Send Feedback
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-feedback.feedbacksend
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

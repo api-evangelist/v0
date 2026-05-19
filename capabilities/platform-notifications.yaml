@@ -1,0 +1,178 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — notifications
+  description: 'v0 App API — notifications. 3 operations. Lead operation: notifications. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - notifications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-notifications
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — notifications business capability. Self-contained, no shared references.
+    resources:
+    - name: notifications-device-token
+      path: /notifications/device-token
+      operations:
+      - name: notificationsdevicetokencreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: notifications-device-token-deviceId
+      path: /notifications/device-token/{deviceId}
+      operations:
+      - name: notificationsdevicetokendeviceiddelete
+        method: DELETE
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: deviceId
+          in: path
+          type: string
+          description: Path parameter "deviceId"
+          required: true
+        - name: cleanAll
+          in: query
+          type: string
+          description: Query parameter "cleanAll"
+        - name: bundleId
+          in: query
+          type: string
+          description: Query parameter "bundleId"
+    - name: notifications-live-activity-update-token
+      path: /notifications/live-activity-update-token
+      operations:
+      - name: notificationsliveactivityupdatetokencreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-notifications-rest
+    port: 8080
+    description: REST adapter for v0 App API — notifications. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/notifications/device-token
+      name: notifications-device-token
+      description: REST surface for notifications-device-token.
+      operations:
+      - method: POST
+        name: notificationsdevicetokencreate
+        description: notificationsdevicetokencreate
+        call: platform-notifications.notificationsdevicetokencreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/notifications/device-token/{deviceid}
+      name: notifications-device-token-deviceid
+      description: REST surface for notifications-device-token-deviceId.
+      operations:
+      - method: DELETE
+        name: notificationsdevicetokendeviceiddelete
+        description: notificationsdevicetokendeviceiddelete
+        call: platform-notifications.notificationsdevicetokendeviceiddelete
+        with:
+          deviceId: rest.deviceId
+          cleanAll: rest.cleanAll
+          bundleId: rest.bundleId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/notifications/live-activity-update-token
+      name: notifications-live-activity-update-token
+      description: REST surface for notifications-live-activity-update-token.
+      operations:
+      - method: POST
+        name: notificationsliveactivityupdatetokencreate
+        description: notificationsliveactivityupdatetokencreate
+        call: platform-notifications.notificationsliveactivityupdatetokencreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-notifications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — notifications. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: notificationsdevicetokencreate
+      description: notificationsdevicetokencreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-notifications.notificationsdevicetokencreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notificationsdevicetokendeviceiddelete
+      description: notificationsdevicetokendeviceiddelete
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-notifications.notificationsdevicetokendeviceiddelete
+      with:
+        deviceId: tools.deviceId
+        cleanAll: tools.cleanAll
+        bundleId: tools.bundleId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notificationsliveactivityupdatetokencreate
+      description: notificationsliveactivityupdatetokencreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-notifications.notificationsliveactivityupdatetokencreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

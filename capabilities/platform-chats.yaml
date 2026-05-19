@@ -1,0 +1,2182 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — chats
+  description: 'v0 App API — chats. 45 operations. Lead operation: Create Chat. Self-contained Naftiko capability covering
+    one V0 business surface.'
+  tags:
+  - V0
+  - chats
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-chats
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — chats business capability. Self-contained, no shared references.
+    resources:
+    - name: chats
+      path: /chats
+      operations:
+      - name: chatscreate
+        method: POST
+        description: Create Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: chatsfind
+        method: GET
+        description: Find Chats
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: number
+          description: Specifies the maximum number of chat records to return in a single response. Useful for paginating
+            results when there are many chats.
+        - name: offset
+          in: query
+          type: number
+          description: Determines the starting point for pagination. Used in conjunction with limit to retrieve a specific
+            page of chat results.
+        - name: isFavorite
+          in: query
+          type: string
+          description: Filters chats by their "favorite" status. Accepts `"true"` or `"false"` (as strings, not booleans).
+        - name: vercelProjectId
+          in: query
+          type: string
+          description: Filters chats by the linked Vercel project ID. Only returns chats associated with the specified Vercel
+            project.
+        - name: branch
+          in: query
+          type: string
+          description: Filters chats by the Git branch name. Only returns chats that have an active Git connection with the
+            specified branch as the head.
+    - name: chats-init
+      path: /chats/init
+      operations:
+      - name: chatsinit
+        method: POST
+        description: Initialize Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId
+      path: /chats/{chatId}
+      operations:
+      - name: chatsdelete
+        method: DELETE
+        description: Delete Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to delete. This must be passed as a path parameter in the URL.
+          required: true
+      - name: chatsgetbyid
+        method: GET
+        description: Get Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to retrieve. Must be provided as a path parameter.
+          required: true
+        - name: cursor
+          in: query
+          type: string
+          description: Query parameter "cursor"
+        - name: limit
+          in: query
+          type: number
+          description: Query parameter "limit"
+      - name: chatsupdate
+        method: PATCH
+        description: Update Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to update. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-agent-logs
+      path: /chats/{chatId}/agent/logs
+      operations:
+      - name: chatschatidagentlogscreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-deployments
+      path: /chats/{chatId}/deployments
+      operations:
+      - name: chatsfinddeployments
+        method: GET
+        description: Find Deployments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat to find deployments for
+          required: true
+        - name: versionId
+          in: query
+          type: string
+          description: The ID of the version to find deployments for
+          required: true
+      - name: chatsdeployments
+        method: POST
+        description: Create Deployment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat to create a deployment for
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-env-vars
+      path: /chats/{chatId}/env-vars
+      operations:
+      - name: chatsfindenvvars
+        method: GET
+        description: Find Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat whose environment variables should be retrieved.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+      - name: chatsenvvars
+        method: POST
+        description: Create Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat where environment variables should be created.
+          required: true
+        - name: decrypted
+          in: query
+          type: string
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-env-vars-delete
+      path: /chats/{chatId}/env-vars/delete
+      operations:
+      - name: chatschatidenvvarsdeletecreate
+        method: POST
+        description: Delete Environment Variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat whose environment variables should be deleted.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-favorite
+      path: /chats/{chatId}/favorite
+      operations:
+      - name: chatsfavorite
+        method: PUT
+        description: Favorite Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to update. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-fork
+      path: /chats/{chatId}/fork
+      operations:
+      - name: chatsfork
+        method: POST
+        description: Fork Chat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to fork. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-git-activity
+      path: /chats/{chatId}/git/activity
+      operations:
+      - name: chatschatidgitactivityfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-git-connection
+      path: /chats/{chatId}/git/connection
+      operations:
+      - name: chatschatidgitconnectionfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-git-deployment
+      path: /chats/{chatId}/git/deployment
+      operations:
+      - name: chatschatidgitdeploymentfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: sha
+          in: query
+          type: string
+          description: Query parameter "sha"
+          required: true
+    - name: chats-chatId-git-merge-pull-request
+      path: /chats/{chatId}/git/merge-pull-request
+      operations:
+      - name: chatschatidgitmergepullrequestcreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-git-pull-changes
+      path: /chats/{chatId}/git/pull-changes
+      operations:
+      - name: chatschatidgitpullchangescreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The chat ID to pull changes into.
+          required: true
+    - name: chats-chatId-git-pull-request
+      path: /chats/{chatId}/git/pull-request
+      operations:
+      - name: chatschatidgitpullrequestcreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-git-status
+      path: /chats/{chatId}/git/status
+      operations:
+      - name: chatschatidgitstatusfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-messages
+      path: /chats/{chatId}/messages
+      operations:
+      - name: chatsfindmessages
+        method: GET
+        description: Find Chat Messages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to retrieve messages for. Provided as a path parameter.
+          required: true
+        - name: limit
+          in: query
+          type: number
+          description: Specifies the maximum number of message records to return in a single response. Useful for paginating
+            results when there are many messages.
+        - name: cursor
+          in: query
+          type: string
+          description: Base64 encoded cursor containing pagination data
+      - name: chatssendmessage
+        method: POST
+        description: Send Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to send the message to. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-messages-messageId
+      path: /chats/{chatId}/messages/{messageId}
+      operations:
+      - name: chatsgetmessage
+        method: GET
+        description: Get Chat Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the message. Provided as a path parameter.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: The unique identifier of the message to retrieve. Provided as a path parameter.
+          required: true
+      - name: chatschatidmessagesmessageiddelete
+        method: DELETE
+        description: Delete Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the message to delete.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: The unique identifier of the message to delete.
+          required: true
+    - name: chats-chatId-messages-messageId-resume
+      path: /chats/{chatId}/messages/{messageId}/resume
+      operations:
+      - name: chatsresume
+        method: POST
+        description: Resume Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the message to resume. Provided as a path parameter.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: The identifier of the specific message to resume. Provided as a path parameter.
+          required: true
+    - name: chats-chatId-messages-messageId-stop
+      path: /chats/{chatId}/messages/{messageId}/stop
+      operations:
+      - name: chatsstop
+        method: POST
+        description: Stop Message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the message to stop. Provided as a path parameter.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: The identifier of the specific message to stop. Provided as a path parameter.
+          required: true
+    - name: chats-chatId-metadata
+      path: /chats/{chatId}/metadata
+      operations:
+      - name: chatsgetmetadata
+        method: GET
+        description: Get Chat Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-tasks-resolve
+      path: /chats/{chatId}/tasks/resolve
+      operations:
+      - name: chatsresolvetask
+        method: POST
+        description: Resolve Task
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the pending task. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-upload
+      path: /chats/{chatId}/upload
+      operations:
+      - name: chatsupload
+        method: POST
+        description: Upload File
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-vercel
+      path: /chats/{chatId}/vercel
+      operations:
+      - name: chatsfindvercel
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-vercel-project
+      path: /chats/{chatId}/vercel-project
+      operations:
+      - name: chatsvercelproject
+        method: POST
+        description: Create Vercel Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The ID of the chat to create a Vercel project for.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-version-picker
+      path: /chats/{chatId}/version-picker
+      operations:
+      - name: chatsfindversionpicker
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+    - name: chats-chatId-versions
+      path: /chats/{chatId}/versions
+      operations:
+      - name: chatsfindversions
+        method: GET
+        description: Find Chat Versions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat to retrieve versions for. Provided as a path parameter.
+          required: true
+        - name: limit
+          in: query
+          type: number
+          description: Specifies the maximum number of version records to return in a single response. Useful for paginating
+            results when there are many versions.
+        - name: cursor
+          in: query
+          type: string
+          description: Base64 encoded cursor containing pagination data
+    - name: chats-chatId-versions-versionId
+      path: /chats/{chatId}/versions/{versionId}
+      operations:
+      - name: chatsgetversion
+        method: GET
+        description: Get Chat Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the version. Provided as a path parameter.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version to retrieve. Provided as a path parameter.
+          required: true
+        - name: includeDefaultFiles
+          in: query
+          type: string
+          description: When true, includes all default files (package.json, configuration files, etc.) that would be part
+            of a ZIP download. When false or omitted, returns only the ge
+      - name: chatsupdateversion
+        method: PATCH
+        description: Update Chat Version Files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the version to update. Provided as a path parameter.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version (block) to update. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-versions-versionId-diff-patch
+      path: /chats/{chatId}/versions/{versionId}/diff-patch
+      operations:
+      - name: chatsgetversiondiffpatch
+        method: GET
+        description: Get Version Diff Patch
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version (block) to get diff patch for.
+          required: true
+        - name: fileName
+          in: query
+          type: string
+          description: The file path to get the diff patch for.
+          required: true
+    - name: chats-chatId-versions-versionId-diff-stats
+      path: /chats/{chatId}/versions/{versionId}/diff-stats
+      operations:
+      - name: chatsgetversiondiffstats
+        method: GET
+        description: Get Version Diff Stats
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version (block) to get diff stats for.
+          required: true
+    - name: chats-chatId-versions-versionId-download
+      path: /chats/{chatId}/versions/{versionId}/download
+      operations:
+      - name: chatsdownloadversion
+        method: GET
+        description: Download version files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the version. Provided as a path parameter.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version to download. Provided as a path parameter.
+          required: true
+        - name: format
+          in: query
+          type: string
+          description: The archive format for the download. Choose "zip" for broad compatibility or "tarball" for Unix/Linux
+            systems.
+        - name: includeDefaultFiles
+          in: query
+          type: string
+          description: When true, includes all default files (package.json, configuration files, etc.) that would be part
+            of a complete deployment. When false or omitted, returns only
+    - name: chats-chatId-versions-versionId-files-delete
+      path: /chats/{chatId}/versions/{versionId}/files/delete
+      operations:
+      - name: chatsdeleteversionfiles
+        method: POST
+        description: Delete Chat Version Files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the version to delete files from.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version (block) to delete files from.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: chats-chatId-versions-versionId-iframe
+      path: /chats/{chatId}/versions/{versionId}/iframe
+      operations:
+      - name: chatsfindiframe
+        method: GET
+        description: Get Version Iframe
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: Path parameter "versionId"
+          required: true
+    - name: chats-chatId-versions-versionId-recreate
+      path: /chats/{chatId}/versions/{versionId}/recreate
+      operations:
+      - name: chatsrecreate
+        method: POST
+        description: Recreate Version VM
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: Path parameter "versionId"
+          required: true
+    - name: chats-chatId-versions-versionId-restore
+      path: /chats/{chatId}/versions/{versionId}/restore
+      operations:
+      - name: chatsrestore
+        method: POST
+        description: Restore Block
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: The unique identifier of the chat containing the version to restore.
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: The unique identifier of the version to restore.
+          required: true
+    - name: chats-chatId-versions-versionId-vm-logs
+      path: /chats/{chatId}/versions/{versionId}/vm-logs
+      operations:
+      - name: chatsfindvmlogs
+        method: GET
+        description: Get Version VM Logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: Path parameter "versionId"
+          required: true
+      - name: chatsvmlogs
+        method: DELETE
+        description: Clear Version VM Logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: path
+          type: string
+          description: Path parameter "chatId"
+          required: true
+        - name: versionId
+          in: path
+          type: string
+          description: Path parameter "versionId"
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-chats-rest
+    port: 8080
+    description: REST adapter for v0 App API — chats. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/chats
+      name: chats
+      description: REST surface for chats.
+      operations:
+      - method: POST
+        name: chatscreate
+        description: Create Chat
+        call: platform-chats.chatscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: chatsfind
+        description: Find Chats
+        call: platform-chats.chatsfind
+        with:
+          limit: rest.limit
+          offset: rest.offset
+          isFavorite: rest.isFavorite
+          vercelProjectId: rest.vercelProjectId
+          branch: rest.branch
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/init
+      name: chats-init
+      description: REST surface for chats-init.
+      operations:
+      - method: POST
+        name: chatsinit
+        description: Initialize Chat
+        call: platform-chats.chatsinit
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}
+      name: chats-chatid
+      description: REST surface for chats-chatId.
+      operations:
+      - method: DELETE
+        name: chatsdelete
+        description: Delete Chat
+        call: platform-chats.chatsdelete
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: chatsgetbyid
+        description: Get Chat
+        call: platform-chats.chatsgetbyid
+        with:
+          chatId: rest.chatId
+          cursor: rest.cursor
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: chatsupdate
+        description: Update Chat
+        call: platform-chats.chatsupdate
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/agent/logs
+      name: chats-chatid-agent-logs
+      description: REST surface for chats-chatId-agent-logs.
+      operations:
+      - method: POST
+        name: chatschatidagentlogscreate
+        description: chatschatidagentlogscreate
+        call: platform-chats.chatschatidagentlogscreate
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/deployments
+      name: chats-chatid-deployments
+      description: REST surface for chats-chatId-deployments.
+      operations:
+      - method: GET
+        name: chatsfinddeployments
+        description: Find Deployments
+        call: platform-chats.chatsfinddeployments
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: chatsdeployments
+        description: Create Deployment
+        call: platform-chats.chatsdeployments
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/env-vars
+      name: chats-chatid-env-vars
+      description: REST surface for chats-chatId-env-vars.
+      operations:
+      - method: GET
+        name: chatsfindenvvars
+        description: Find Environment Variables
+        call: platform-chats.chatsfindenvvars
+        with:
+          chatId: rest.chatId
+          decrypted: rest.decrypted
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: chatsenvvars
+        description: Create Environment Variables
+        call: platform-chats.chatsenvvars
+        with:
+          chatId: rest.chatId
+          decrypted: rest.decrypted
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/env-vars/delete
+      name: chats-chatid-env-vars-delete
+      description: REST surface for chats-chatId-env-vars-delete.
+      operations:
+      - method: POST
+        name: chatschatidenvvarsdeletecreate
+        description: Delete Environment Variables
+        call: platform-chats.chatschatidenvvarsdeletecreate
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/favorite
+      name: chats-chatid-favorite
+      description: REST surface for chats-chatId-favorite.
+      operations:
+      - method: PUT
+        name: chatsfavorite
+        description: Favorite Chat
+        call: platform-chats.chatsfavorite
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/fork
+      name: chats-chatid-fork
+      description: REST surface for chats-chatId-fork.
+      operations:
+      - method: POST
+        name: chatsfork
+        description: Fork Chat
+        call: platform-chats.chatsfork
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/activity
+      name: chats-chatid-git-activity
+      description: REST surface for chats-chatId-git-activity.
+      operations:
+      - method: GET
+        name: chatschatidgitactivityfind
+        description: chatschatidgitactivityfind
+        call: platform-chats.chatschatidgitactivityfind
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/connection
+      name: chats-chatid-git-connection
+      description: REST surface for chats-chatId-git-connection.
+      operations:
+      - method: GET
+        name: chatschatidgitconnectionfind
+        description: chatschatidgitconnectionfind
+        call: platform-chats.chatschatidgitconnectionfind
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/deployment
+      name: chats-chatid-git-deployment
+      description: REST surface for chats-chatId-git-deployment.
+      operations:
+      - method: GET
+        name: chatschatidgitdeploymentfind
+        description: chatschatidgitdeploymentfind
+        call: platform-chats.chatschatidgitdeploymentfind
+        with:
+          chatId: rest.chatId
+          sha: rest.sha
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/merge-pull-request
+      name: chats-chatid-git-merge-pull-request
+      description: REST surface for chats-chatId-git-merge-pull-request.
+      operations:
+      - method: POST
+        name: chatschatidgitmergepullrequestcreate
+        description: chatschatidgitmergepullrequestcreate
+        call: platform-chats.chatschatidgitmergepullrequestcreate
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/pull-changes
+      name: chats-chatid-git-pull-changes
+      description: REST surface for chats-chatId-git-pull-changes.
+      operations:
+      - method: POST
+        name: chatschatidgitpullchangescreate
+        description: chatschatidgitpullchangescreate
+        call: platform-chats.chatschatidgitpullchangescreate
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/pull-request
+      name: chats-chatid-git-pull-request
+      description: REST surface for chats-chatId-git-pull-request.
+      operations:
+      - method: POST
+        name: chatschatidgitpullrequestcreate
+        description: chatschatidgitpullrequestcreate
+        call: platform-chats.chatschatidgitpullrequestcreate
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/git/status
+      name: chats-chatid-git-status
+      description: REST surface for chats-chatId-git-status.
+      operations:
+      - method: GET
+        name: chatschatidgitstatusfind
+        description: chatschatidgitstatusfind
+        call: platform-chats.chatschatidgitstatusfind
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/messages
+      name: chats-chatid-messages
+      description: REST surface for chats-chatId-messages.
+      operations:
+      - method: GET
+        name: chatsfindmessages
+        description: Find Chat Messages
+        call: platform-chats.chatsfindmessages
+        with:
+          chatId: rest.chatId
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: chatssendmessage
+        description: Send Message
+        call: platform-chats.chatssendmessage
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/messages/{messageid}
+      name: chats-chatid-messages-messageid
+      description: REST surface for chats-chatId-messages-messageId.
+      operations:
+      - method: GET
+        name: chatsgetmessage
+        description: Get Chat Message
+        call: platform-chats.chatsgetmessage
+        with:
+          chatId: rest.chatId
+          messageId: rest.messageId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: chatschatidmessagesmessageiddelete
+        description: Delete Message
+        call: platform-chats.chatschatidmessagesmessageiddelete
+        with:
+          chatId: rest.chatId
+          messageId: rest.messageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/messages/{messageid}/resume
+      name: chats-chatid-messages-messageid-resume
+      description: REST surface for chats-chatId-messages-messageId-resume.
+      operations:
+      - method: POST
+        name: chatsresume
+        description: Resume Message
+        call: platform-chats.chatsresume
+        with:
+          chatId: rest.chatId
+          messageId: rest.messageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/messages/{messageid}/stop
+      name: chats-chatid-messages-messageid-stop
+      description: REST surface for chats-chatId-messages-messageId-stop.
+      operations:
+      - method: POST
+        name: chatsstop
+        description: Stop Message
+        call: platform-chats.chatsstop
+        with:
+          chatId: rest.chatId
+          messageId: rest.messageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/metadata
+      name: chats-chatid-metadata
+      description: REST surface for chats-chatId-metadata.
+      operations:
+      - method: GET
+        name: chatsgetmetadata
+        description: Get Chat Metadata
+        call: platform-chats.chatsgetmetadata
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/tasks/resolve
+      name: chats-chatid-tasks-resolve
+      description: REST surface for chats-chatId-tasks-resolve.
+      operations:
+      - method: POST
+        name: chatsresolvetask
+        description: Resolve Task
+        call: platform-chats.chatsresolvetask
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/upload
+      name: chats-chatid-upload
+      description: REST surface for chats-chatId-upload.
+      operations:
+      - method: POST
+        name: chatsupload
+        description: Upload File
+        call: platform-chats.chatsupload
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/vercel
+      name: chats-chatid-vercel
+      description: REST surface for chats-chatId-vercel.
+      operations:
+      - method: GET
+        name: chatsfindvercel
+        description: chatsfindvercel
+        call: platform-chats.chatsfindvercel
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/vercel-project
+      name: chats-chatid-vercel-project
+      description: REST surface for chats-chatId-vercel-project.
+      operations:
+      - method: POST
+        name: chatsvercelproject
+        description: Create Vercel Project
+        call: platform-chats.chatsvercelproject
+        with:
+          chatId: rest.chatId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/version-picker
+      name: chats-chatid-version-picker
+      description: REST surface for chats-chatId-version-picker.
+      operations:
+      - method: GET
+        name: chatsfindversionpicker
+        description: chatsfindversionpicker
+        call: platform-chats.chatsfindversionpicker
+        with:
+          chatId: rest.chatId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions
+      name: chats-chatid-versions
+      description: REST surface for chats-chatId-versions.
+      operations:
+      - method: GET
+        name: chatsfindversions
+        description: Find Chat Versions
+        call: platform-chats.chatsfindversions
+        with:
+          chatId: rest.chatId
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}
+      name: chats-chatid-versions-versionid
+      description: REST surface for chats-chatId-versions-versionId.
+      operations:
+      - method: GET
+        name: chatsgetversion
+        description: Get Chat Version
+        call: platform-chats.chatsgetversion
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+          includeDefaultFiles: rest.includeDefaultFiles
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: chatsupdateversion
+        description: Update Chat Version Files
+        call: platform-chats.chatsupdateversion
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/diff-patch
+      name: chats-chatid-versions-versionid-diff-patch
+      description: REST surface for chats-chatId-versions-versionId-diff-patch.
+      operations:
+      - method: GET
+        name: chatsgetversiondiffpatch
+        description: Get Version Diff Patch
+        call: platform-chats.chatsgetversiondiffpatch
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+          fileName: rest.fileName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/diff-stats
+      name: chats-chatid-versions-versionid-diff-stats
+      description: REST surface for chats-chatId-versions-versionId-diff-stats.
+      operations:
+      - method: GET
+        name: chatsgetversiondiffstats
+        description: Get Version Diff Stats
+        call: platform-chats.chatsgetversiondiffstats
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/download
+      name: chats-chatid-versions-versionid-download
+      description: REST surface for chats-chatId-versions-versionId-download.
+      operations:
+      - method: GET
+        name: chatsdownloadversion
+        description: Download version files
+        call: platform-chats.chatsdownloadversion
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+          format: rest.format
+          includeDefaultFiles: rest.includeDefaultFiles
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/files/delete
+      name: chats-chatid-versions-versionid-files-delete
+      description: REST surface for chats-chatId-versions-versionId-files-delete.
+      operations:
+      - method: POST
+        name: chatsdeleteversionfiles
+        description: Delete Chat Version Files
+        call: platform-chats.chatsdeleteversionfiles
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/iframe
+      name: chats-chatid-versions-versionid-iframe
+      description: REST surface for chats-chatId-versions-versionId-iframe.
+      operations:
+      - method: GET
+        name: chatsfindiframe
+        description: Get Version Iframe
+        call: platform-chats.chatsfindiframe
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/recreate
+      name: chats-chatid-versions-versionid-recreate
+      description: REST surface for chats-chatId-versions-versionId-recreate.
+      operations:
+      - method: POST
+        name: chatsrecreate
+        description: Recreate Version VM
+        call: platform-chats.chatsrecreate
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/restore
+      name: chats-chatid-versions-versionid-restore
+      description: REST surface for chats-chatId-versions-versionId-restore.
+      operations:
+      - method: POST
+        name: chatsrestore
+        description: Restore Block
+        call: platform-chats.chatsrestore
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/chats/{chatid}/versions/{versionid}/vm-logs
+      name: chats-chatid-versions-versionid-vm-logs
+      description: REST surface for chats-chatId-versions-versionId-vm-logs.
+      operations:
+      - method: GET
+        name: chatsfindvmlogs
+        description: Get Version VM Logs
+        call: platform-chats.chatsfindvmlogs
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: chatsvmlogs
+        description: Clear Version VM Logs
+        call: platform-chats.chatsvmlogs
+        with:
+          chatId: rest.chatId
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-chats-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — chats. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-chat
+      description: Create Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-chats
+      description: Find Chats
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfind
+      with:
+        limit: tools.limit
+        offset: tools.offset
+        isFavorite: tools.isFavorite
+        vercelProjectId: tools.vercelProjectId
+        branch: tools.branch
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: initialize-chat
+      description: Initialize Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsinit
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-chat
+      description: Delete Chat
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-chats.chatsdelete
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-chat
+      description: Get Chat
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetbyid
+      with:
+        chatId: tools.chatId
+        cursor: tools.cursor
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-chat
+      description: Update Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsupdate
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidagentlogscreate
+      description: chatschatidagentlogscreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatschatidagentlogscreate
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-deployments
+      description: Find Deployments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfinddeployments
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-deployment
+      description: Create Deployment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsdeployments
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-environment-variables
+      description: Find Environment Variables
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindenvvars
+      with:
+        chatId: tools.chatId
+        decrypted: tools.decrypted
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-environment-variables
+      description: Create Environment Variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsenvvars
+      with:
+        chatId: tools.chatId
+        decrypted: tools.decrypted
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-environment-variables
+      description: Delete Environment Variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatschatidenvvarsdeletecreate
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: favorite-chat
+      description: Favorite Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfavorite
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fork-chat
+      description: Fork Chat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsfork
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitactivityfind
+      description: chatschatidgitactivityfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatschatidgitactivityfind
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitconnectionfind
+      description: chatschatidgitconnectionfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatschatidgitconnectionfind
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitdeploymentfind
+      description: chatschatidgitdeploymentfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatschatidgitdeploymentfind
+      with:
+        chatId: tools.chatId
+        sha: tools.sha
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitmergepullrequestcreate
+      description: chatschatidgitmergepullrequestcreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatschatidgitmergepullrequestcreate
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitpullchangescreate
+      description: chatschatidgitpullchangescreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatschatidgitpullchangescreate
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitpullrequestcreate
+      description: chatschatidgitpullrequestcreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatschatidgitpullrequestcreate
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatschatidgitstatusfind
+      description: chatschatidgitstatusfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatschatidgitstatusfind
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-chat-messages
+      description: Find Chat Messages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindmessages
+      with:
+        chatId: tools.chatId
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-message
+      description: Send Message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatssendmessage
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-chat-message
+      description: Get Chat Message
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetmessage
+      with:
+        chatId: tools.chatId
+        messageId: tools.messageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-message
+      description: Delete Message
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-chats.chatschatidmessagesmessageiddelete
+      with:
+        chatId: tools.chatId
+        messageId: tools.messageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resume-message
+      description: Resume Message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsresume
+      with:
+        chatId: tools.chatId
+        messageId: tools.messageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stop-message
+      description: Stop Message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsstop
+      with:
+        chatId: tools.chatId
+        messageId: tools.messageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-chat-metadata
+      description: Get Chat Metadata
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetmetadata
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resolve-task
+      description: Resolve Task
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsresolvetask
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-file
+      description: Upload File
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsupload
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatsfindvercel
+      description: chatsfindvercel
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindvercel
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-vercel-project
+      description: Create Vercel Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsvercelproject
+      with:
+        chatId: tools.chatId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: chatsfindversionpicker
+      description: chatsfindversionpicker
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindversionpicker
+      with:
+        chatId: tools.chatId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-chat-versions
+      description: Find Chat Versions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindversions
+      with:
+        chatId: tools.chatId
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-chat-version
+      description: Get Chat Version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetversion
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+        includeDefaultFiles: tools.includeDefaultFiles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-chat-version-files
+      description: Update Chat Version Files
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsupdateversion
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-version-diff-patch
+      description: Get Version Diff Patch
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetversiondiffpatch
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+        fileName: tools.fileName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-version-diff-stats
+      description: Get Version Diff Stats
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsgetversiondiffstats
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: download-version-files
+      description: Download version files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsdownloadversion
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+        format: tools.format
+        includeDefaultFiles: tools.includeDefaultFiles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-chat-version-files
+      description: Delete Chat Version Files
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsdeleteversionfiles
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-version-iframe
+      description: Get Version Iframe
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindiframe
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: recreate-version-vm
+      description: Recreate Version VM
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsrecreate
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restore-block
+      description: Restore Block
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-chats.chatsrestore
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-version-vm-logs
+      description: Get Version VM Logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-chats.chatsfindvmlogs
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: clear-version-vm-logs
+      description: Clear Version VM Logs
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-chats.chatsvmlogs
+      with:
+        chatId: tools.chatId
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.

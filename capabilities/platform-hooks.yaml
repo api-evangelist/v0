@@ -1,0 +1,226 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — hooks
+  description: 'v0 App API — hooks. 5 operations. Lead operation: Find Hooks. Self-contained Naftiko capability covering one
+    V0 business surface.'
+  tags:
+  - V0
+  - hooks
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-hooks
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — hooks business capability. Self-contained, no shared references.
+    resources:
+    - name: hooks
+      path: /hooks
+      operations:
+      - name: hooksfind
+        method: GET
+        description: Find Hooks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: hookscreate
+        method: POST
+        description: Create Hook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: hooks-hookId
+      path: /hooks/{hookId}
+      operations:
+      - name: hooksgetbyid
+        method: GET
+        description: Get Hook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: hookId
+          in: path
+          type: string
+          description: The unique identifier of the hook to retrieve.
+          required: true
+      - name: hooksupdate
+        method: PATCH
+        description: Update Hook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: hookId
+          in: path
+          type: string
+          description: The ID of the webhook to update. Provided as a path parameter.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: hooksdelete
+        method: DELETE
+        description: Delete Hook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: hookId
+          in: path
+          type: string
+          description: The ID of the webhook to delete. Provided as a path parameter.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-hooks-rest
+    port: 8080
+    description: REST adapter for v0 App API — hooks. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/hooks
+      name: hooks
+      description: REST surface for hooks.
+      operations:
+      - method: GET
+        name: hooksfind
+        description: Find Hooks
+        call: platform-hooks.hooksfind
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: hookscreate
+        description: Create Hook
+        call: platform-hooks.hookscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/hooks/{hookid}
+      name: hooks-hookid
+      description: REST surface for hooks-hookId.
+      operations:
+      - method: GET
+        name: hooksgetbyid
+        description: Get Hook
+        call: platform-hooks.hooksgetbyid
+        with:
+          hookId: rest.hookId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: hooksupdate
+        description: Update Hook
+        call: platform-hooks.hooksupdate
+        with:
+          hookId: rest.hookId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: hooksdelete
+        description: Delete Hook
+        call: platform-hooks.hooksdelete
+        with:
+          hookId: rest.hookId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-hooks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — hooks. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: find-hooks
+      description: Find Hooks
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-hooks.hooksfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-hook
+      description: Create Hook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-hooks.hookscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-hook
+      description: Get Hook
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-hooks.hooksgetbyid
+      with:
+        hookId: tools.hookId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-hook
+      description: Update Hook
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: platform-hooks.hooksupdate
+      with:
+        hookId: tools.hookId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-hook
+      description: Delete Hook
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: platform-hooks.hooksdelete
+      with:
+        hookId: tools.hookId
+      outputParameters:
+      - type: object
+        mapping: $.

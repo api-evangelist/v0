@@ -1,0 +1,333 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — integrations
+  description: 'v0 App API — integrations. 8 operations. Lead operation: List Available Integrations. Self-contained Naftiko
+    capability covering one V0 business surface.'
+  tags:
+  - V0
+  - integrations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-integrations
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — integrations business capability. Self-contained, no shared references.
+    resources:
+    - name: integrations
+      path: /integrations
+      operations:
+      - name: integrationsfind
+        method: GET
+        description: List Available Integrations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: integrationscreate
+        method: POST
+        description: Create Integration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: integrations-project
+      path: /integrations/project
+      operations:
+      - name: integrationsprojectcreate
+        method: POST
+        description: Connect Integrations For Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: integrationsprojectfind
+        method: GET
+        description: Integrations Data For Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: chatId
+          in: query
+          type: string
+          description: The chat ID. If undefined, the v0ProjectId must be provided.
+        - name: v0ProjectId
+          in: query
+          type: string
+          description: The v0 Project ID. If undefined, the chatId must be provided.
+    - name: integrations-vercel-projects
+      path: /integrations/vercel/projects
+      operations:
+      - name: integrationsvercelprojectsfind
+        method: GET
+        description: Find Vercel Projects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: integrationsvercelprojectscreate
+        method: POST
+        description: Create Vercel Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: integrations-wizard
+      path: /integrations/wizard
+      operations:
+      - name: integrationswizardcreate
+        method: POST
+        description: Update Data From Wizard
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: integrationswizardfind
+        method: GET
+        description: Compute Wizard
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: versionId
+          in: query
+          type: string
+          description: The unique identifier of the version to compute the wizard data for.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-integrations-rest
+    port: 8080
+    description: REST adapter for v0 App API — integrations. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/integrations
+      name: integrations
+      description: REST surface for integrations.
+      operations:
+      - method: GET
+        name: integrationsfind
+        description: List Available Integrations
+        call: platform-integrations.integrationsfind
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: integrationscreate
+        description: Create Integration
+        call: platform-integrations.integrationscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integrations/project
+      name: integrations-project
+      description: REST surface for integrations-project.
+      operations:
+      - method: POST
+        name: integrationsprojectcreate
+        description: Connect Integrations For Project
+        call: platform-integrations.integrationsprojectcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: integrationsprojectfind
+        description: Integrations Data For Project
+        call: platform-integrations.integrationsprojectfind
+        with:
+          chatId: rest.chatId
+          v0ProjectId: rest.v0ProjectId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integrations/vercel/projects
+      name: integrations-vercel-projects
+      description: REST surface for integrations-vercel-projects.
+      operations:
+      - method: GET
+        name: integrationsvercelprojectsfind
+        description: Find Vercel Projects
+        call: platform-integrations.integrationsvercelprojectsfind
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: integrationsvercelprojectscreate
+        description: Create Vercel Project
+        call: platform-integrations.integrationsvercelprojectscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/integrations/wizard
+      name: integrations-wizard
+      description: REST surface for integrations-wizard.
+      operations:
+      - method: POST
+        name: integrationswizardcreate
+        description: Update Data From Wizard
+        call: platform-integrations.integrationswizardcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: integrationswizardfind
+        description: Compute Wizard
+        call: platform-integrations.integrationswizardfind
+        with:
+          versionId: rest.versionId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-integrations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — integrations. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-integrations
+      description: List Available Integrations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-integrations.integrationsfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-integration
+      description: Create Integration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-integrations.integrationscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: connect-integrations-project
+      description: Connect Integrations For Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-integrations.integrationsprojectcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: integrations-data-project
+      description: Integrations Data For Project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-integrations.integrationsprojectfind
+      with:
+        chatId: tools.chatId
+        v0ProjectId: tools.v0ProjectId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-vercel-projects
+      description: Find Vercel Projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-integrations.integrationsvercelprojectsfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-vercel-project
+      description: Create Vercel Project
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-integrations.integrationsvercelprojectscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-data-wizard
+      description: Update Data From Wizard
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-integrations.integrationswizardcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: compute-wizard
+      description: Compute Wizard
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-integrations.integrationswizardfind
+      with:
+        versionId: tools.versionId
+      outputParameters:
+      - type: object
+        mapping: $.

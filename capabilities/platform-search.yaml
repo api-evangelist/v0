@@ -1,0 +1,99 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — search
+  description: 'v0 App API — search. 1 operations. Lead operation: Search Chats and Projects. Self-contained Naftiko capability
+    covering one V0 business surface.'
+  tags:
+  - V0
+  - search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-search
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — search business capability. Self-contained, no shared references.
+    resources:
+    - name: search
+      path: /search
+      operations:
+      - name: searchfind
+        method: GET
+        description: Search Chats and Projects
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: query
+          in: query
+          type: string
+          description: Search query to filter chats and projects
+        - name: type
+          in: query
+          type: string
+          description: Filter results by type. Can be repeated (type=chat&type=project) or a single type
+        - name: limit
+          in: query
+          type: number
+          description: Query parameter "limit"
+        - name: cursor
+          in: query
+          type: string
+          description: Base64 encoded cursor containing pagination data
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-search-rest
+    port: 8080
+    description: REST adapter for v0 App API — search. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/search
+      name: search
+      description: REST surface for search.
+      operations:
+      - method: GET
+        name: searchfind
+        description: Search Chats and Projects
+        call: platform-search.searchfind
+        with:
+          query: rest.query
+          type: rest.type
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: search-chats-and-projects
+      description: Search Chats and Projects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-search.searchfind
+      with:
+        query: tools.query
+        type: tools.type
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.

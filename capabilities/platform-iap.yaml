@@ -1,0 +1,82 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — iap
+  description: 'v0 App API — iap. 1 operations. Lead operation: Mobile IAP credit. Self-contained Naftiko capability covering
+    one V0 business surface.'
+  tags:
+  - V0
+  - iap
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-iap
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — iap business capability. Self-contained, no shared references.
+    resources:
+    - name: iap-credit
+      path: /iap/credit
+      operations:
+      - name: iapcreditcreate
+        method: POST
+        description: Mobile IAP credit
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-iap-rest
+    port: 8080
+    description: REST adapter for v0 App API — iap. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/iap/credit
+      name: iap-credit
+      description: REST surface for iap-credit.
+      operations:
+      - method: POST
+        name: iapcreditcreate
+        description: Mobile IAP credit
+        call: platform-iap.iapcreditcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-iap-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — iap. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: mobile-iap-credit
+      description: Mobile IAP credit
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-iap.iapcreditcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

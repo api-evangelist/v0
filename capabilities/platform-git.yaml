@@ -1,0 +1,412 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — git
+  description: 'v0 App API — git. 8 operations. Lead operation: git. Self-contained Naftiko capability covering one V0 business
+    surface.'
+  tags:
+  - V0
+  - git
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-git
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — git business capability. Self-contained, no shared references.
+    resources:
+    - name: git-connect
+      path: /git/connect
+      operations:
+      - name: gitconnectcreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: git-namespaces
+      path: /git/namespaces
+      operations:
+      - name: gitnamespacesfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: git-projects
+      path: /git/projects
+      operations:
+      - name: gitprojectsfind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: query
+          type: string
+          description: The namespace (organization or user).
+          required: true
+        - name: repo
+          in: query
+          type: string
+          description: The repository name.
+          required: true
+    - name: git-start-chat
+      path: /git/start-chat
+      operations:
+      - name: gitstartchatcreate
+        method: POST
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: git-org-repos
+      path: /git/{org}/repos
+      operations:
+      - name: gitfindrepos
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org
+          in: path
+          type: string
+          description: The namespace ID (organization or user).
+          required: true
+        - name: search
+          in: query
+          type: string
+          description: Search query to filter repositories.
+    - name: git-org-repo
+      path: /git/{org}/{repo}
+      operations:
+      - name: gitorgrepofind
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org
+          in: path
+          type: string
+          description: The namespace (organization or user).
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: The repository name.
+          required: true
+    - name: git-org-repo-branches
+      path: /git/{org}/{repo}/branches
+      operations:
+      - name: gitfindbranches
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org
+          in: path
+          type: string
+          description: The namespace (organization or user).
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: The repository name.
+          required: true
+        - name: search
+          in: query
+          type: string
+          description: Search query to filter branches.
+    - name: git-org-repo-projects
+      path: /git/{org}/{repo}/projects
+      operations:
+      - name: gitfindprojects
+        method: GET
+        description: ''
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: org
+          in: path
+          type: string
+          description: The namespace (organization or user).
+          required: true
+        - name: repo
+          in: path
+          type: string
+          description: The repository name.
+          required: true
+        - name: branch
+          in: query
+          type: string
+          description: The branch to detect projects from.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-git-rest
+    port: 8080
+    description: REST adapter for v0 App API — git. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/git/connect
+      name: git-connect
+      description: REST surface for git-connect.
+      operations:
+      - method: POST
+        name: gitconnectcreate
+        description: gitconnectcreate
+        call: platform-git.gitconnectcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/namespaces
+      name: git-namespaces
+      description: REST surface for git-namespaces.
+      operations:
+      - method: GET
+        name: gitnamespacesfind
+        description: gitnamespacesfind
+        call: platform-git.gitnamespacesfind
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/projects
+      name: git-projects
+      description: REST surface for git-projects.
+      operations:
+      - method: GET
+        name: gitprojectsfind
+        description: gitprojectsfind
+        call: platform-git.gitprojectsfind
+        with:
+          namespace: rest.namespace
+          repo: rest.repo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/start-chat
+      name: git-start-chat
+      description: REST surface for git-start-chat.
+      operations:
+      - method: POST
+        name: gitstartchatcreate
+        description: gitstartchatcreate
+        call: platform-git.gitstartchatcreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/{org}/repos
+      name: git-org-repos
+      description: REST surface for git-org-repos.
+      operations:
+      - method: GET
+        name: gitfindrepos
+        description: gitfindrepos
+        call: platform-git.gitfindrepos
+        with:
+          org: rest.org
+          search: rest.search
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/{org}/{repo}
+      name: git-org-repo
+      description: REST surface for git-org-repo.
+      operations:
+      - method: GET
+        name: gitorgrepofind
+        description: gitorgrepofind
+        call: platform-git.gitorgrepofind
+        with:
+          org: rest.org
+          repo: rest.repo
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/{org}/{repo}/branches
+      name: git-org-repo-branches
+      description: REST surface for git-org-repo-branches.
+      operations:
+      - method: GET
+        name: gitfindbranches
+        description: gitfindbranches
+        call: platform-git.gitfindbranches
+        with:
+          org: rest.org
+          repo: rest.repo
+          search: rest.search
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/git/{org}/{repo}/projects
+      name: git-org-repo-projects
+      description: REST surface for git-org-repo-projects.
+      operations:
+      - method: GET
+        name: gitfindprojects
+        description: gitfindprojects
+        call: platform-git.gitfindprojects
+        with:
+          org: rest.org
+          repo: rest.repo
+          branch: rest.branch
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-git-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — git. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: gitconnectcreate
+      description: gitconnectcreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-git.gitconnectcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitnamespacesfind
+      description: gitnamespacesfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitnamespacesfind
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitprojectsfind
+      description: gitprojectsfind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitprojectsfind
+      with:
+        namespace: tools.namespace
+        repo: tools.repo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitstartchatcreate
+      description: gitstartchatcreate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: platform-git.gitstartchatcreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitfindrepos
+      description: gitfindrepos
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitfindrepos
+      with:
+        org: tools.org
+        search: tools.search
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitorgrepofind
+      description: gitorgrepofind
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitorgrepofind
+      with:
+        org: tools.org
+        repo: tools.repo
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitfindbranches
+      description: gitfindbranches
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitfindbranches
+      with:
+        org: tools.org
+        repo: tools.repo
+        search: tools.search
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: gitfindprojects
+      description: gitfindprojects
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-git.gitfindprojects
+      with:
+        org: tools.org
+        repo: tools.repo
+        branch: tools.branch
+      outputParameters:
+      - type: object
+        mapping: $.

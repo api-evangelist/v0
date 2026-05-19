@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: v0 App API — promptTemplates
+  description: 'v0 App API — promptTemplates. 1 operations. Lead operation: Find Prompt Templates. Self-contained Naftiko
+    capability covering one V0 business surface.'
+  tags:
+  - V0
+  - promptTemplates
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    V0_API_KEY: V0_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: platform-prompttemplates
+    baseUri: https://api.v0.dev/v1
+    description: v0 App API — promptTemplates business capability. Self-contained, no shared references.
+    resources:
+    - name: prompt-templates
+      path: /prompt-templates
+      operations:
+      - name: prompttemplatesfind
+        method: GET
+        description: Find Prompt Templates
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.V0_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: platform-prompttemplates-rest
+    port: 8080
+    description: REST adapter for v0 App API — promptTemplates. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/prompt-templates
+      name: prompt-templates
+      description: REST surface for prompt-templates.
+      operations:
+      - method: GET
+        name: prompttemplatesfind
+        description: Find Prompt Templates
+        call: platform-prompttemplates.prompttemplatesfind
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: platform-prompttemplates-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for v0 App API — promptTemplates. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: find-prompt-templates
+      description: Find Prompt Templates
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: platform-prompttemplates.prompttemplatesfind
+      outputParameters:
+      - type: object
+        mapping: $.
