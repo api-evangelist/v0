@@ -7,95 +7,99 @@ description: v0 is Vercel's AI-powered application builder. The v0 Platform API 
   An OpenAPI 3.1 spec is published at https://api.v0.app/openapi.json and a v0-sdk package is available for TypeScript.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- AI
-- App Builder
-- Vercel
-- Code Generation
-- Platform API
+  - AI
+  - App Builder
+  - Vercel
+  - Code Generation
+  - Platform API
 created: '2026-05-08'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: v0:platform-api
-  name: v0 Platform API
-  description: REST API for v0 chats, messages, projects, deployments, hooks, integrations, scopes, and rate-limit/usage.
-    Authenticated with API keys (V0_API_KEY) issued from the v0 dashboard. Requires a Premium or Team plan.
-  humanURL: https://vercel.com/docs/v0/api
-  baseURL: https://api.v0.dev/v1
-  tags:
-  - AI
-  - Platform
-  - Chats
-  - Projects
-  - Deployments
-  properties:
+  - aid: v0:platform-api
+    name: v0 Platform API
+    description: REST API for v0 chats, messages, projects, deployments, hooks, integrations, scopes, and rate-limit/usage.
+      Authenticated with API keys (V0_API_KEY) issued from the v0 dashboard. Requires a Premium or Team plan.
+    humanURL: https://vercel.com/docs/v0/api
+    baseURL: https://api.v0.dev/v1
+    tags:
+    - AI
+    - Platform
+    - Chats
+    - Projects
+    - Deployments
+    properties:
+    - type: Documentation
+      url: https://vercel.com/docs/v0/api
+    - type: OpenAPI
+      url: openapi/v0-platform-openapi.json
+    - type: SDK
+      url: https://www.npmjs.com/package/v0-sdk
+    - type: NaftikoCapability
+      url: capabilities/platform-agent.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-blankproject.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-chatscreenshots.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-chats.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-deployments.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-feedback.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-git.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-hooks.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-iap.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-integrations.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-magiclink.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-mcpservers.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-nativeversion.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-notifications.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-plans.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-products.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-projects.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-prompttemplates.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-ratelimits.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-reports.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-search.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-terms.yaml
+    - type: NaftikoCapability
+      url: capabilities/platform-user.yaml
+common:
+  - type: GitHubOrganization
+    url: https://github.com/vercel
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/v0dev
+  - type: Website
+    url: https://v0.app/
   - type: Documentation
-    url: https://vercel.com/docs/v0/api
-  - type: OpenAPI
-    url: openapi/v0-platform-openapi.json
+    url: https://v0.app/docs
+  - type: Pricing
+    url: https://v0.app/pricing
   - type: SDK
     url: https://www.npmjs.com/package/v0-sdk
-  - type: NaftikoCapability
-    url: capabilities/platform-agent.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-blankproject.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-chatscreenshots.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-chats.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-deployments.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-feedback.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-git.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-hooks.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-iap.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-integrations.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-magiclink.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-mcpservers.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-nativeversion.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-notifications.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-plans.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-products.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-projects.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-prompttemplates.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-ratelimits.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-reports.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-search.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-terms.yaml
-  - type: NaftikoCapability
-    url: capabilities/platform-user.yaml
-common:
-- type: Website
-  url: https://v0.app/
-- type: Documentation
-  url: https://v0.app/docs
-- type: Pricing
-  url: https://v0.app/pricing
-- type: SDK
-  url: https://www.npmjs.com/package/v0-sdk
-- type: Plans
-  url: plans/v0-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/v0-rate-limits.yml
-- type: FinOps
-  url: finops/v0-finops.yml
+  - type: Plans
+    url: plans/v0-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/v0-rate-limits.yml
+  - type: FinOps
+    url: finops/v0-finops.yml
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
