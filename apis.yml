@@ -7,7 +7,7 @@ description: >-
   code-generation primitives that power the v0 web product so AI tools, IDEs, and pipelines can drive v0
   programmatically. An OpenAPI 3.1 spec is published at https://api.v0.app/openapi.json and a v0-sdk package is
   available for TypeScript.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - AI
   - App Builder
