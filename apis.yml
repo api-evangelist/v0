@@ -36,7 +36,7 @@ apis:
         url: https://vercel.com/docs/v0/api
       - type: OpenAPI
         url: openapi/v0-platform-openapi.json
-      - type: SDK
+      - type: SDKs
         url: https://www.npmjs.com/package/v0-sdk
 common:
   - type: GitHubOrganization
@@ -49,7 +49,7 @@ common:
     url: https://v0.app/docs
   - type: Pricing
     url: https://v0.app/pricing
-  - type: SDK
+  - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
   - type: Plans
     url: plans/v0-plans-pricing.yml
