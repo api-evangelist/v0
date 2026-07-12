@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/v0-platform-openapi.json
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+  sources:
+  - openapi/v0-platform-openapi.json

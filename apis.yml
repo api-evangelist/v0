@@ -39,6 +39,12 @@ apis:
       - type: SDKs
         url: https://www.npmjs.com/package/v0-sdk
 common:
+  - type: VulnerabilityDisclosure
+    url: security/v0-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/v0-domain-security.yml
+  - type: Authentication
+    url: authentication/v0-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/vercel
   - type: LinkedIn

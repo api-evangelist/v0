@@ -1,0 +1,39 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: v0.app
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 20 04:24:52 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: vercel.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 21 08:55:49 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: api.v0.dev
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 16 15:28:19 2026 GMT
+  hsts: null
+domains:
+- domain: v0.app
+  dnssec: false
+  caa:
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog"
+  - 0 issue "sectigo.com"
+  spf: false
+  dmarc: false
+- domain: vercel.com
+  dnssec: false
+  caa:
+  - 0 issue "globalsign.com"
+  - 0 issue "sectigo.com"
+  - 0 issue "letsencrypt.org"
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
