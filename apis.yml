@@ -39,6 +39,8 @@ apis:
       - type: SDKs
         url: https://www.npmjs.com/package/v0-sdk
 common:
+  - type: AgenticAccess
+    url: agentic-access/v0-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/v0-vulnerability-disclosure.yml
   - type: DomainSecurity
