@@ -1,0 +1,652 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent hooks API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: hooks
+paths:
+  /hooks:
+    get:
+      summary: Find Hooks
+      description: Retrieves a list of existing hooks in your workspace. Useful for managing active webhooks tied to chat events or deployments.
+      operationId: hooks.find
+      tags:
+      - hooks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/HookSummary'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    post:
+      summary: Create Hook
+      description: Creates a new webhook that listens for specific events. Supports optional association with a chat.
+      operationId: hooks.create
+      tags:
+      - hooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: A human-readable name for the hook.
+                events:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - chat.created
+                    - chat.updated
+                    - chat.deleted
+                    - message.created
+                    - message.updated
+                    - message.deleted
+                    - message.finished
+                  description: List of event types the hook should subscribe to.
+                chatId:
+                  description: The ID of a chat to scope the hook to.
+                  type: string
+                url:
+                  type: string
+                  format: uri
+                  description: The target URL to receive the webhook payloads.
+              required:
+              - name
+              - events
+              - url
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HookDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /hooks/{hookId}:
+    get:
+      summary: Get Hook
+      description: Retrieves the details of a specific webhook using its ID.
+      operationId: hooks.getById
+      tags:
+      - hooks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HookDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: hookId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the hook to retrieve.
+      security:
+      - apiKey: []
+    patch:
+      summary: Update Hook
+      description: Updates the configuration of an existing webhook, including its name, event subscriptions, or target URL.
+      operationId: hooks.update
+      tags:
+      - hooks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: A new name for the hook.
+                  type: string
+                events:
+                  description: Updated list of event types to subscribe to.
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - chat.created
+                    - chat.updated
+                    - chat.deleted
+                    - message.created
+                    - message.updated
+                    - message.deleted
+                    - message.finished
+                url:
+                  description: A new URL to send webhook payloads to.
+                  type: string
+                  format: uri
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HookDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: hookId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the webhook to update. Provided as a path parameter.
+      security:
+      - apiKey: []
+    delete:
+      summary: Delete Hook
+      description: Deletes a webhook based on its ID. This action is irreversible.
+      operationId: hooks.delete
+      tags:
+      - hooks
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  object:
+                    type: string
+                    const: hook
+                  deleted:
+                    type: boolean
+                    const: true
+                required:
+                - id
+                - object
+                - deleted
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: hookId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the webhook to delete. Provided as a path parameter.
+      security:
+      - apiKey: []
+components:
+  schemas:
+    HookDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the webhook.
+        object:
+          type: string
+          const: hook
+          description: Fixed value identifying this object as a webhook.
+        name:
+          type: string
+          description: A user-defined name to label the webhook.
+        events:
+          type: array
+          items:
+            type: string
+            enum:
+            - chat.created
+            - chat.updated
+            - chat.deleted
+            - message.created
+            - message.updated
+            - message.deleted
+            - message.finished
+          description: List of event types this webhook is subscribed to.
+        chatId:
+          description: Optional ID of the chat that this webhook is scoped to.
+          type: string
+        url:
+          type: string
+          description: Target URL that receives event payloads for this webhook.
+      required:
+      - id
+      - object
+      - name
+      - events
+      - url
+      additionalProperties: false
+      description: Full configuration details for a webhook, including its scope and subscription.
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    HookSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the webhook.
+        object:
+          type: string
+          const: hook
+          description: Fixed value identifying this object as a webhook.
+        name:
+          type: string
+          description: A user-defined name to label the webhook.
+      required:
+      - id
+      - object
+      - name
+      additionalProperties: false
+      description: Summary of a webhook, including its ID and display name.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent search API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: search
+paths:
+  /search:
+    get:
+      summary: Search Chats and Projects
+      description: Search across chats and projects with optional query string and type filtering
+      operationId: search.find
+      tags:
+      - search
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResultItem'
+                  pagination:
+                    type: object
+                    properties:
+                      hasMore:
+                        type: boolean
+                      nextCursor:
+                        type: string
+                      nextUrl:
+                        type: string
+                    required:
+                    - hasMore
+                    additionalProperties: false
+                  meta:
+                    type: object
+                    properties:
+                      totalCount:
+                        type: number
+                    required:
+                    - totalCount
+                    additionalProperties: false
+                required:
+                - object
+                - data
+                - pagination
+                - meta
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+          minLength: 1
+          description: Search query to filter chats and projects
+        description: Search query to filter chats and projects
+      - name: type
+        in: query
+        required: false
+        schema:
+          description: Filter results by type. Can be repeated (type=chat&type=project) or a single type
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        description: Filter results by type. Can be repeated (type=chat&type=project) or a single type
+      - name: limit
+        in: query
+        required: false
+        schema:
+          default: 20
+          type: number
+          minimum: 1
+          maximum: 150
+        description: Query parameter "limit"
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Base64 encoded cursor containing pagination data
+        description: Base64 encoded cursor containing pagination data
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    SearchResultItem:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of the item returned in the search result.
+        object:
+          description: Type of item returned, either 'chat' or 'project'.
+          type: string
+          enum:
+          - chat
+          - project
+        name:
+          type: string
+          description: The display name of the item.
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the item was created.
+        updatedAt:
+          description: The ISO timestamp of the last update to the item.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        apiUrl:
+          type: string
+          description: API endpoint for accessing the item programmatically.
+        webUrl:
+          type: string
+          description: Web URL for viewing the item in the interface.
+      required:
+      - id
+      - object
+      - name
+      - createdAt
+      - apiUrl
+      - webUrl
+      additionalProperties: false
+      description: Generic result returned from a search query, representing either a chat or a project.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

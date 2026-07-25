@@ -1,0 +1,853 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent mcpServers API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: mcpServers
+paths:
+  /mcp-servers:
+    get:
+      summary: List MCP Servers
+      description: Returns a list of connected MCP servers for the current user. Use this to check if an MCP preset is already connected.
+      operationId: mcpServers.list
+      tags:
+      - mcpServers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    mcpServerId:
+                      type: string
+                      description: Unique identifier for the MCP server
+                    name:
+                      type: string
+                      description: Display name of the MCP server
+                    url:
+                      type: string
+                      description: URL of the MCP server
+                    description:
+                      description: Description of the MCP server
+                      type: string
+                    enabled:
+                      type: boolean
+                      description: Whether the MCP server is enabled
+                  required:
+                  - mcpServerId
+                  - name
+                  - url
+                  - enabled
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /mcp-servers/{mcpServerId}:
+    get:
+      summary: Get MCP Server
+      description: Retrieves the details of a specific MCP server by its ID.
+      operationId: mcpServers.getById
+      tags:
+      - mcpServers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: mcp_server
+                    description: The object type.
+                  id:
+                    type: string
+                    description: The unique identifier for the MCP server.
+                  name:
+                    type: string
+                    description: The display name of the MCP server.
+                  url:
+                    type: string
+                    format: uri
+                    description: The URL of the MCP server.
+                  description:
+                    description: An optional description of the MCP server.
+                    type: string
+                  enabled:
+                    type: boolean
+                    description: Whether the MCP server is enabled for use in chats.
+                  auth:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - none
+                        - bearer
+                        - custom-headers
+                        - oauth
+                        description: The type of authentication configured.
+                    required:
+                    - type
+                    additionalProperties: false
+                    description: Authentication type for the MCP server. Sensitive values like tokens and headers are not returned.
+                  scope:
+                    type: string
+                    enum:
+                    - user
+                    - team
+                    description: The scope of the MCP server (user or team).
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp when the MCP server was created.
+                  updatedAt:
+                    description: The ISO timestamp when the MCP server was last updated.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                required:
+                - object
+                - id
+                - name
+                - url
+                - enabled
+                - auth
+                - scope
+                - createdAt
+                additionalProperties: false
+                description: Summary information about an MCP server.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: mcpServerId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the MCP server to retrieve.
+      security:
+      - apiKey: []
+    patch:
+      summary: Update MCP Server
+      description: Updates the configuration of an existing MCP server, including its name, URL, description, enabled status, and authentication settings.
+      operationId: mcpServers.update
+      tags:
+      - mcpServers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: The display name of the MCP server.
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                url:
+                  description: The URL of the MCP server.
+                  type: string
+                  maxLength: 500
+                  format: uri
+                description:
+                  description: An optional description of the MCP server.
+                  type: string
+                  maxLength: 500
+                enabled:
+                  description: Whether the MCP server is enabled.
+                  type: boolean
+                auth:
+                  description: Authentication configuration.
+                  anyOf:
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        const: none
+                        description: No authentication required.
+                    required:
+                    - type
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        const: bearer
+                        description: Bearer token authentication.
+                      token:
+                        type: string
+                        minLength: 1
+                        maxLength: 1000
+                        description: The bearer token for authentication.
+                    required:
+                    - type
+                    - token
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        const: custom-headers
+                        description: Custom headers authentication.
+                      headers:
+                        type: object
+                        propertyNames:
+                          type: string
+                          maxLength: 100
+                        additionalProperties:
+                          type: string
+                          maxLength: 500
+                        description: Key-value pairs of custom headers to include in requests.
+                    required:
+                    - type
+                    - headers
+                    additionalProperties: false
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        const: oauth
+                        description: OAuth 2.1 authentication.
+                      config:
+                        type: object
+                        properties:
+                          authorizationUrl:
+                            type: string
+                            format: uri
+                            description: The OAuth authorization endpoint URL.
+                          tokenUrl:
+                            type: string
+                            format: uri
+                            description: The OAuth token endpoint URL.
+                          registrationUrl:
+                            description: The optional dynamic client registration endpoint URL.
+                            type: string
+                            format: uri
+                          clientId:
+                            type: string
+                            minLength: 1
+                            description: The OAuth client ID.
+                          clientSecret:
+                            description: The optional OAuth client secret. This value is stored securely and is never returned by the API.
+                            type: string
+                          scopes:
+                            default: []
+                            description: OAuth scopes to request during authorization.
+                            type: array
+                            items:
+                              type: string
+                          usePKCE:
+                            default: true
+                            description: Whether to use PKCE for the authorization code flow.
+                            type: boolean
+                          issuer:
+                            description: The optional issuer identifier for mix-up protection.
+                            type: string
+                          resource:
+                            description: The optional RFC 8707 resource indicator. For MCP servers, this is usually the MCP server URL.
+                            type: string
+                          clientIdMetadataDocumentSupported:
+                            description: Whether the authorization server supports Client ID Metadata Documents.
+                            type: boolean
+                        required:
+                        - authorizationUrl
+                        - tokenUrl
+                        - clientId
+                        additionalProperties: false
+                        description: OAuth configuration for the MCP server.
+                    required:
+                    - type
+                    - config
+                    additionalProperties: false
+                scope:
+                  description: The scope of the MCP server.
+                  type: string
+                  enum:
+                  - user
+                  - team
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: mcp_server
+                    description: The object type.
+                  id:
+                    type: string
+                    description: The unique identifier for the MCP server.
+                  name:
+                    type: string
+                    description: The display name of the MCP server.
+                  url:
+                    type: string
+                    format: uri
+                    description: The URL of the MCP server.
+                  description:
+                    description: An optional description of the MCP server.
+                    type: string
+                  enabled:
+                    type: boolean
+                    description: Whether the MCP server is enabled for use in chats.
+                  auth:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - none
+                        - bearer
+                        - custom-headers
+                        - oauth
+                        description: The type of authentication configured.
+                    required:
+                    - type
+                    additionalProperties: false
+                    description: Authentication type for the MCP server. Sensitive values like tokens and headers are not returned.
+                  scope:
+                    type: string
+                    enum:
+                    - user
+                    - team
+                    description: The scope of the MCP server (user or team).
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp when the MCP server was created.
+                  updatedAt:
+                    description: The ISO timestamp when the MCP server was last updated.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                required:
+                - object
+                - id
+                - name
+                - url
+                - enabled
+                - auth
+                - scope
+                - createdAt
+                additionalProperties: false
+                description: Summary information about an MCP server.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: mcpServerId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the MCP server to update.
+      security:
+      - apiKey: []
+    delete:
+      summary: Delete MCP Server
+      description: Deletes an MCP server based on its ID. This action is irreversible and will also remove any associated OAuth tokens.
+      operationId: mcpServers.delete
+      tags:
+      - mcpServers
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: mcp_server
+                  id:
+                    type: string
+                    description: The ID of the deleted MCP server.
+                  deleted:
+                    type: boolean
+                    const: true
+                    description: Indicates the server was deleted.
+                required:
+                - object
+                - id
+                - deleted
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: mcpServerId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the MCP server to delete.
+      security:
+      - apiKey: []
+  /mcp-servers/{mcpServerId}/oauth/authorize:
+    post:
+      summary: Create MCP Server OAuth Authorization URL
+      description: Creates an OAuth authorization URL for an OAuth MCP server. Redirect the user to the returned URL, and the Platform API OAuth callback will store the resulting tokens before redirecting to your returnUrl.
+      operationId: mcpServers.createOAuthAuthorizationUrl
+      tags:
+      - mcpServers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                returnUrl:
+                  type: string
+                  format: uri
+                  description: An absolute URL in your application where v0 redirects after OAuth completes. HTTPS is required in production.
+              required:
+              - returnUrl
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: mcp_server_oauth_authorization
+                    description: The object type.
+                  mcpServerId:
+                    type: string
+                    description: The MCP server being authorized.
+                  url:
+                    type: string
+                    format: uri
+                    description: The provider authorization URL to redirect the user to.
+                  state:
+                    type: string
+                    description: The OAuth state value. This expires after 5 minutes.
+                  expiresAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp when the authorization URL expires.
+                required:
+                - object
+                - mcpServerId
+                - url
+                - state
+                - expiresAt
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: mcpServerId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the OAuth MCP server to authorize.
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

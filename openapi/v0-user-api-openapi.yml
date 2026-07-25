@@ -1,0 +1,1106 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent user API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: user
+paths:
+  /user:
+    get:
+      summary: Get User
+      description: Retrieves information about the authenticated user, including their ID, name, email, and account metadata.
+      operationId: user.get
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSummarySchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /user/billing:
+    get:
+      summary: Get Billing
+      description: Fetches billing usage and quota information for the authenticated user. Can be scoped to a specific context (e.g. project or namespace).
+      operationId: user.getBilling
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    billingType:
+                      type: string
+                      const: token
+                    data:
+                      type: object
+                      properties:
+                        plan:
+                          type: string
+                        billingMode:
+                          type: string
+                          const: test
+                        role:
+                          type: string
+                        billingCycle:
+                          type: object
+                          properties:
+                            start:
+                              type: number
+                            end:
+                              type: number
+                          required:
+                          - start
+                          - end
+                          additionalProperties: false
+                        balance:
+                          type: object
+                          properties:
+                            remaining:
+                              type: number
+                            total:
+                              type: number
+                          required:
+                          - remaining
+                          - total
+                          additionalProperties: false
+                        onDemand:
+                          type: object
+                          properties:
+                            balance:
+                              type: number
+                            blocks:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  expirationDate:
+                                    type: number
+                                  effectiveDate:
+                                    type: number
+                                  originalBalance:
+                                    type: number
+                                  currentBalance:
+                                    type: number
+                                required:
+                                - effectiveDate
+                                - originalBalance
+                                - currentBalance
+                                additionalProperties: false
+                          required:
+                          - balance
+                          additionalProperties: false
+                      required:
+                      - plan
+                      - role
+                      - billingCycle
+                      - balance
+                      - onDemand
+                      additionalProperties: false
+                  required:
+                  - billingType
+                  - data
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    billingType:
+                      type: string
+                      const: legacy
+                    data:
+                      type: object
+                      properties:
+                        remaining:
+                          type: number
+                        reset:
+                          type: number
+                        limit:
+                          type: number
+                      required:
+                      - limit
+                      additionalProperties: false
+                  required:
+                  - billingType
+                  - data
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: scope
+        in: query
+        required: false
+        schema:
+          description: Filters billing data by a specific scope, such as a project ID or slug.
+          type: string
+        description: Filters billing data by a specific scope, such as a project ID or slug.
+      security:
+      - apiKey: []
+  /user/plan:
+    get:
+      summary: Get Plan
+      description: Returns the current subscription plan for the authenticated user, including tier details and feature limits.
+      operationId: user.getPlan
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: plan
+                  plan:
+                    type: string
+                  billingCycle:
+                    type: object
+                    properties:
+                      start:
+                        type: number
+                      end:
+                        type: number
+                    required:
+                    - start
+                    - end
+                    additionalProperties: false
+                  balance:
+                    type: object
+                    properties:
+                      remaining:
+                        type: number
+                      total:
+                        type: number
+                    required:
+                    - remaining
+                    - total
+                    additionalProperties: false
+                required:
+                - object
+                - plan
+                - billingCycle
+                - balance
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /user/scopes:
+    get:
+      summary: Get User Scopes
+      description: Retrieves all accessible scopes for the authenticated user, such as personal workspaces or shared teams.
+      operationId: user.getScopes
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ScopeSummary'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /user/activity:
+    get:
+      summary: Get User Activity
+      description: Retrieves the user's activity data showing message counts per day. Returns either the specified year or the last 52 weeks if no year is provided.
+      operationId: user.getActivity
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: activity
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          description: Date in YYYY-MM-DD format
+                        count:
+                          type: number
+                          description: Number of messages sent on this date
+                      required:
+                      - date
+                      - count
+                      additionalProperties: false
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: year
+        in: query
+        required: false
+        schema:
+          description: Optional year to filter activity data (e.g., "2024"). If not provided, returns the last 52 weeks of activity.
+          type: string
+          pattern: ^\d{4}$
+        description: Optional year to filter activity data (e.g., "2024"). If not provided, returns the last 52 weeks of activity.
+      security:
+      - apiKey: []
+  /user/activity-years:
+    get:
+      summary: Get User Activity Years
+      description: Retrieves the years where the user has activity (sent messages). Returns an array of years in descending order (newest first).
+      operationId: user.getActivityYears
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: activity_years
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      description: Year as a 4-digit string (e.g., "2024")
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /user/preferences:
+    get:
+      operationId: user.preferences.find
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesResponseSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    post:
+      operationId: user.preferences.create
+      tags:
+      - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notifications:
+                  type: object
+                  properties:
+                    liveActivity:
+                      type: boolean
+                      description: Whether the user wants to receive live activities.
+                    pushNotifications:
+                      type: boolean
+                      description: Whether the user wants to receive push notifications.
+                  required:
+                  - liveActivity
+                  - pushNotifications
+                  additionalProperties: false
+                  description: The user's preferred method for receiving notifications.
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferencesPostResponseSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /user/billing/redeem-usage-code:
+    post:
+      summary: Redeem a usage code
+      description: Redeems a usage code and credits the active scope using Copper as the source of truth.
+      operationId: user.billing.redeemUsageCode.create
+      tags:
+      - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  minLength: 1
+              required:
+              - code
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  message:
+                    type: string
+                  credits:
+                    type: string
+                required:
+                - success
+                - message
+                - credits
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ScopeSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the scope (e.g., user or team workspace).
+        object:
+          type: string
+          const: scope
+          description: Fixed value identifying this object as a scope.
+        name:
+          description: An optional human-readable name for the scope.
+          type: string
+      required:
+      - id
+      - object
+      additionalProperties: false
+      description: Basic information about a workspace or identity context for projects and chats.
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UserSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the user.
+        object:
+          type: string
+          const: user
+          description: Fixed value identifying this object as a user.
+        name:
+          description: Optional full name of the user.
+          type: string
+        email:
+          type: string
+          description: The user's email address.
+        avatar:
+          type: string
+          description: URL to the user's avatar image.
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the user was created.
+        updatedAt:
+          description: The ISO timestamp of the last update to the user.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - object
+      - email
+      - avatar
+      - createdAt
+      additionalProperties: false
+      description: Details of the authenticated user, including profile and contact information.
+    UserPreferencesResponseSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: user_preferences
+          description: Object type identifier.
+        preferences:
+          anyOf:
+          - type: object
+            properties:
+              notifications:
+                type: object
+                properties:
+                  liveActivity:
+                    type: boolean
+                    description: Whether the user wants to receive live activities.
+                  pushNotifications:
+                    type: boolean
+                    description: Whether the user wants to receive push notifications.
+                required:
+                - liveActivity
+                - pushNotifications
+                additionalProperties: false
+                description: The user's preferred method for receiving notifications.
+            required:
+            - notifications
+            additionalProperties: false
+            description: User preferences configuration including notification settings.
+          - type: 'null'
+          description: The user's current preferences, or null if errored.
+      required:
+      - object
+      - preferences
+      additionalProperties: false
+      description: Response schema for retrieving user preferences.
+    UserPreferencesPostResponseSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: user_preferences
+          description: Object type identifier.
+        preferences:
+          anyOf:
+          - type: object
+            properties:
+              notifications:
+                type: object
+                properties:
+                  liveActivity:
+                    type: boolean
+                    description: Whether the user wants to receive live activities.
+                  pushNotifications:
+                    type: boolean
+                    description: Whether the user wants to receive push notifications.
+                required:
+                - liveActivity
+                - pushNotifications
+                additionalProperties: false
+                description: The user's preferred method for receiving notifications.
+            required:
+            - notifications
+            additionalProperties: false
+            description: User preferences configuration including notification settings.
+          - type: 'null'
+          description: The updated preferences if successful, or null if failed.
+      required:
+      - object
+      - preferences
+      additionalProperties: false
+      description: Response schema for updating user preferences.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

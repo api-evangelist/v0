@@ -1,0 +1,2372 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent integrations API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: integrations
+paths:
+  /integrations:
+    get:
+      summary: List Available Integrations
+      description: Retrieves all available integrations from the marketplace that can be created and connected.
+      operationId: integrations.find
+      tags:
+      - integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationListSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    post:
+      summary: Create Integration
+      description: Creates a new integration or returns installation URL for marketplace integrations. For storage integrations (blob), creates the store directly. For marketplace integrations, creates an integration link and returns a URL for the user to complete installation.
+      operationId: integrations.create
+      tags:
+      - integrations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - type: object
+                properties:
+                  type:
+                    type: string
+                    const: blob
+                    description: Create a blob storage integration.
+                  name:
+                    type: string
+                    minLength: 1
+                    description: Name for the blob storage integration.
+                  vercelProjectId:
+                    type: string
+                    minLength: 1
+                    description: Vercel project ID to connect the blob storage to.
+                  access:
+                    default: private
+                    description: Access level for the blob store. "private" means a token is required to read blobs (for sensitive data). "public" means blobs are publicly accessible via URL (for assets like images).
+                    type: string
+                    enum:
+                    - public
+                    - private
+                required:
+                - type
+                - name
+                - vercelProjectId
+                additionalProperties: false
+              - type: object
+                properties:
+                  type:
+                    type: string
+                    const: marketplace
+                    description: Create a marketplace integration.
+                  productId:
+                    type: string
+                    minLength: 1
+                    description: The product ID from the marketplace (e.g., "iap_xxxxx" for products, or slug for integrations).
+                  vercelProjectId:
+                    type: string
+                    minLength: 1
+                    description: Vercel project ID to connect the integration to (required for marketplace integrations).
+                required:
+                - type
+                - productId
+                - vercelProjectId
+                additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the integration.
+                    object:
+                      type: string
+                      const: integration
+                      description: The object type.
+                    slug:
+                      type: string
+                      description: The slug of the integration.
+                    name:
+                      type: string
+                      description: The name of the integration.
+                    description:
+                      type: string
+                      description: A short description of the integration.
+                    iconUrl:
+                      type: string
+                      description: URL to the integration icon.
+                    storeId:
+                      type: string
+                      description: The ID of the created store/integration.
+                    type:
+                      type: string
+                      const: storage
+                      description: Indicates this is a storage integration that was created directly.
+                  required:
+                  - id
+                  - object
+                  - slug
+                  - name
+                  - description
+                  - iconUrl
+                  - storeId
+                  - type
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    integrationId:
+                      type: string
+                      description: The ID of the integration.
+                    installationUrl:
+                      type: string
+                      format: uri
+                      description: URL where the user should go to complete the integration installation.
+                    token:
+                      type: string
+                      description: Token for tracking the installation process.
+                    expiresAt:
+                      type: string
+                      format: date-time
+                      pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                      description: When the installation link expires.
+                    type:
+                      type: string
+                      const: marketplace
+                      description: Indicates this requires user installation via Vercel marketplace.
+                  required:
+                  - integrationId
+                  - installationUrl
+                  - token
+                  - expiresAt
+                  - type
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /integrations/vercel/projects:
+    get:
+      summary: Find Vercel Projects
+      description: Retrieves a list of Vercel projects linked to your integration. Useful for associating chats, deployments, or hooks with specific Vercel projects.
+      operationId: integrations.vercel.projects.find
+      tags:
+      - integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VercelProjectSummary'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    post:
+      summary: Create Vercel Project
+      description: Links a Vercel project to an existing v0 project. Enables Vercel-related features and deployment integration within the v0 workspace.
+      operationId: integrations.vercel.projects.create
+      tags:
+      - integrations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                  description: The ID of the v0 project to link to the new Vercel project.
+                name:
+                  type: string
+                  description: The name to assign to the new Vercel project.
+              required:
+              - projectId
+              - name
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VercelProjectDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /integrations/wizard:
+    post:
+      summary: Update Data From Wizard
+      description: Update the wizard data for a specific block.
+      operationId: integrations.wizard.create
+      tags:
+      - integrations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                setEnvironmentVariables:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        minLength: 1
+                      value:
+                        type: string
+                        minLength: 1
+                        maxLength: 65536
+                      targets:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - production
+                          - preview
+                          - development
+                    required:
+                    - key
+                    - value
+                    additionalProperties: false
+                runActions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                        - supabase-chat-url
+                    required:
+                    - action
+                    additionalProperties: false
+                connectIntegrations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      integrationId:
+                        type: string
+                      name:
+                        type: string
+                        enum:
+                        - Upstash for Redis
+                        - Upstash Search
+                        - Neon
+                        - Supabase
+                        - Amazon Aurora DSQL
+                        - Amazon Aurora PostgreSQL
+                        - Amazon DynamoDB
+                        - firebase
+                        - Groq
+                        - Grok
+                        - fal
+                        - Deep Infra
+                        - Stripe
+                        - Clerk
+                        - Convex
+                        - Blob
+                        - Edge Config
+                        - Vercel AI Gateway
+                        - Snowflake
+                      existingInstanceId:
+                        type: string
+                      importExisting:
+                        type: boolean
+                      acceptedLinks:
+                        type: object
+                        properties:
+                          eulaLink:
+                            type: boolean
+                          privacyLink:
+                            type: boolean
+                        required:
+                        - eulaLink
+                        - privacyLink
+                        additionalProperties: false
+                      useMarketplaceFlow:
+                        type: boolean
+                      targets:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                          - production
+                          - preview
+                          - development
+                      allowEnvOverride:
+                        type: boolean
+                      access:
+                        type: string
+                        enum:
+                        - public
+                        - private
+                      region:
+                        type: string
+                    required:
+                    - integrationId
+                    - name
+                    additionalProperties: false
+                disableAutoPrompt:
+                  type: boolean
+                setBannerDismissed:
+                  type: object
+                  properties:
+                    fingerprint:
+                      type: string
+                    dismissed:
+                      type: boolean
+                  required:
+                  - fingerprint
+                  - dismissed
+                  additionalProperties: false
+                blockId:
+                  type: string
+                autoCreateV0Project:
+                  type: boolean
+              required:
+              - blockId
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: success
+                    disabledAutoPrompt:
+                      anyOf:
+                      - type: object
+                        properties:
+                          status:
+                            type: string
+                            const: success
+                        required:
+                        - status
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          status:
+                            type: string
+                            const: error
+                          message:
+                            type: string
+                        required:
+                        - status
+                        - message
+                        additionalProperties: false
+                    setBannerDismissedResult:
+                      anyOf:
+                      - type: object
+                        properties:
+                          status:
+                            type: string
+                            const: success
+                        required:
+                        - status
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          status:
+                            type: string
+                            const: error
+                          message:
+                            type: string
+                        required:
+                        - status
+                        - message
+                        additionalProperties: false
+                    ranActions:
+                      type: array
+                      items:
+                        allOf:
+                        - anyOf:
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: success
+                            required:
+                            - status
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: error
+                              message:
+                                type: string
+                            required:
+                            - status
+                            - message
+                            additionalProperties: false
+                        - type: object
+                          properties:
+                            action:
+                              type: string
+                              enum:
+                              - supabase-chat-url
+                          required:
+                          - action
+                          additionalProperties: false
+                    setEnvironmentVariables:
+                      allOf:
+                      - anyOf:
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: success
+                          required:
+                          - status
+                          additionalProperties: false
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: error
+                            message:
+                              type: string
+                          required:
+                          - status
+                          - message
+                          additionalProperties: false
+                      - type: object
+                        properties:
+                          keys:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - keys
+                        additionalProperties: false
+                    connectedIntegrations:
+                      type: array
+                      items:
+                        allOf:
+                        - anyOf:
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: success
+                              redirectUrl:
+                                type: string
+                                format: uri
+                              acceptPolicies:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                  description:
+                                    type: string
+                                  addendumLink:
+                                    type: object
+                                    properties:
+                                      url:
+                                        type: string
+                                      text:
+                                        type: string
+                                    required:
+                                    - url
+                                    - text
+                                    additionalProperties: false
+                                  eulaLink:
+                                    anyOf:
+                                    - type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        text:
+                                          type: string
+                                      required:
+                                      - url
+                                      - text
+                                      additionalProperties: false
+                                    - type: 'null'
+                                  privacyLink:
+                                    anyOf:
+                                    - type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        text:
+                                          type: string
+                                      required:
+                                      - url
+                                      - text
+                                      additionalProperties: false
+                                    - type: 'null'
+                                  footerMD:
+                                    type: string
+                                  actionButtonText:
+                                    type: string
+                                required:
+                                - title
+                                - description
+                                - addendumLink
+                                - eulaLink
+                                - privacyLink
+                                - footerMD
+                                - actionButtonText
+                                additionalProperties: false
+                              isPending:
+                                type: boolean
+                            required:
+                            - status
+                            - isPending
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: error
+                              message:
+                                type: string
+                            required:
+                            - status
+                            - message
+                            additionalProperties: false
+                        - type: object
+                          properties:
+                            integrationId:
+                              type: string
+                            integrationName:
+                              type: string
+                              enum:
+                              - Upstash for Redis
+                              - Upstash Search
+                              - Neon
+                              - Supabase
+                              - Amazon Aurora DSQL
+                              - Amazon Aurora PostgreSQL
+                              - Amazon DynamoDB
+                              - firebase
+                              - Groq
+                              - Grok
+                              - fal
+                              - Deep Infra
+                              - Stripe
+                              - Clerk
+                              - Convex
+                              - Blob
+                              - Edge Config
+                              - Vercel AI Gateway
+                              - Snowflake
+                          required:
+                          - integrationId
+                          - integrationName
+                          additionalProperties: false
+                    createdV0Project:
+                      anyOf:
+                      - type: object
+                        properties:
+                          projectId:
+                            type: string
+                          name:
+                            type: string
+                          settings:
+                            type: object
+                            properties:
+                              color:
+                                type:
+                                - string
+                                - 'null'
+                              icon:
+                                type:
+                                - string
+                                - 'null'
+                            required:
+                            - color
+                            - icon
+                            additionalProperties: false
+                          vercelProjectId:
+                            type: string
+                          isCreator:
+                            type: boolean
+                        required:
+                        - projectId
+                        - name
+                        - settings
+                        - vercelProjectId
+                        - isCreator
+                        additionalProperties: false
+                      - type: 'null'
+                    createdVercelProjectId:
+                      type:
+                      - string
+                      - 'null'
+                  required:
+                  - status
+                  - disabledAutoPrompt
+                  - setBannerDismissedResult
+                  - ranActions
+                  - setEnvironmentVariables
+                  - connectedIntegrations
+                  - createdV0Project
+                  - createdVercelProjectId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: error
+                    message:
+                      type: string
+                    forbidden:
+                      type: boolean
+                  required:
+                  - status
+                  - message
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    get:
+      summary: Compute Wizard
+      description: Compute and retrieve the latest wizard data for a specific block.
+      operationId: integrations.wizard.find
+      tags:
+      - integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: success
+                    data:
+                      type: object
+                      properties:
+                        environmentVariables:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                              keyCreationUrl:
+                                type: string
+                                format: uri
+                            required:
+                            - key
+                            additionalProperties: false
+                        integrations:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              isConnected:
+                                type: boolean
+                              name:
+                                type: string
+                                enum:
+                                - Upstash for Redis
+                                - Upstash Search
+                                - Neon
+                                - Supabase
+                                - Amazon Aurora DSQL
+                                - Amazon Aurora PostgreSQL
+                                - Amazon DynamoDB
+                                - firebase
+                                - Groq
+                                - Grok
+                                - fal
+                                - Deep Infra
+                                - Stripe
+                                - Clerk
+                                - Convex
+                                - Blob
+                                - Edge Config
+                                - Vercel AI Gateway
+                                - Snowflake
+                              pendingRedirect:
+                                type: object
+                                properties:
+                                  url:
+                                    type: string
+                                    format: uri
+                                  expiresAt:
+                                    type: number
+                                required:
+                                - url
+                                - expiresAt
+                                additionalProperties: false
+                              lightIconUrl:
+                                type: string
+                              darkIconUrl:
+                                type: string
+                              description:
+                                type: string
+                              connectedInstanceName:
+                                type:
+                                - string
+                                - 'null'
+                              category:
+                                type: string
+                              isBeta:
+                                type: boolean
+                              slug:
+                                type: string
+                              tooltip:
+                                type:
+                                - string
+                                - 'null'
+                              resourceId:
+                                type:
+                                - string
+                                - 'null'
+                              existingInstances:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    isConnected:
+                                      type: boolean
+                                    name:
+                                      type: string
+                                    id:
+                                      type: string
+                                    externalResourceId:
+                                      type:
+                                      - string
+                                      - 'null'
+                                    manageUrl:
+                                      anyOf:
+                                      - type: string
+                                        format: uri
+                                      - type: 'null'
+                                    targets:
+                                      type: array
+                                      items:
+                                        type: string
+                                        enum:
+                                        - production
+                                        - preview
+                                        - development
+                                    connectedTargets:
+                                      type: array
+                                      items:
+                                        type: string
+                                        enum:
+                                        - production
+                                        - preview
+                                        - development
+                                  required:
+                                  - isConnected
+                                  - name
+                                  - id
+                                  - externalResourceId
+                                  - manageUrl
+                                  additionalProperties: false
+                              manageUrls:
+                                anyOf:
+                                - type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      title:
+                                        type: string
+                                      url:
+                                        type: string
+                                    required:
+                                    - title
+                                    - url
+                                    additionalProperties: false
+                                - type: 'null'
+                              claimFlow:
+                                anyOf:
+                                - type: object
+                                  properties:
+                                    url:
+                                      type: string
+                                      format: uri
+                                    learnMoreUrl:
+                                      type: string
+                                    description:
+                                      type: string
+                                    integrationConfigurationId:
+                                      type: string
+                                    resourceId:
+                                      type: string
+                                  required:
+                                  - url
+                                  - learnMoreUrl
+                                  - description
+                                  - integrationConfigurationId
+                                  - resourceId
+                                  additionalProperties: false
+                                - type: 'null'
+                              supportsMcp:
+                                type: boolean
+                              supportsImport:
+                                type: boolean
+                              rbac:
+                                type: object
+                                properties:
+                                  create:
+                                    type: boolean
+                                  update:
+                                    type: boolean
+                                required:
+                                - create
+                                - update
+                                additionalProperties: false
+                              mcpPermission:
+                                anyOf:
+                                - type: object
+                                  properties:
+                                    currentPermission:
+                                      type: string
+                                      enum:
+                                      - disabled
+                                      - manual
+                                      - auto
+                                  required:
+                                  - currentPermission
+                                  additionalProperties: false
+                                - type: 'null'
+                              providerResourceDashboardUrl:
+                                type:
+                                - string
+                                - 'null'
+                              metadata:
+                                type: object
+                                properties:
+                                  supabase:
+                                    type: object
+                                    properties:
+                                      status:
+                                        type: string
+                                        enum:
+                                        - paused
+                                        - active
+                                      supabaseProjectUrl:
+                                        type: string
+                                        format: uri
+                                    required:
+                                    - status
+                                    - supabaseProjectUrl
+                                    additionalProperties: false
+                                additionalProperties: false
+                              policies:
+                                type: object
+                                properties:
+                                  eulaUrl:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  privacyPolicyUrl:
+                                    type:
+                                    - string
+                                    - 'null'
+                                  vercelIntegrationMarketplaceEuaUrl:
+                                    type: string
+                                required:
+                                - eulaUrl
+                                - privacyPolicyUrl
+                                - vercelIntegrationMarketplaceEuaUrl
+                                additionalProperties: false
+                            required:
+                            - id
+                            - isConnected
+                            - name
+                            - lightIconUrl
+                            - darkIconUrl
+                            - description
+                            - connectedInstanceName
+                            - category
+                            - isBeta
+                            - slug
+                            - tooltip
+                            - resourceId
+                            - existingInstances
+                            - manageUrls
+                            - claimFlow
+                            - supportsMcp
+                            - supportsImport
+                            - rbac
+                            - mcpPermission
+                            - providerResourceDashboardUrl
+                            - metadata
+                            additionalProperties: false
+                        scripts:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              fileName:
+                                type: string
+                            required:
+                            - fileName
+                            additionalProperties: false
+                        actions:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              action:
+                                type: string
+                                enum:
+                                - supabase-chat-url
+                              title:
+                                type: string
+                              info:
+                                type: string
+                            required:
+                            - action
+                            - title
+                            additionalProperties: false
+                        canShowWizard:
+                          type: boolean
+                        fingerprint:
+                          type:
+                          - string
+                          - 'null'
+                        shouldPrompt:
+                          type: boolean
+                        bannerDismissed:
+                          type: boolean
+                      required:
+                      - environmentVariables
+                      - integrations
+                      - scripts
+                      - actions
+                      - canShowWizard
+                      - fingerprint
+                      - shouldPrompt
+                      - bannerDismissed
+                      additionalProperties: false
+                  required:
+                  - status
+                  - data
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: error
+                    message:
+                      type: string
+                    forbidden:
+                      type: boolean
+                  required:
+                  - status
+                  - message
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: versionId
+        in: query
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the version to compute the wizard data for.
+        description: The unique identifier of the version to compute the wizard data for.
+      security:
+      - apiKey: []
+  /integrations/project:
+    post:
+      summary: Connect Integrations For Project
+      description: Connect integrations for a specific project.
+      operationId: integrations.project.create
+      tags:
+      - integrations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - type: object
+                properties:
+                  connectIntegrations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        integrationId:
+                          type: string
+                        name:
+                          type: string
+                          enum:
+                          - Upstash for Redis
+                          - Upstash Search
+                          - Neon
+                          - Supabase
+                          - Amazon Aurora DSQL
+                          - Amazon Aurora PostgreSQL
+                          - Amazon DynamoDB
+                          - firebase
+                          - Groq
+                          - Grok
+                          - fal
+                          - Deep Infra
+                          - Stripe
+                          - Clerk
+                          - Convex
+                          - Blob
+                          - Edge Config
+                          - Vercel AI Gateway
+                          - Snowflake
+                        existingInstanceId:
+                          type: string
+                        importExisting:
+                          type: boolean
+                        acceptedLinks:
+                          type: object
+                          properties:
+                            eulaLink:
+                              type: boolean
+                            privacyLink:
+                              type: boolean
+                          required:
+                          - eulaLink
+                          - privacyLink
+                          additionalProperties: false
+                        useMarketplaceFlow:
+                          type: boolean
+                        targets:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - production
+                            - preview
+                            - development
+                        allowEnvOverride:
+                          type: boolean
+                        access:
+                          type: string
+                          enum:
+                          - public
+                          - private
+                        region:
+                          type: string
+                      required:
+                      - integrationId
+                      - name
+                      additionalProperties: false
+                  setEnvironmentVariables:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          minLength: 1
+                        value:
+                          type: string
+                          minLength: 1
+                          maxLength: 65536
+                        targets:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - production
+                            - preview
+                            - development
+                      required:
+                      - key
+                      - value
+                      additionalProperties: false
+                  updateEnvironmentVariables:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        key:
+                          type: string
+                          minLength: 1
+                        value:
+                          type: string
+                          minLength: 1
+                          maxLength: 65536
+                        targets:
+                          type: array
+                          items:
+                            type: string
+                            enum:
+                            - production
+                            - preview
+                            - development
+                        comment:
+                          type: string
+                      required:
+                      - id
+                      additionalProperties: false
+                  deleteEnvironmentVariableIds:
+                    type: array
+                    items:
+                      type: string
+                additionalProperties: false
+              - anyOf:
+                - type: object
+                  properties:
+                    chatId:
+                      type: string
+                    v0ProjectId: {}
+                    vercelProjectId:
+                      type: string
+                  required:
+                  - chatId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    v0ProjectId:
+                      type: string
+                    chatId: {}
+                    vercelProjectId:
+                      type: string
+                  required:
+                  - v0ProjectId
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    vercelProjectId:
+                      type: string
+                    chatId: {}
+                    v0ProjectId: {}
+                  required:
+                  - vercelProjectId
+                  additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    createdV0Project:
+                      anyOf:
+                      - type: object
+                        properties:
+                          projectId:
+                            type: string
+                          name:
+                            type: string
+                          settings:
+                            type: object
+                            properties:
+                              color:
+                                type:
+                                - string
+                                - 'null'
+                              icon:
+                                type:
+                                - string
+                                - 'null'
+                            required:
+                            - color
+                            - icon
+                            additionalProperties: false
+                          vercelProjectId:
+                            type: string
+                          isCreator:
+                            type: boolean
+                        required:
+                        - projectId
+                        - name
+                        - settings
+                        - vercelProjectId
+                        - isCreator
+                        additionalProperties: false
+                      - type: 'null'
+                    createdVercelProjectId:
+                      type:
+                      - string
+                      - 'null'
+                    connectedIntegrations:
+                      type: array
+                      items:
+                        allOf:
+                        - anyOf:
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: success
+                              redirectUrl:
+                                type: string
+                                format: uri
+                              acceptPolicies:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                  description:
+                                    type: string
+                                  addendumLink:
+                                    type: object
+                                    properties:
+                                      url:
+                                        type: string
+                                      text:
+                                        type: string
+                                    required:
+                                    - url
+                                    - text
+                                    additionalProperties: false
+                                  eulaLink:
+                                    anyOf:
+                                    - type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        text:
+                                          type: string
+                                      required:
+                                      - url
+                                      - text
+                                      additionalProperties: false
+                                    - type: 'null'
+                                  privacyLink:
+                                    anyOf:
+                                    - type: object
+                                      properties:
+                                        url:
+                                          type: string
+                                        text:
+                                          type: string
+                                      required:
+                                      - url
+                                      - text
+                                      additionalProperties: false
+                                    - type: 'null'
+                                  footerMD:
+                                    type: string
+                                  actionButtonText:
+                                    type: string
+                                required:
+                                - title
+                                - description
+                                - addendumLink
+                                - eulaLink
+                                - privacyLink
+                                - footerMD
+                                - actionButtonText
+                                additionalProperties: false
+                              isPending:
+                                type: boolean
+                            required:
+                            - status
+                            - isPending
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              status:
+                                type: string
+                                const: error
+                              message:
+                                type: string
+                            required:
+                            - status
+                            - message
+                            additionalProperties: false
+                        - type: object
+                          properties:
+                            integrationId:
+                              type: string
+                            integrationName:
+                              type: string
+                              enum:
+                              - Upstash for Redis
+                              - Upstash Search
+                              - Neon
+                              - Supabase
+                              - Amazon Aurora DSQL
+                              - Amazon Aurora PostgreSQL
+                              - Amazon DynamoDB
+                              - firebase
+                              - Groq
+                              - Grok
+                              - fal
+                              - Deep Infra
+                              - Stripe
+                              - Clerk
+                              - Convex
+                              - Blob
+                              - Edge Config
+                              - Vercel AI Gateway
+                              - Snowflake
+                          required:
+                          - integrationId
+                          - integrationName
+                          additionalProperties: false
+                    setEnvironmentVariables:
+                      allOf:
+                      - anyOf:
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: success
+                          required:
+                          - status
+                          additionalProperties: false
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: error
+                            message:
+                              type: string
+                          required:
+                          - status
+                          - message
+                          additionalProperties: false
+                      - type: object
+                        properties:
+                          keys:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - keys
+                        additionalProperties: false
+                    updatedEnvironmentVariables:
+                      allOf:
+                      - anyOf:
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: success
+                          required:
+                          - status
+                          additionalProperties: false
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: error
+                            message:
+                              type: string
+                          required:
+                          - status
+                          - message
+                          additionalProperties: false
+                      - type: object
+                        properties:
+                          ids:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - ids
+                        additionalProperties: false
+                    deletedEnvironmentVariables:
+                      allOf:
+                      - anyOf:
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: success
+                          required:
+                          - status
+                          additionalProperties: false
+                        - type: object
+                          properties:
+                            status:
+                              type: string
+                              const: error
+                            message:
+                              type: string
+                          required:
+                          - status
+                          - message
+                          additionalProperties: false
+                      - type: object
+                        properties:
+                          ids:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - ids
+                        additionalProperties: false
+                    status:
+                      type: string
+                      const: success
+                  required:
+                  - createdV0Project
+                  - createdVercelProjectId
+                  - connectedIntegrations
+                  - setEnvironmentVariables
+                  - updatedEnvironmentVariables
+                  - deletedEnvironmentVariables
+                  - status
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: error
+                    message:
+                      type: string
+                    forbidden:
+                      type: boolean
+                  required:
+                  - status
+                  - message
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    get:
+      summary: Integrations Data For Project
+      description: Compute and retrieve the latest integrations data for a specific v0 Project.
+      operationId: integrations.project.find
+      tags:
+      - integrations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: success
+                    data:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          isConnected:
+                            type: boolean
+                          name:
+                            type: string
+                            enum:
+                            - Upstash for Redis
+                            - Upstash Search
+                            - Neon
+                            - Supabase
+                            - Amazon Aurora DSQL
+                            - Amazon Aurora PostgreSQL
+                            - Amazon DynamoDB
+                            - firebase
+                            - Groq
+                            - Grok
+                            - fal
+                            - Deep Infra
+                            - Stripe
+                            - Clerk
+                            - Convex
+                            - Blob
+                            - Edge Config
+                            - Vercel AI Gateway
+                            - Snowflake
+                          pendingRedirect:
+                            type: object
+                            properties:
+                              url:
+                                type: string
+                                format: uri
+                              expiresAt:
+                                type: number
+                            required:
+                            - url
+                            - expiresAt
+                            additionalProperties: false
+                          lightIconUrl:
+                            type: string
+                          darkIconUrl:
+                            type: string
+                          description:
+                            type: string
+                          connectedInstanceName:
+                            type:
+                            - string
+                            - 'null'
+                          category:
+                            type: string
+                          isBeta:
+                            type: boolean
+                          slug:
+                            type: string
+                          tooltip:
+                            type:
+                            - string
+                            - 'null'
+                          resourceId:
+                            type:
+                            - string
+                            - 'null'
+                          existingInstances:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                isConnected:
+                                  type: boolean
+                                name:
+                                  type: string
+                                id:
+                                  type: string
+                                externalResourceId:
+                                  type:
+                                  - string
+                                  - 'null'
+                                manageUrl:
+                                  anyOf:
+                                  - type: string
+                                    format: uri
+                                  - type: 'null'
+                                targets:
+                                  type: array
+                                  items:
+                                    type: string
+                                    enum:
+                                    - production
+                                    - preview
+                                    - development
+                                connectedTargets:
+                                  type: array
+                                  items:
+                                    type: string
+                                    enum:
+                                    - production
+                                    - preview
+                                    - development
+                              required:
+                              - isConnected
+                              - name
+                              - id
+                              - externalResourceId
+                              - manageUrl
+                              additionalProperties: false
+                          manageUrls:
+                            anyOf:
+                            - type: array
+                              items:
+                                type: object
+                                properties:
+                                  title:
+                                    type: string
+                                  url:
+                                    type: string
+                                required:
+                                - title
+                                - url
+                                additionalProperties: false
+                            - type: 'null'
+                          claimFlow:
+                            anyOf:
+                            - type: object
+                              properties:
+                                url:
+                                  type: string
+                                  format: uri
+                                learnMoreUrl:
+                                  type: string
+                                description:
+                                  type: string
+                                integrationConfigurationId:
+                                  type: string
+                                resourceId:
+                                  type: string
+                              required:
+                              - url
+                              - learnMoreUrl
+                              - description
+                              - integrationConfigurationId
+                              - resourceId
+                              additionalProperties: false
+                            - type: 'null'
+                          supportsMcp:
+                            type: boolean
+                          supportsImport:
+                            type: boolean
+                          rbac:
+                            type: object
+                            properties:
+                              create:
+                                type: boolean
+                              update:
+                                type: boolean
+                            required:
+                            - create
+                            - update
+                            additionalProperties: false
+                          mcpPermission:
+                            anyOf:
+                            - type: object
+                              properties:
+                                currentPermission:
+                                  type: string
+                                  enum:
+                                  - disabled
+                                  - manual
+                                  - auto
+                              required:
+                              - currentPermission
+                              additionalProperties: false
+                            - type: 'null'
+                          providerResourceDashboardUrl:
+                            type:
+                            - string
+                            - 'null'
+                          metadata:
+                            type: object
+                            properties:
+                              supabase:
+                                type: object
+                                properties:
+                                  status:
+                                    type: string
+                                    enum:
+                                    - paused
+                                    - active
+                                  supabaseProjectUrl:
+                                    type: string
+                                    format: uri
+                                required:
+                                - status
+                                - supabaseProjectUrl
+                                additionalProperties: false
+                            additionalProperties: false
+                          policies:
+                            type: object
+                            properties:
+                              eulaUrl:
+                                type:
+                                - string
+                                - 'null'
+                              privacyPolicyUrl:
+                                type:
+                                - string
+                                - 'null'
+                              vercelIntegrationMarketplaceEuaUrl:
+                                type: string
+                            required:
+                            - eulaUrl
+                            - privacyPolicyUrl
+                            - vercelIntegrationMarketplaceEuaUrl
+                            additionalProperties: false
+                        required:
+                        - id
+                        - isConnected
+                        - name
+                        - lightIconUrl
+                        - darkIconUrl
+                        - description
+                        - connectedInstanceName
+                        - category
+                        - isBeta
+                        - slug
+                        - tooltip
+                        - resourceId
+                        - existingInstances
+                        - manageUrls
+                        - claimFlow
+                        - supportsMcp
+                        - supportsImport
+                        - rbac
+                        - mcpPermission
+                        - providerResourceDashboardUrl
+                        - metadata
+                        additionalProperties: false
+                  required:
+                  - status
+                  - data
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      type: string
+                      const: error
+                    message:
+                      type: string
+                    forbidden:
+                      type: boolean
+                  required:
+                  - status
+                  - message
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: chatId
+        in: query
+        required: false
+        schema:
+          description: The chat ID. If undefined, the v0ProjectId must be provided.
+          type: string
+        description: The chat ID. If undefined, the v0ProjectId must be provided.
+      - name: v0ProjectId
+        in: query
+        required: false
+        schema:
+          description: The v0 Project ID. If undefined, the chatId must be provided.
+          type: string
+        description: The v0 Project ID. If undefined, the chatId must be provided.
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    VercelProjectDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the linked Vercel project.
+        object:
+          type: string
+          const: vercel_project
+          description: Fixed value identifying this object as a Vercel project.
+        name:
+          type: string
+          description: The name of the Vercel project.
+      required:
+      - id
+      - object
+      - name
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    IntegrationListSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: list
+          description: Fixed value identifying this as a list response.
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The ID of the integration.
+              object:
+                type: string
+                const: integration
+                description: The object type.
+              slug:
+                type: string
+                description: The slug of the integration.
+              name:
+                type: string
+                description: The name of the integration.
+              description:
+                type: string
+                description: A short description of the integration.
+              iconUrl:
+                type: string
+                description: URL to the integration icon.
+            required:
+            - id
+            - object
+            - slug
+            - name
+            - description
+            - iconUrl
+            additionalProperties: false
+            description: Detailed information about an integration.
+          description: Array of integration details.
+      required:
+      - object
+      - data
+      additionalProperties: false
+      description: List of available integrations.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    VercelProjectSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the linked Vercel project.
+        object:
+          type: string
+          const: vercel_project
+          description: Fixed value identifying this object as a Vercel project.
+        name:
+          type: string
+          description: The name of the Vercel project.
+      required:
+      - id
+      - object
+      - name
+      additionalProperties: false
+      description: Basic metadata about a Vercel project connected to a v0 project.
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

@@ -1,0 +1,823 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent deployments API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: deployments
+paths:
+  /deployments:
+    get:
+      summary: Find Deployments
+      description: Find deployments by project and chat IDs. This will return a list of deployments for the given project and chat IDs.
+      operationId: deployments.find
+      tags:
+      - deployments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A unique identifier for the deployment.
+                        object:
+                          type: string
+                          const: deployment
+                          description: Fixed value identifying this object as a deployment.
+                        inspectorUrl:
+                          type: string
+                          description: URL to the deployment inspector.
+                        chatId:
+                          type: string
+                          description: The ID of the chat that this deployment is scoped to.
+                        projectId:
+                          description: The ID of the project that this deployment is scoped to.
+                          type: string
+                        versionId:
+                          type: string
+                          description: The ID of the version that this deployment is scoped to.
+                        apiUrl:
+                          type: string
+                          format: uri
+                          description: The API endpoint URL for accessing this deployment programmatically.
+                        webUrl:
+                          type: string
+                          format: uri
+                          description: The web URL where the deployment can be viewed or managed.
+                      required:
+                      - id
+                      - object
+                      - inspectorUrl
+                      - chatId
+                      - versionId
+                      - apiUrl
+                      - webUrl
+                      additionalProperties: false
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: query
+        required: false
+        schema:
+          description: The ID of the project to find deployments for
+          type: string
+        description: The ID of the project to find deployments for
+      - name: chatId
+        in: query
+        required: true
+        schema:
+          type: string
+          description: The ID of the chat to find deployments for
+        description: The ID of the chat to find deployments for
+      - name: versionId
+        in: query
+        required: true
+        schema:
+          type: string
+          description: The ID of the version to find deployments for
+        description: The ID of the version to find deployments for
+      security:
+      - apiKey: []
+    post:
+      summary: Create Deployment
+      description: Create a new deployment for a specific chat and version. This will trigger a deployment to Vercel.
+      operationId: deployments.create
+      tags:
+      - deployments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                chatId:
+                  type: string
+                versionId:
+                  type: string
+              required:
+              - chatId
+              - versionId
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the deployment.
+                  object:
+                    type: string
+                    const: deployment
+                    description: Fixed value identifying this object as a deployment.
+                  inspectorUrl:
+                    type: string
+                    description: URL to the deployment inspector.
+                  chatId:
+                    type: string
+                    description: The ID of the chat that this deployment is scoped to.
+                  projectId:
+                    description: The ID of the project that this deployment is scoped to.
+                    type: string
+                  versionId:
+                    type: string
+                    description: The ID of the version that this deployment is scoped to.
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this deployment programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the deployment can be viewed or managed.
+                required:
+                - id
+                - object
+                - inspectorUrl
+                - chatId
+                - versionId
+                - apiUrl
+                - webUrl
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /deployments/{deploymentId}:
+    get:
+      summary: Get Deployment
+      description: Get a deployment by ID. This will return the details of the deployment, including the inspector URL, chat ID, project ID, version ID, API URL, and web URL.
+      operationId: deployments.getById
+      tags:
+      - deployments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the deployment.
+                  object:
+                    type: string
+                    const: deployment
+                    description: Fixed value identifying this object as a deployment.
+                  inspectorUrl:
+                    type: string
+                    description: URL to the deployment inspector.
+                  chatId:
+                    type: string
+                    description: The ID of the chat that this deployment is scoped to.
+                  projectId:
+                    description: The ID of the project that this deployment is scoped to.
+                    type: string
+                  versionId:
+                    type: string
+                    description: The ID of the version that this deployment is scoped to.
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this deployment programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the deployment can be viewed or managed.
+                required:
+                - id
+                - object
+                - inspectorUrl
+                - chatId
+                - versionId
+                - apiUrl
+                - webUrl
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter "deploymentId"
+      security:
+      - apiKey: []
+    delete:
+      summary: Delete Deployment
+      description: Delete a deployment by ID. This will delete the deployment from Vercel.
+      operationId: deployments.delete
+      tags:
+      - deployments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  object:
+                    type: string
+                    const: deployment
+                  deleted:
+                    type: boolean
+                    const: true
+                required:
+                - id
+                - object
+                - deleted
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter "deploymentId"
+      security:
+      - apiKey: []
+  /deployments/{deploymentId}/logs:
+    get:
+      summary: Find Deployment Logs
+      description: Retrieves logs for a specific deployment. Supports filtering by timestamp to fetch only recent logs.
+      operationId: deployments.findLogs
+      tags:
+      - deployments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        createdAt:
+                          type: string
+                          description: Log creation timestamp.
+                        deploymentId:
+                          type: string
+                          description: Deployment ID.
+                        id:
+                          type: string
+                          description: Log entry ID.
+                        text:
+                          type: string
+                          description: Log message content.
+                        type:
+                          type: string
+                          enum:
+                          - stdout
+                          - stderr
+                          description: Output stream type.
+                        level:
+                          default: info
+                          description: Log severity level.
+                          type: string
+                          enum:
+                          - error
+                          - warning
+                          - info
+                        object:
+                          type: string
+                          const: deployment_log
+                          description: Object type identifier.
+                      required:
+                      - createdAt
+                      - deploymentId
+                      - id
+                      - text
+                      - type
+                      - object
+                      additionalProperties: false
+                    description: Array of log entries.
+                  nextSince:
+                    description: Timestamp for pagination.
+                    type: number
+                  object:
+                    type: string
+                    const: list
+                    description: Object type identifier.
+                required:
+                - logs
+                - object
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the deployment to retrieve logs for. Provided as a path parameter.
+      - name: since
+        in: query
+        required: false
+        schema:
+          description: A UNIX timestamp (in seconds) used to filter logs. Returns only log entries generated after the specified time.
+          type: number
+        description: A UNIX timestamp (in seconds) used to filter logs. Returns only log entries generated after the specified time.
+      security:
+      - apiKey: []
+  /deployments/{deploymentId}/errors:
+    get:
+      summary: Find Deployment Errors
+      description: Retrieves a list of errors that occurred during a specific deployment. Useful for diagnosing and debugging deployment issues.
+      operationId: deployments.findErrors
+      tags:
+      - deployments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fullErrorText:
+                    type: string
+                  errorType:
+                    type: string
+                  formattedError:
+                    type: string
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: deploymentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the deployment to inspect for errors. Provided as a path parameter.
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

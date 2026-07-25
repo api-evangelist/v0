@@ -1,0 +1,1459 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent git API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: git
+paths:
+  /git/{org}/repos:
+    get:
+      operationId: git.findRepos
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: The name of the repository.
+                          updatedAt:
+                            type: string
+                            description: ISO timestamp of last update.
+                          url:
+                            type: string
+                            description: The URL of the repository.
+                        required:
+                        - name
+                        - updatedAt
+                        - url
+                        additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The namespace ID (organization or user).
+      - name: search
+        in: query
+        required: false
+        schema:
+          description: Search query to filter repositories.
+          type: string
+        description: Search query to filter repositories.
+      security:
+      - apiKey: []
+  /git/{org}/{repo}:
+    get:
+      operationId: git.{org}.{repo}.find
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: object
+                      properties:
+                        hasWritePermission:
+                          type: boolean
+                          description: Whether the user has write permission to the repository.
+                        defaultBranch:
+                          type: string
+                          description: The default branch of the repository.
+                        repoId:
+                          type: number
+                          description: The GitHub repository ID.
+                        size:
+                          type: number
+                          description: The size of the repository in KB.
+                        language:
+                          description: The primary language of the repository.
+                          type:
+                          - string
+                          - 'null'
+                        description:
+                          description: The repository description.
+                          type:
+                          - string
+                          - 'null'
+                        topics:
+                          type: array
+                          items:
+                            type: string
+                          description: Repository topics/tags.
+                      required:
+                      - hasWritePermission
+                      - defaultBranch
+                      - repoId
+                      - size
+                      - language
+                      - description
+                      - topics
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The namespace (organization or user).
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The repository name.
+      security:
+      - apiKey: []
+  /git/{org}/{repo}/branches:
+    get:
+      operationId: git.findBranches
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: array
+                      items:
+                        type: string
+                      description: List of branch names in the repository.
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The namespace (organization or user).
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The repository name.
+      - name: search
+        in: query
+        required: false
+        schema:
+          description: Search query to filter branches.
+          type: string
+        description: Search query to filter branches.
+      security:
+      - apiKey: []
+  /git/{org}/{repo}/projects:
+    get:
+      operationId: git.findProjects
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            description: The name from package.json.
+                            type: string
+                          framework:
+                            type: string
+                            enum:
+                            - next
+                            - nuxt
+                            - vite
+                            - svelte
+                            - astro
+                            - services
+                            - other
+                            description: The detected framework.
+                          path:
+                            type: string
+                            description: The path to the project directory.
+                          size:
+                            description: The size of the package.json in bytes.
+                            type: number
+                          dependencies:
+                            description: List of dependencies.
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - framework
+                        - path
+                        additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The namespace (organization or user).
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The repository name.
+      - name: branch
+        in: query
+        required: false
+        schema:
+          description: The branch to detect projects from.
+          type: string
+        description: The branch to detect projects from.
+      security:
+      - apiKey: []
+  /git/projects:
+    get:
+      operationId: git.projects.find
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: The Vercel project ID.
+                          name:
+                            type: string
+                            description: The name of the Vercel project.
+                          accountId:
+                            type: string
+                            description: The account ID that owns the project.
+                          createdAt:
+                            type: number
+                            description: Timestamp when the project was created.
+                          updatedAt:
+                            type: number
+                            description: Timestamp when the project was last updated.
+                          framework:
+                            description: The framework detected for the project.
+                            type:
+                            - string
+                            - 'null'
+                          latestDeployments:
+                            description: Recent deployments for the project.
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  description: The deployment ID.
+                                createdAt:
+                                  type: number
+                                  description: Timestamp when the deployment was created.
+                                url:
+                                  type: string
+                                  description: The deployment URL.
+                                alias:
+                                  type: array
+                                  items:
+                                    type: string
+                                  description: Aliases for this deployment.
+                              required:
+                              - id
+                              - createdAt
+                              - url
+                              - alias
+                              additionalProperties: false
+                        required:
+                        - id
+                        - name
+                        - accountId
+                        - createdAt
+                        - updatedAt
+                        additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: namespace
+        in: query
+        required: true
+        schema:
+          type: string
+          description: The namespace (organization or user).
+        description: The namespace (organization or user).
+      - name: repo
+        in: query
+        required: true
+        schema:
+          type: string
+          description: The repository name.
+        description: The repository name.
+      security:
+      - apiKey: []
+  /git/namespaces:
+    get:
+      operationId: git.namespaces.find
+      tags:
+      - git
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: object
+                      properties:
+                        userNamespace:
+                          description: User's personal GitHub namespace.
+                          type: object
+                          properties:
+                            id:
+                              description: The namespace ID.
+                              type:
+                              - string
+                              - number
+                            installationId:
+                              description: GitHub App installation ID.
+                              type: number
+                            isAccessRestricted:
+                              description: Whether access is restricted.
+                              type: boolean
+                            name:
+                              description: Display name of the namespace.
+                              type: string
+                            ownerType:
+                              type: string
+                              enum:
+                              - team
+                              - user
+                              description: Whether this is a team or user namespace.
+                            provider:
+                              type: string
+                              description: Git provider (e.g., "github").
+                            requireReauth:
+                              description: Whether reauthentication is required.
+                              type: boolean
+                            slug:
+                              type: string
+                              description: The namespace slug/username.
+                          required:
+                          - id
+                          - ownerType
+                          - provider
+                          - slug
+                          additionalProperties: false
+                        orgNamespaces:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                description: The namespace ID.
+                                type:
+                                - string
+                                - number
+                              installationId:
+                                description: GitHub App installation ID.
+                                type: number
+                              isAccessRestricted:
+                                description: Whether access is restricted.
+                                type: boolean
+                              name:
+                                description: Display name of the namespace.
+                                type: string
+                              ownerType:
+                                type: string
+                                enum:
+                                - team
+                                - user
+                                description: Whether this is a team or user namespace.
+                              provider:
+                                type: string
+                                description: Git provider (e.g., "github").
+                              requireReauth:
+                                description: Whether reauthentication is required.
+                                type: boolean
+                              slug:
+                                type: string
+                                description: The namespace slug/username.
+                            required:
+                            - id
+                            - ownerType
+                            - provider
+                            - slug
+                            additionalProperties: false
+                          description: Organization namespaces the user has access to.
+                        verifiedGitHubUser:
+                          description: Verified GitHub user information (only set if user.verified is true).
+                          type: object
+                          properties:
+                            createdAt:
+                              description: Unix timestamp of creation.
+                              type: number
+                            email:
+                              description: User email address.
+                              type:
+                              - string
+                              - 'null'
+                            login:
+                              description: GitHub username.
+                              type: string
+                            name:
+                              description: Display name.
+                              type:
+                              - string
+                              - 'null'
+                            updatedAt:
+                              description: Unix timestamp of last update.
+                              type: number
+                            userId:
+                              description: GitHub user ID.
+                              type: number
+                            verified:
+                              description: Whether the user is verified.
+                              type: boolean
+                          additionalProperties: false
+                        user:
+                          description: GitHub user information.
+                          type: object
+                          properties:
+                            createdAt:
+                              description: Unix timestamp of creation.
+                              type: number
+                            email:
+                              description: User email address.
+                              type:
+                              - string
+                              - 'null'
+                            login:
+                              description: GitHub username.
+                              type: string
+                            name:
+                              description: Display name.
+                              type:
+                              - string
+                              - 'null'
+                            updatedAt:
+                              description: Unix timestamp of last update.
+                              type: number
+                            userId:
+                              description: GitHub user ID.
+                              type: number
+                            verified:
+                              description: Whether the user is verified.
+                              type: boolean
+                          additionalProperties: false
+                      required:
+                      - orgNamespaces
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /git/start-chat:
+    post:
+      operationId: git.startChat.create
+      tags:
+      - git
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namespace:
+                  type: string
+                  description: The namespace (organization or user).
+                repo:
+                  type: string
+                  description: The repository name.
+                baseBranch:
+                  type: string
+                  description: The base branch to start from.
+                rootDirectory:
+                  description: The root directory of the project within the repository.
+                  type: string
+                vercelProjectId:
+                  description: The Vercel project ID to link to.
+                  type: string
+                newProjectName:
+                  description: Name for a new project to create.
+                  type: string
+                source:
+                  type: string
+                  enum:
+                  - url
+                  - search
+                  - duplicate
+                  description: The source of the chat creation request.
+                isE2ETest:
+                  description: Whether this is an e2e test request.
+                  type: boolean
+              required:
+              - namespace
+              - repo
+              - baseBranch
+              - source
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: object
+                      properties:
+                        chatId:
+                          type: string
+                          description: The ID of the newly created chat.
+                        blockId:
+                          type: string
+                          description: The ID of the initial code block.
+                        requiredEnvsAndIntegrations:
+                          type: object
+                          properties:
+                            hasRequirements:
+                              type: boolean
+                              description: Whether the project has required environment variables or integrations.
+                            environmentVariables:
+                              type: array
+                              items:
+                                type: string
+                              description: List of required environment variable names.
+                            integrations:
+                              type: array
+                              items:
+                                type: string
+                              description: List of required integration names.
+                          required:
+                          - hasRequirements
+                          - environmentVariables
+                          - integrations
+                          additionalProperties: false
+                      required:
+                      - chatId
+                      - blockId
+                      - requiredEnvsAndIntegrations
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /git/connect:
+    post:
+      operationId: git.connect.create
+      tags:
+      - git
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatId:
+                  type: string
+                  description: The chat ID to connect the repository to.
+                owner:
+                  type: string
+                  description: The Git namespace slug (organization or username).
+                repoName:
+                  type: string
+                  description: The desired repository name.
+                blockId:
+                  description: Optional block ID to associate with the repository.
+                  type: string
+              required:
+              - chatId
+              - owner
+              - repoName
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: true
+                    value:
+                      type: object
+                      properties:
+                        remoteURL:
+                          type: string
+                          description: The GitHub repository remote URL.
+                        repoName:
+                          type: string
+                          description: The final repository name (may be deduped).
+                        linkedProject:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            name:
+                              type: string
+                            accountId:
+                              type: string
+                            link:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                org:
+                                  type: string
+                                repo:
+                                  type: string
+                                productionBranch:
+                                  type: string
+                              required:
+                              - type
+                              - org
+                              - repo
+                              additionalProperties: false
+                          required:
+                          - id
+                          - name
+                          additionalProperties: false
+                          description: The Vercel project linked to the repository.
+                      required:
+                      - remoteURL
+                      - repoName
+                      - linkedProject
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - value
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    ok:
+                      type: boolean
+                      const: false
+                    error:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        statusCode:
+                          type: number
+                        errorCode:
+                          type: string
+                        existingRepo:
+                          type: object
+                          properties:
+                            org:
+                              type: string
+                            repo:
+                              type: string
+                            remoteURL:
+                              type: string
+                          required:
+                          - org
+                          - repo
+                          - remoteURL
+                          additionalProperties: false
+                      required:
+                      - error
+                      - statusCode
+                      - errorCode
+                      additionalProperties: false
+                  required:
+                  - ok
+                  - error
+                  additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api

@@ -1,0 +1,2374 @@
+openapi: 3.1.0
+info:
+  title: v0 App agent projects API
+  version: '0'
+  description: Full stack vibe coding API
+  termsOfService: https://vercel.com/legal/api-terms
+servers:
+- url: https://api.v0.dev/v1
+tags:
+- name: projects
+paths:
+  /chats/{chatId}/project:
+    get:
+      summary: Get Project by Chat ID
+      description: Retrieves the v0 project associated with a given chat. Useful for determining the context or scope of a chat session.
+      operationId: projects.getByChatId
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the project.
+                  object:
+                    type: string
+                    const: project
+                    description: Fixed value identifying this object as a project.
+                  name:
+                    type: string
+                    description: The name of the project as defined by the user.
+                  privacy:
+                    type: string
+                    enum:
+                    - private
+                    - team
+                    description: The privacy setting for the project - either private or team.
+                  vercelProjectId:
+                    description: Optional ID of the linked Vercel project, if connected.
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp representing when the project was created.
+                  updatedAt:
+                    description: The ISO timestamp of the most recent update, if available.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this project programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the project can be viewed or managed.
+                  description:
+                    description: The description of the project.
+                    type: string
+                  instructions:
+                    description: The instructions for the project.
+                    type: string
+                  chats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A unique identifier for the chat.
+                        object:
+                          type: string
+                          const: chat
+                          description: Fixed value identifying this object as a chat.
+                        shareable:
+                          type: boolean
+                          description: Indicates whether the chat can be shared via public link.
+                        privacy:
+                          type: string
+                          enum:
+                          - public
+                          - private
+                          - team
+                          - team-edit
+                          - unlisted
+                          description: Defines the visibility of the chat—private, team-only, or public.
+                        name:
+                          description: An optional name assigned to the chat by the user.
+                          type: string
+                        title:
+                          type: string
+                          description: Deprecated title field preserved for backward compatibility.
+                          deprecated: true
+                        createdAt:
+                          type: string
+                          format: date-time
+                          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          description: The ISO timestamp representing when the chat was created.
+                        updatedAt:
+                          description: The ISO timestamp of the last update to the chat.
+                          type: string
+                        favorite:
+                          type: boolean
+                          description: Indicates whether the chat is marked as a favorite.
+                        authorId:
+                          type: string
+                          description: The ID of the user who created the chat.
+                        projectId:
+                          description: Optional ID of the v0 project associated with this chat.
+                          type: string
+                        vercelProjectId:
+                          description: Optional ID of the linked Vercel project, if connected.
+                          type: string
+                        webUrl:
+                          type: string
+                          description: Web URL to view this chat in the browser.
+                        apiUrl:
+                          type: string
+                          description: API URL to access this chat via the API.
+                        latestVersion:
+                          description: The most recent generated version of the chat, if available.
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: A unique identifier for the version.
+                            object:
+                              type: string
+                              const: version
+                              description: Fixed value identifying this object as a version.
+                            status:
+                              type: string
+                              enum:
+                              - pending
+                              - completed
+                              - failed
+                              description: The current status of the version generation process.
+                            demoUrl:
+                              description: Optional URL for previewing the generated output.
+                              type: string
+                            screenshotUrl:
+                              type: string
+                              description: URL to retrieve a screenshot of this version.
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                              description: The date and time when the version was created, in ISO 8601 format.
+                            updatedAt:
+                              description: The date and time when the version was last updated, in ISO 8601 format.
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          required:
+                          - id
+                          - object
+                          - status
+                          - createdAt
+                          additionalProperties: false
+                      required:
+                      - id
+                      - object
+                      - shareable
+                      - privacy
+                      - createdAt
+                      - favorite
+                      - authorId
+                      - webUrl
+                      - apiUrl
+                      additionalProperties: false
+                      description: Summary of a chat, including metadata like privacy, author, latest version, and URLs.
+                    description: List of all chats that are associated with this project.
+                required:
+                - id
+                - object
+                - name
+                - privacy
+                - createdAt
+                - apiUrl
+                - webUrl
+                - chats
+                additionalProperties: false
+                description: Full representation of a project, including its associated chats.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: chatId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the chat to retrieve the associated project for.
+      security:
+      - apiKey: []
+  /projects:
+    get:
+      summary: Find Projects
+      description: Returns a list of all v0 projects in your workspace. Useful for browsing or managing projects across different chats or use cases.
+      operationId: projects.find
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectSummary'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+    post:
+      summary: Create Project
+      description: Creates a new v0 project with an optional description, icon, environment variables, and instructions. Projects help organize chats and manage context.
+      operationId: projects.create
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                  description: The name of the project.
+                description:
+                  description: A brief summary of the project’s purpose.
+                  type: string
+                  maxLength: 1000
+                icon:
+                  default: icon-wand-sparkles
+                  description: An icon identifier to visually represent the project.
+                  type: string
+                environmentVariables:
+                  description: A list of key-value pairs used to define runtime variables for the project.
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        maxLength: 255
+                      value:
+                        type: string
+                        maxLength: 1000
+                    required:
+                    - key
+                    - value
+                    additionalProperties: false
+                instructions:
+                  description: Guidance or goals that provide context for the model when working within the project.
+                  type: string
+                  maxLength: 2000
+                vercelProjectId:
+                  description: The ID of an existing Vercel project to link to. If not provided, a new Vercel project will be created.
+                  type: string
+                privacy:
+                  description: The privacy setting for the project. For user accounts, this is always "private". For team/enterprise accounts, this can be either "private" or "team".
+                  type: string
+                  enum:
+                  - private
+                  - team
+              required:
+              - name
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the project.
+                  object:
+                    type: string
+                    const: project
+                    description: Fixed value identifying this object as a project.
+                  name:
+                    type: string
+                    description: The name of the project as defined by the user.
+                  privacy:
+                    type: string
+                    enum:
+                    - private
+                    - team
+                    description: The privacy setting for the project - either private or team.
+                  vercelProjectId:
+                    description: Optional ID of the linked Vercel project, if connected.
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp representing when the project was created.
+                  updatedAt:
+                    description: The ISO timestamp of the most recent update, if available.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this project programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the project can be viewed or managed.
+                  description:
+                    description: The description of the project.
+                    type: string
+                  instructions:
+                    description: The instructions for the project.
+                    type: string
+                  chats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A unique identifier for the chat.
+                        object:
+                          type: string
+                          const: chat
+                          description: Fixed value identifying this object as a chat.
+                        shareable:
+                          type: boolean
+                          description: Indicates whether the chat can be shared via public link.
+                        privacy:
+                          type: string
+                          enum:
+                          - public
+                          - private
+                          - team
+                          - team-edit
+                          - unlisted
+                          description: Defines the visibility of the chat—private, team-only, or public.
+                        name:
+                          description: An optional name assigned to the chat by the user.
+                          type: string
+                        title:
+                          type: string
+                          description: Deprecated title field preserved for backward compatibility.
+                          deprecated: true
+                        createdAt:
+                          type: string
+                          format: date-time
+                          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          description: The ISO timestamp representing when the chat was created.
+                        updatedAt:
+                          description: The ISO timestamp of the last update to the chat.
+                          type: string
+                        favorite:
+                          type: boolean
+                          description: Indicates whether the chat is marked as a favorite.
+                        authorId:
+                          type: string
+                          description: The ID of the user who created the chat.
+                        projectId:
+                          description: Optional ID of the v0 project associated with this chat.
+                          type: string
+                        vercelProjectId:
+                          description: Optional ID of the linked Vercel project, if connected.
+                          type: string
+                        webUrl:
+                          type: string
+                          description: Web URL to view this chat in the browser.
+                        apiUrl:
+                          type: string
+                          description: API URL to access this chat via the API.
+                        latestVersion:
+                          description: The most recent generated version of the chat, if available.
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: A unique identifier for the version.
+                            object:
+                              type: string
+                              const: version
+                              description: Fixed value identifying this object as a version.
+                            status:
+                              type: string
+                              enum:
+                              - pending
+                              - completed
+                              - failed
+                              description: The current status of the version generation process.
+                            demoUrl:
+                              description: Optional URL for previewing the generated output.
+                              type: string
+                            screenshotUrl:
+                              type: string
+                              description: URL to retrieve a screenshot of this version.
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                              description: The date and time when the version was created, in ISO 8601 format.
+                            updatedAt:
+                              description: The date and time when the version was last updated, in ISO 8601 format.
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          required:
+                          - id
+                          - object
+                          - status
+                          - createdAt
+                          additionalProperties: false
+                      required:
+                      - id
+                      - object
+                      - shareable
+                      - privacy
+                      - createdAt
+                      - favorite
+                      - authorId
+                      - webUrl
+                      - apiUrl
+                      additionalProperties: false
+                      description: Summary of a chat, including metadata like privacy, author, latest version, and URLs.
+                    description: List of all chats that are associated with this project.
+                required:
+                - id
+                - object
+                - name
+                - privacy
+                - createdAt
+                - apiUrl
+                - webUrl
+                - chats
+                additionalProperties: false
+                description: Full representation of a project, including its associated chats.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - apiKey: []
+  /projects/{projectId}:
+    get:
+      summary: Get Project by ID
+      description: Retrieves the details of a specific v0 project by its ID.
+      operationId: projects.getById
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the project.
+                  object:
+                    type: string
+                    const: project
+                    description: Fixed value identifying this object as a project.
+                  name:
+                    type: string
+                    description: The name of the project as defined by the user.
+                  privacy:
+                    type: string
+                    enum:
+                    - private
+                    - team
+                    description: The privacy setting for the project - either private or team.
+                  vercelProjectId:
+                    description: Optional ID of the linked Vercel project, if connected.
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp representing when the project was created.
+                  updatedAt:
+                    description: The ISO timestamp of the most recent update, if available.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this project programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the project can be viewed or managed.
+                  description:
+                    description: The description of the project.
+                    type: string
+                  instructions:
+                    description: The instructions for the project.
+                    type: string
+                  chats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A unique identifier for the chat.
+                        object:
+                          type: string
+                          const: chat
+                          description: Fixed value identifying this object as a chat.
+                        shareable:
+                          type: boolean
+                          description: Indicates whether the chat can be shared via public link.
+                        privacy:
+                          type: string
+                          enum:
+                          - public
+                          - private
+                          - team
+                          - team-edit
+                          - unlisted
+                          description: Defines the visibility of the chat—private, team-only, or public.
+                        name:
+                          description: An optional name assigned to the chat by the user.
+                          type: string
+                        title:
+                          type: string
+                          description: Deprecated title field preserved for backward compatibility.
+                          deprecated: true
+                        createdAt:
+                          type: string
+                          format: date-time
+                          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          description: The ISO timestamp representing when the chat was created.
+                        updatedAt:
+                          description: The ISO timestamp of the last update to the chat.
+                          type: string
+                        favorite:
+                          type: boolean
+                          description: Indicates whether the chat is marked as a favorite.
+                        authorId:
+                          type: string
+                          description: The ID of the user who created the chat.
+                        projectId:
+                          description: Optional ID of the v0 project associated with this chat.
+                          type: string
+                        vercelProjectId:
+                          description: Optional ID of the linked Vercel project, if connected.
+                          type: string
+                        webUrl:
+                          type: string
+                          description: Web URL to view this chat in the browser.
+                        apiUrl:
+                          type: string
+                          description: API URL to access this chat via the API.
+                        latestVersion:
+                          description: The most recent generated version of the chat, if available.
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: A unique identifier for the version.
+                            object:
+                              type: string
+                              const: version
+                              description: Fixed value identifying this object as a version.
+                            status:
+                              type: string
+                              enum:
+                              - pending
+                              - completed
+                              - failed
+                              description: The current status of the version generation process.
+                            demoUrl:
+                              description: Optional URL for previewing the generated output.
+                              type: string
+                            screenshotUrl:
+                              type: string
+                              description: URL to retrieve a screenshot of this version.
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                              description: The date and time when the version was created, in ISO 8601 format.
+                            updatedAt:
+                              description: The date and time when the version was last updated, in ISO 8601 format.
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          required:
+                          - id
+                          - object
+                          - status
+                          - createdAt
+                          additionalProperties: false
+                      required:
+                      - id
+                      - object
+                      - shareable
+                      - privacy
+                      - createdAt
+                      - favorite
+                      - authorId
+                      - webUrl
+                      - apiUrl
+                      additionalProperties: false
+                      description: Summary of a chat, including metadata like privacy, author, latest version, and URLs.
+                    description: List of all chats that are associated with this project.
+                required:
+                - id
+                - object
+                - name
+                - privacy
+                - createdAt
+                - apiUrl
+                - webUrl
+                - chats
+                additionalProperties: false
+                description: Full representation of a project, including its associated chats.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project to retrieve.
+      security:
+      - apiKey: []
+    patch:
+      summary: Update Project
+      description: Updates the metadata of an existing project using its `projectId`. Supports changes to the project name and privacy setting.
+      operationId: projects.update
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: A new name to assign to the project. Helps with identification and organization.
+                  type: string
+                description:
+                  description: A new description to assign to the project. Helps with identification and organization.
+                  type: string
+                instructions:
+                  description: Guidance or goals that provide context for the model when working within the project.
+                  type: string
+                privacy:
+                  description: The privacy setting for the project. For user accounts, this must be "private". For team/enterprise accounts, this can be either "private" or "team".
+                  type: string
+                  enum:
+                  - private
+                  - team
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: A unique identifier for the project.
+                  object:
+                    type: string
+                    const: project
+                    description: Fixed value identifying this object as a project.
+                  name:
+                    type: string
+                    description: The name of the project as defined by the user.
+                  privacy:
+                    type: string
+                    enum:
+                    - private
+                    - team
+                    description: The privacy setting for the project - either private or team.
+                  vercelProjectId:
+                    description: Optional ID of the linked Vercel project, if connected.
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    description: The ISO timestamp representing when the project was created.
+                  updatedAt:
+                    description: The ISO timestamp of the most recent update, if available.
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                  apiUrl:
+                    type: string
+                    format: uri
+                    description: The API endpoint URL for accessing this project programmatically.
+                  webUrl:
+                    type: string
+                    format: uri
+                    description: The web URL where the project can be viewed or managed.
+                  description:
+                    description: The description of the project.
+                    type: string
+                  instructions:
+                    description: The instructions for the project.
+                    type: string
+                  chats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: A unique identifier for the chat.
+                        object:
+                          type: string
+                          const: chat
+                          description: Fixed value identifying this object as a chat.
+                        shareable:
+                          type: boolean
+                          description: Indicates whether the chat can be shared via public link.
+                        privacy:
+                          type: string
+                          enum:
+                          - public
+                          - private
+                          - team
+                          - team-edit
+                          - unlisted
+                          description: Defines the visibility of the chat—private, team-only, or public.
+                        name:
+                          description: An optional name assigned to the chat by the user.
+                          type: string
+                        title:
+                          type: string
+                          description: Deprecated title field preserved for backward compatibility.
+                          deprecated: true
+                        createdAt:
+                          type: string
+                          format: date-time
+                          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          description: The ISO timestamp representing when the chat was created.
+                        updatedAt:
+                          description: The ISO timestamp of the last update to the chat.
+                          type: string
+                        favorite:
+                          type: boolean
+                          description: Indicates whether the chat is marked as a favorite.
+                        authorId:
+                          type: string
+                          description: The ID of the user who created the chat.
+                        projectId:
+                          description: Optional ID of the v0 project associated with this chat.
+                          type: string
+                        vercelProjectId:
+                          description: Optional ID of the linked Vercel project, if connected.
+                          type: string
+                        webUrl:
+                          type: string
+                          description: Web URL to view this chat in the browser.
+                        apiUrl:
+                          type: string
+                          description: API URL to access this chat via the API.
+                        latestVersion:
+                          description: The most recent generated version of the chat, if available.
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: A unique identifier for the version.
+                            object:
+                              type: string
+                              const: version
+                              description: Fixed value identifying this object as a version.
+                            status:
+                              type: string
+                              enum:
+                              - pending
+                              - completed
+                              - failed
+                              description: The current status of the version generation process.
+                            demoUrl:
+                              description: Optional URL for previewing the generated output.
+                              type: string
+                            screenshotUrl:
+                              type: string
+                              description: URL to retrieve a screenshot of this version.
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                              description: The date and time when the version was created, in ISO 8601 format.
+                            updatedAt:
+                              description: The date and time when the version was last updated, in ISO 8601 format.
+                              type: string
+                              format: date-time
+                              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                          required:
+                          - id
+                          - object
+                          - status
+                          - createdAt
+                          additionalProperties: false
+                      required:
+                      - id
+                      - object
+                      - shareable
+                      - privacy
+                      - createdAt
+                      - favorite
+                      - authorId
+                      - webUrl
+                      - apiUrl
+                      additionalProperties: false
+                      description: Summary of a chat, including metadata like privacy, author, latest version, and URLs.
+                    description: List of all chats that are associated with this project.
+                required:
+                - id
+                - object
+                - name
+                - privacy
+                - createdAt
+                - apiUrl
+                - webUrl
+                - chats
+                additionalProperties: false
+                description: Full representation of a project, including its associated chats.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project to update. Provided as a path parameter.
+      security:
+      - apiKey: []
+    delete:
+      summary: Delete Project
+      description: Deletes a specific project based on the provided projectId. This operation marks the project as deleted and is irreversible.
+      operationId: projects.delete
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the deleted project.
+                  object:
+                    type: string
+                    const: project
+                    description: Fixed value identifying this object as a project.
+                  deleted:
+                    type: boolean
+                    const: true
+                    description: Confirmation that the project has been deleted.
+                required:
+                - id
+                - object
+                - deleted
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project to delete. This must be passed as a path parameter in the URL.
+      - name: deleteAllChats
+        in: query
+        required: false
+        schema:
+          default: 'false'
+          description: If true, deletes all the chats associated with the given project ID. Deleting is permanent. Defaults to false.
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: If true, deletes all the chats associated with the given project ID. Deleting is permanent. Defaults to false.
+      security:
+      - apiKey: []
+  /projects/{projectId}/assign:
+    post:
+      summary: Assign Project to Chat
+      description: Links an existing v0 project to a specific chat. Helps group conversations under a shared project context.
+      operationId: projects.assign
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chatId:
+                  type: string
+                  description: The ID of the chat to assign the project to.
+              required:
+              - chatId
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: project
+                  id:
+                    type: string
+                  assigned:
+                    type: boolean
+                    const: true
+                required:
+                - object
+                - id
+                - assigned
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the project to assign.
+      security:
+      - apiKey: []
+  /projects/{projectId}/env-vars:
+    get:
+      summary: Find Environment Variables
+      description: Retrieves all environment variables for a given project.
+      operationId: projects.findEnvVars
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnvironmentVariableSummarySchema'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project whose environment variables should be retrieved.
+      - name: decrypted
+        in: query
+        required: false
+        schema:
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Whether to return decrypted values. Defaults to false (encrypted).
+      security:
+      - apiKey: []
+    post:
+      summary: Create Environment Variables
+      description: Creates new environment variables for a given project. This endpoint will fail if any of the specified environment variable keys already exist, unless upsert is set to true.
+      operationId: projects.createEnvVars
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                environmentVariables:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        minLength: 1
+                        description: The name of the environment variable.
+                      value:
+                        type: string
+                        description: The value of the environment variable.
+                    required:
+                    - key
+                    - value
+                    additionalProperties: false
+                  description: An array of environment variables to create with key and value fields.
+                upsert:
+                  description: Whether to overwrite existing environment variables with the same keys. Defaults to false.
+                  type: boolean
+              required:
+              - environmentVariables
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnvironmentVariableSummarySchema'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project where environment variables should be created.
+      - name: decrypted
+        in: query
+        required: false
+        schema:
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Whether to return decrypted values. Defaults to false (encrypted).
+      security:
+      - apiKey: []
+    patch:
+      summary: Update Environment Variables
+      description: Updates multiple environment variables for a given project. Only the value of each environment variable can be updated.
+      operationId: projects.updateEnvVars
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                environmentVariables:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The unique identifier of the environment variable to update.
+                      value:
+                        type: string
+                        description: The new value of the environment variable.
+                    required:
+                    - id
+                    - value
+                    additionalProperties: false
+                  description: An array of environment variables to update with id and value fields.
+              required:
+              - environmentVariables
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EnvironmentVariableSummarySchema'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project whose environment variables should be updated.
+      - name: decrypted
+        in: query
+        required: false
+        schema:
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Whether to return decrypted values. Defaults to false (encrypted).
+      security:
+      - apiKey: []
+  /projects/{projectId}/env-vars/delete:
+    post:
+      summary: Delete Environment Variables
+      description: Deletes multiple environment variables for a given project by their IDs.
+      operationId: projects.deleteEnvVars
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                environmentVariableIds:
+                  type: array
+                  items:
+                    type: string
+                    description: The unique identifier of the environment variable to delete.
+                  description: An array of environment variable IDs to delete.
+              required:
+              - environmentVariableIds
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: list
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        object:
+                          type: string
+                          const: environment_variable
+                        deleted:
+                          type: boolean
+                          const: true
+                      required:
+                      - id
+                      - object
+                      - deleted
+                      additionalProperties: false
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project whose environment variables should be deleted.
+      security:
+      - apiKey: []
+  /projects/{projectId}/env-vars/{environmentVariableId}:
+    get:
+      summary: Get Environment Variable
+      description: Retrieves a specific environment variable for a given project by its ID, including its value.
+      operationId: projects.getEnvVar
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: environment_variable
+                  data:
+                    $ref: '#/components/schemas/EnvironmentVariableDetailSchema'
+                required:
+                - object
+                - data
+                additionalProperties: false
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the project that owns the environment variable.
+      - name: environmentVariableId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the environment variable to retrieve.
+      - name: decrypted
+        in: query
+        required: false
+        schema:
+          description: Whether to return decrypted values. Defaults to false (encrypted).
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Whether to return decrypted values. Defaults to false (encrypted).
+      security:
+      - apiKey: []
+  /projects/{vercelProjectId}/integrations:
+    get:
+      summary: List Vercel Project Integrations
+      description: Retrieves all integrations linked to a specific Vercel project, showing their connection status and metadata.
+      operationId: projects.listIntegrations
+      tags:
+      - projects
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationConnectionListSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: vercelProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The Vercel project ID to list integrations for.
+      security:
+      - apiKey: []
+  /projects/{vercelProjectId}/integrations/{integrationId}:
+    post:
+      summary: Connect Vercel Project to Integration
+      description: Creates a persistent connection between a Vercel project and an integration, enabling integration features and functionality within the project context.
+      operationId: projects.connectIntegration
+      tags:
+      - projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                envVarPrefix:
+                  description: Optional environment variable prefix for the integration.
+                  type: string
+              additionalProperties: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationConnectionDetailSchema'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadTooLargeError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      parameters:
+      - name: vercelProjectId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The Vercel project ID to link to the integration.
+      - name: integrationId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the integration to link to the project.
+      security:
+      - apiKey: []
+components:
+  schemas:
+    EnvironmentVariableDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Detailed information for an environment variable including its value.
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ProjectSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the project.
+        object:
+          type: string
+          const: project
+          description: Fixed value identifying this object as a project.
+        name:
+          type: string
+          description: The name of the project as defined by the user.
+        privacy:
+          type: string
+          enum:
+          - private
+          - team
+          description: The privacy setting for the project - either private or team.
+        vercelProjectId:
+          description: Optional ID of the linked Vercel project, if connected.
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the project was created.
+        updatedAt:
+          description: The ISO timestamp of the most recent update, if available.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        apiUrl:
+          type: string
+          format: uri
+          description: The API endpoint URL for accessing this project programmatically.
+        webUrl:
+          type: string
+          format: uri
+          description: The web URL where the project can be viewed or managed.
+      required:
+      - id
+      - object
+      - name
+      - privacy
+      - createdAt
+      - apiUrl
+      - webUrl
+      additionalProperties: false
+      description: Summary of a project, including metadata, timestamps, and optional Vercel linkage.
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    IntegrationConnectionDetailSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: integration_connection
+          description: The object type.
+        id:
+          type: string
+          description: 'The unique ID of the integration connection (format: {projectId}_{integrationId}).'
+        connected:
+          type: boolean
+          description: Whether the integration is connected to the project.
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the integration.
+            object:
+              type: string
+              const: integration
+              description: The object type.
+            slug:
+              type: string
+              description: The slug of the integration.
+            name:
+              type: string
+              description: The name of the integration.
+          required:
+          - id
+          - object
+          - slug
+          - name
+          additionalProperties: false
+          description: Information about the connected integration.
+        metadata:
+          description: Additional metadata about the integration connection.
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+      required:
+      - object
+      - id
+      - connected
+      - integration
+      additionalProperties: false
+      description: Detailed information about an integration connection to a project.
+    IntegrationConnectionListSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: list
+          description: Fixed value identifying this as a list response.
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                const: integration_connection
+                description: The object type.
+              id:
+                type: string
+                description: 'The unique ID of the integration connection (format: {projectId}_{integrationId}).'
+              connected:
+                type: boolean
+                description: Whether the integration is connected to the project.
+              integration:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the integration.
+                  object:
+                    type: string
+                    const: integration
+                    description: The object type.
+                  slug:
+                    type: string
+                    description: The slug of the integration.
+                  name:
+                    type: string
+                    description: The name of the integration.
+                required:
+                - id
+                - object
+                - slug
+                - name
+                additionalProperties: false
+                description: Information about the connected integration.
+            required:
+            - object
+            - id
+            - connected
+            - integration
+            additionalProperties: false
+            description: Summary information about an integration connection to a project.
+          description: Array of integration connection summaries.
+      required:
+      - object
+      - data
+      additionalProperties: false
+      description: List response containing integration connections.
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    EnvironmentVariableSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Summary information for an environment variable.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your v0 API key. Get one at https://v0.app/chat/settings/keys
+externalDocs:
+  description: Find more info here
+  url: https://vercel.com/docs/v0/api
