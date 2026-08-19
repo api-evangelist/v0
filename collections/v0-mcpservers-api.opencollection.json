@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent mcpServers API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "mcpServers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List MCP Servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/mcp-servers",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of connected MCP servers for the current user. Use this to check if an MCP preset is already connected."
+        },
+        {
+          "info": {
+            "name": "Get MCP Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/mcp-servers/:mcpServerId",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the details of a specific MCP server by its ID."
+        },
+        {
+          "info": {
+            "name": "Update MCP Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/mcp-servers/:mcpServerId",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the configuration of an existing MCP server, including its name, URL, description, enabled status, and authentication settings."
+        },
+        {
+          "info": {
+            "name": "Delete MCP Server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/mcp-servers/:mcpServerId",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the MCP server to delete."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes an MCP server based on its ID. This action is irreversible and will also remove any associated OAuth tokens."
+        },
+        {
+          "info": {
+            "name": "Create MCP Server OAuth Authorization URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/mcp-servers/:mcpServerId/oauth/authorize",
+            "params": [
+              {
+                "name": "mcpServerId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the OAuth MCP server to authorize."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates an OAuth authorization URL for an OAuth MCP server. Redirect the user to the returned URL, and the Platform API OAuth callback will store the resulting tokens before redirecting to your returnUrl."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

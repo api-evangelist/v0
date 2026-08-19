@@ -1,0 +1,1375 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent chats API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Chats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of chat records to return in a single response. Useful for paginating results when there are many chats."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Determines the starting point for pagination. Used in conjunction with limit to retrieve a specific page of chat results."
+              },
+              {
+                "name": "isFavorite",
+                "value": "",
+                "type": "query",
+                "description": "Filters chats by their \"favorite\" status. Accepts `\"true\"` or `\"false\"` (as strings, not booleans).\n\n- `\"true\"`: returns only chats marked as favorites.\n- `\"false\"`: returns only non-favorite chats."
+              },
+              {
+                "name": "vercelProjectId",
+                "value": "",
+                "type": "query",
+                "description": "Filters chats by the linked Vercel project ID. Only returns chats associated with the specified Vercel project."
+              },
+              {
+                "name": "branch",
+                "value": "",
+                "type": "query",
+                "description": "Filters chats by the Git branch name. Only returns chats that have an active Git connection with the specified branch as the head."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of existing chats, with support for pagination and filtering by favorite status, Vercel project, or Git branch. Helps manage and navigate chat history."
+        },
+        {
+          "info": {
+            "name": "Create Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new chat using a user message, optional system context, and model configuration. Useful for prompting the model within the scope of a specific project."
+        },
+        {
+          "info": {
+            "name": "Initialize Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/init",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initializes a new chat from source content such as files, repositories, registries, or zip archives. Enables context-rich conversations based on code or assets."
+        },
+        {
+          "info": {
+            "name": "Get Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to retrieve. Must be provided as a path parameter."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"cursor\""
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"limit\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the full details of a specific chat using its `chatId`. Includes messages, metadata, and associated configuration."
+        },
+        {
+          "info": {
+            "name": "Update Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/chats/:chatId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to update. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the metadata of an existing chat using its `chatId`. Supports changes to the chat name and privacy setting."
+        },
+        {
+          "info": {
+            "name": "Delete Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/chats/:chatId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to delete. This must be passed as a path parameter in the URL."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a specific chat based on the provided chatId. This operation is irreversible and permanently removes the chat and its contents."
+        },
+        {
+          "info": {
+            "name": "Favorite Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.v0.dev/v1/chats/:chatId/favorite",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to update. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Marks or unmarks a chat as a favorite using its `chatId`. This helps with organizing and quickly accessing important chats."
+        },
+        {
+          "info": {
+            "name": "Fork Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/fork",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to fork. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new chat fork (duplicate) from a specific version within an existing chat. Useful for branching off alternate directions without modifying the original conversation."
+        },
+        {
+          "info": {
+            "name": "Find Chat Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to retrieve messages for. Provided as a path parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of message records to return in a single response. Useful for paginating results when there are many messages."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Base64 encoded cursor containing pagination data"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of all messages for a specific chat, ordered by creation date (newest first). Supports cursor-based pagination and includes message content, role, and type information."
+        },
+        {
+          "info": {
+            "name": "Send Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to send the message to. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new message in an existing chat. Triggers a model response using the provided prompt, with optional attachments and configuration settings."
+        },
+        {
+          "info": {
+            "name": "Get Chat Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages/:messageId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the message. Provided as a path parameter."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message to retrieve. Provided as a path parameter."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific message within a chat, including content, files, model configuration, and demo URLs."
+        },
+        {
+          "info": {
+            "name": "Delete Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages/:messageId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the message to delete."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the message to delete."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a specific message from a chat."
+        },
+        {
+          "info": {
+            "name": "Find Chat Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat to retrieve versions for. Provided as a path parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the maximum number of version records to return in a single response. Useful for paginating results when there are many versions."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Base64 encoded cursor containing pagination data"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of all versions (iterations) for a specific chat, ordered by creation date (newest first). Supports cursor-based pagination and includes version status and demo URLs."
+        },
+        {
+          "info": {
+            "name": "Get Version Iframe",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/iframe",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"versionId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the iframe for a version"
+        },
+        {
+          "info": {
+            "name": "Get Version VM Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/vm-logs",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"versionId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the VM server logs for a version"
+        },
+        {
+          "info": {
+            "name": "Clear Version VM Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/vm-logs",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"versionId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Clear the VM server logs for a version"
+        },
+        {
+          "info": {
+            "name": "Get Chat Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the version. Provided as a path parameter."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version to retrieve. Provided as a path parameter."
+              },
+              {
+                "name": "includeDefaultFiles",
+                "value": "",
+                "type": "query",
+                "description": "When true, includes all default files (package.json, configuration files, etc.) that would be part of a ZIP download. When false or omitted, returns only the generated source files."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed information about a specific version of a chat, including all files with their content and lock status."
+        },
+        {
+          "info": {
+            "name": "Update Chat Version Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the version to update. Provided as a path parameter."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version (block) to update. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the source files of a specific chat version (block) manually. This allows editing generated files directly through the API."
+        },
+        {
+          "info": {
+            "name": "Download version files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/download",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the version. Provided as a path parameter."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version to download. Provided as a path parameter."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The archive format for the download. Choose \"zip\" for broad compatibility or \"tarball\" for Unix/Linux systems."
+              },
+              {
+                "name": "includeDefaultFiles",
+                "value": "",
+                "type": "query",
+                "description": "When true, includes all default files (package.json, configuration files, etc.) that would be part of a complete deployment. When false or omitted, returns only the generated source files."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Download all files for a specific chat version as a zip or tarball archive. Use includeDefaultFiles=true to include all deployment files (package.json, configuration files, etc.) or false/omitted to return only the generated source files."
+        },
+        {
+          "info": {
+            "name": "Get Version Diff Stats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/diff-stats",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version (block) to get diff stats for."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves line-level diff statistics (additions and removals) for each file changed in a specific version."
+        },
+        {
+          "info": {
+            "name": "Get Version Diff Patch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/diff-patch",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version (block) to get diff patch for."
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "The file path to get the diff patch for."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the unified diff patch for a file changed in a specific version."
+        },
+        {
+          "info": {
+            "name": "Delete Chat Version Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/files/delete",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the version to delete files from."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version (block) to delete files from."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes source files from a specific chat version (block). Files are removed from the version and a new source version is created."
+        },
+        {
+          "info": {
+            "name": "Get Chat Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/metadata",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get the metadata for a chat"
+        },
+        {
+          "info": {
+            "name": "Upload File",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/upload",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Upload a file to a chat"
+        },
+        {
+          "info": {
+            "name": "Resume Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages/:messageId/resume",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the message to resume. Provided as a path parameter."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the specific message to resume. Provided as a path parameter."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resumes processing of a previously interrupted or incomplete message in a chat. Useful for continuing generation when a message was paused or stopped."
+        },
+        {
+          "info": {
+            "name": "Stop Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/messages/:messageId/stop",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the message to stop. Provided as a path parameter."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the specific message to stop. Provided as a path parameter."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Stops an in-flight message generation in a chat. Useful for cancelling a streaming response that is still being generated."
+        },
+        {
+          "info": {
+            "name": "Resolve Task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/tasks/resolve",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the pending task. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resolves a pending task in a chat, continuing the conversation. The latest message in the active chat fork must be an assistant message currently blocked on a matching task (integration setup, plan approval, question answers, or permission grants)."
+        },
+        {
+          "info": {
+            "name": "Restore Block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/restore",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the chat containing the version to restore."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the version to restore."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Restores a block to a specific version."
+        },
+        {
+          "info": {
+            "name": "Recreate Version VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/versions/:versionId/recreate",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"versionId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Recreate the VM sandbox for a version"
+        },
+        {
+          "info": {
+            "name": "chats.findVersionPicker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/version-picker",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.activity.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/activity",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.status.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/status",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.connection.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/connection",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.pullRequest.create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/pull-request",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.mergePullRequest.create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/merge-pull-request",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.pullChanges.create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/pull-changes",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The chat ID to pull changes into."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.git.deployment.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/git/deployment",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              },
+              {
+                "name": "sha",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"sha\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "chats.{chatId}.agent.logs.create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/agent/logs",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        },
+        {
+          "info": {
+            "name": "Find Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/deployments",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat to find deployments for"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the version to find deployments for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Find deployments by chat ID. This will return a list of deployments for the given chat. Uses the vercelProjectId from the chat."
+        },
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/deployments",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat to create a deployment for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new deployment for a specific chat and version. This will trigger a deployment to Vercel. Uses the vercelProjectId from the chat."
+        },
+        {
+          "info": {
+            "name": "Find Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/env-vars",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat whose environment variables should be retrieved."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all environment variables for a given chat. Uses the vercelProjectId from the chat."
+        },
+        {
+          "info": {
+            "name": "Create Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/env-vars",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat where environment variables should be created."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates new environment variables for a given chat. Uses the vercelProjectId from the chat."
+        },
+        {
+          "info": {
+            "name": "Delete Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/env-vars/delete",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat whose environment variables should be deleted."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes multiple environment variables for a given chat by their IDs. Uses the vercelProjectId from the chat."
+        },
+        {
+          "info": {
+            "name": "Create Vercel Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/chats/:chatId/vercel-project",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat to create a Vercel project for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new Vercel project and links it to the specified chat."
+        },
+        {
+          "info": {
+            "name": "chats.findVercel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/vercel",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"chatId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

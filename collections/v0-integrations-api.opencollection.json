@@ -1,0 +1,192 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent integrations API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Available Integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/integrations",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all available integrations from the marketplace that can be created and connected."
+        },
+        {
+          "info": {
+            "name": "Create Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new integration or returns installation URL for marketplace integrations. For storage integrations (blob), creates the store directly. For marketplace integrations, creates an integration link and returns a URL for the user to complete installation."
+        },
+        {
+          "info": {
+            "name": "Find Vercel Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/integrations/vercel/projects",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of Vercel projects linked to your integration. Useful for associating chats, deployments, or hooks with specific Vercel projects."
+        },
+        {
+          "info": {
+            "name": "Create Vercel Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/integrations/vercel/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Links a Vercel project to an existing v0 project. Enables Vercel-related features and deployment integration within the v0 workspace."
+        },
+        {
+          "info": {
+            "name": "Compute Wizard",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/integrations/wizard",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the version to compute the wizard data for."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Compute and retrieve the latest wizard data for a specific block."
+        },
+        {
+          "info": {
+            "name": "Update Data From Wizard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/integrations/wizard",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update the wizard data for a specific block."
+        },
+        {
+          "info": {
+            "name": "Integrations Data For Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/integrations/project",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "query",
+                "description": "The chat ID. If undefined, the v0ProjectId must be provided."
+              },
+              {
+                "name": "v0ProjectId",
+                "value": "",
+                "type": "query",
+                "description": "The v0 Project ID. If undefined, the chatId must be provided."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Compute and retrieve the latest integrations data for a specific v0 Project."
+        },
+        {
+          "info": {
+            "name": "Connect Integrations For Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/integrations/project",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Connect integrations for a specific project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

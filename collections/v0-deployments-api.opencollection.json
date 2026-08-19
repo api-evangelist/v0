@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent deployments API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Deployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/deployments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the project to find deployments for"
+              },
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the chat to find deployments for"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the version to find deployments for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Find deployments by project and chat IDs. This will return a list of deployments for the given project and chat IDs."
+        },
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/deployments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a new deployment for a specific chat and version. This will trigger a deployment to Vercel."
+        },
+        {
+          "info": {
+            "name": "Get Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"deploymentId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a deployment by ID. This will return the details of the deployment, including the inspector URL, chat ID, project ID, version ID, API URL, and web URL."
+        },
+        {
+          "info": {
+            "name": "Delete Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/deployments/:deploymentId",
+            "params": [
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "Path parameter \"deploymentId\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete a deployment by ID. This will delete the deployment from Vercel."
+        },
+        {
+          "info": {
+            "name": "Find Deployment Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/deployments/:deploymentId/logs",
+            "params": [
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the deployment to retrieve logs for. Provided as a path parameter."
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "A UNIX timestamp (in seconds) used to filter logs. Returns only log entries generated after the specified time."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves logs for a specific deployment. Supports filtering by timestamp to fetch only recent logs."
+        },
+        {
+          "info": {
+            "name": "Find Deployment Errors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/deployments/:deploymentId/errors",
+            "params": [
+              {
+                "name": "deploymentId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the deployment to inspect for errors. Provided as a path parameter."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of errors that occurred during a specific deployment. Useful for diagnosing and debugging deployment issues."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

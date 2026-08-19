@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent nativeVersion API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "nativeVersion",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "nativeVersion.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/native-version",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"version\""
+              },
+              {
+                "name": "buildNumber",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"buildNumber\""
+              },
+              {
+                "name": "distribution",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"distribution\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

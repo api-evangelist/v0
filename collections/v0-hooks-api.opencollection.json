@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent hooks API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "hooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Hooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/hooks",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of existing hooks in your workspace. Useful for managing active webhooks tied to chat events or deployments."
+        },
+        {
+          "info": {
+            "name": "Create Hook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/hooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new webhook that listens for specific events. Supports optional association with a chat."
+        },
+        {
+          "info": {
+            "name": "Get Hook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/hooks/:hookId",
+            "params": [
+              {
+                "name": "hookId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the hook to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the details of a specific webhook using its ID."
+        },
+        {
+          "info": {
+            "name": "Update Hook",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/hooks/:hookId",
+            "params": [
+              {
+                "name": "hookId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the webhook to update. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the configuration of an existing webhook, including its name, event subscriptions, or target URL."
+        },
+        {
+          "info": {
+            "name": "Delete Hook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/hooks/:hookId",
+            "params": [
+              {
+                "name": "hookId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the webhook to delete. Provided as a path parameter."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a webhook based on its ID. This action is irreversible."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

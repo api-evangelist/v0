@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent reports API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Usage Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/reports/usage",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"startDate\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"endDate\""
+              },
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"chatId\""
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"messageId\""
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"userId\""
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"limit\""
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Base64 encoded cursor containing pagination data"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves detailed usage events for the authenticated user or team, including costs, event types, models used, and metadata. Shows the same data as displayed in the usage dashboard. Can be filtered by chatId to show usage for a specific chat, or by userId to show usage for a specific user."
+        },
+        {
+          "info": {
+            "name": "Get User Activity Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/reports/user-activity",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"startDate\""
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"endDate\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves aggregated user activity data for team members, including chat counts, message counts, and activity timestamps. Only available for Enterprise teams with OWNER or BILLING role. Shows the same data as displayed in the Usage settings for Enterprise teams."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

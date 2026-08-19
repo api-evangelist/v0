@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent chatScreenshots API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "chatScreenshots",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "chatScreenshots.find",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chat-screenshots",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"limit\""
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"offset\""
+              },
+              {
+                "name": "device",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter \"device\""
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent promptTemplates API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "promptTemplates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Prompt Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/prompt-templates",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of prompt templates that can be used to quickly start new chats. These are pre-defined prompts that help users get started with common use cases."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

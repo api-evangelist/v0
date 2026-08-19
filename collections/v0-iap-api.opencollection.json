@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent iap API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "iap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Mobile IAP credit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/iap/credit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Credits an on‑demand ledger based on a verified in‑app purchase. Uses Copper as the source of truth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

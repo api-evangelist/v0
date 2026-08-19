@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent rateLimits API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "rateLimits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find Rate Limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/rate-limits",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "The context or namespace to check rate limits for (e.g., a project slug or feature area)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves rate limit information for a given scope. Useful for monitoring usage limits and avoiding throttling."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,422 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "v0 App agent projects API",
+    "version": "0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Project by Chat ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/chats/:chatId/project",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the chat to retrieve the associated project for."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the v0 project associated with a given chat. Useful for determining the context or scope of a chat session."
+        },
+        {
+          "info": {
+            "name": "Find Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/projects",
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all v0 projects in your workspace. Useful for browsing or managing projects across different chats or use cases."
+        },
+        {
+          "info": {
+            "name": "Create Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new v0 project with an optional description, icon, environment variables, and instructions. Projects help organize chats and manage context."
+        },
+        {
+          "info": {
+            "name": "Get Project by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the details of a specific v0 project by its ID."
+        },
+        {
+          "info": {
+            "name": "Update Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project to update. Provided as a path parameter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates the metadata of an existing project using its `projectId`. Supports changes to the project name and privacy setting."
+        },
+        {
+          "info": {
+            "name": "Delete Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.v0.dev/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project to delete. This must be passed as a path parameter in the URL."
+              },
+              {
+                "name": "deleteAllChats",
+                "value": "",
+                "type": "query",
+                "description": "If true, deletes all the chats associated with the given project ID. Deleting is permanent. Defaults to false."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a specific project based on the provided projectId. This operation marks the project as deleted and is irreversible."
+        },
+        {
+          "info": {
+            "name": "Assign Project to Chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/projects/:projectId/assign",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the project to assign."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Links an existing v0 project to a specific chat. Helps group conversations under a shared project context."
+        },
+        {
+          "info": {
+            "name": "Find Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/projects/:projectId/env-vars",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project whose environment variables should be retrieved."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all environment variables for a given project."
+        },
+        {
+          "info": {
+            "name": "Create Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/projects/:projectId/env-vars",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project where environment variables should be created."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates new environment variables for a given project. This endpoint will fail if any of the specified environment variable keys already exist, unless upsert is set to true."
+        },
+        {
+          "info": {
+            "name": "Update Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.v0.dev/v1/projects/:projectId/env-vars",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project whose environment variables should be updated."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Updates multiple environment variables for a given project. Only the value of each environment variable can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete Environment Variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/projects/:projectId/env-vars/delete",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project whose environment variables should be deleted."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes multiple environment variables for a given project by their IDs."
+        },
+        {
+          "info": {
+            "name": "Get Environment Variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/projects/:projectId/env-vars/:environmentVariableId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the project that owns the environment variable."
+              },
+              {
+                "name": "environmentVariableId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the environment variable to retrieve."
+              },
+              {
+                "name": "decrypted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return decrypted values. Defaults to false (encrypted)."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a specific environment variable for a given project by its ID, including its value."
+        },
+        {
+          "info": {
+            "name": "List Vercel Project Integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v0.dev/v1/projects/:vercelProjectId/integrations",
+            "params": [
+              {
+                "name": "vercelProjectId",
+                "value": "",
+                "type": "path",
+                "description": "The Vercel project ID to list integrations for."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves all integrations linked to a specific Vercel project, showing their connection status and metadata."
+        },
+        {
+          "info": {
+            "name": "Connect Vercel Project to Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v0.dev/v1/projects/:vercelProjectId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "vercelProjectId",
+                "value": "",
+                "type": "path",
+                "description": "The Vercel project ID to link to the integration."
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the integration to link to the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a persistent connection between a Vercel project and an integration, enabling integration features and functionality within the project context."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

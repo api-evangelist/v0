@@ -1,0 +1,4102 @@
+{
+  "item": [
+    {
+      "id": "0a830fec-2140-42a6-ac55-e7552348297b",
+      "name": "integrations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "69984200-6da5-4148-997a-f170116758ca",
+          "name": "List Available Integrations",
+          "request": {
+            "name": "List Available Integrations",
+            "description": {
+              "content": "Retrieves all available integrations from the marketplace that can be created and connected.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "513deba7-c96b-4f85-9f6e-528d5314c0e6",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"iconUrl\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"iconUrl\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2bdbfd7-b770-46d9-8255-22dcd22b67a9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9e7a9dd-437c-449f-b54d-6ab199eff9dc",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "921932ad-83a6-42aa-afda-cf15e569f36b",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ae62774-07b1-4e76-a948-f020d5265134",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1fc3b37-02db-4584-a2c4-7449e747cf76",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf083342-802c-4476-a888-493c27248cf3",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f65ce4f7-68de-4ab8-af9e-09cc8fe74091",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e753b52-b9ef-4fbc-a90a-41e110dcacef",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52eea226-0d0f-43b3-a85f-beb66b9aadc7",
+          "name": "Create Integration",
+          "request": {
+            "name": "Create Integration",
+            "description": {
+              "content": "Creates a new integration or returns installation URL for marketplace integrations. For storage integrations (blob), creates the store directly. For marketplace integrations, creates an integration link and returns a URL for the user to complete installation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6587328-dad0-45ac-8686-5d210e14c9e5",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"string\",\n  \"slug\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"iconUrl\": \"string\",\n  \"storeId\": \"string\",\n  \"type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dffc0b22-641f-422e-88fd-780fff9de8a8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f3d8e40-a137-4758-a724-005aab43d6f6",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14c7fe80-e6b2-4079-b965-b908809ded4d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ff04c10-07c2-4b40-bfe7-9624c599ca29",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "038f7f53-376e-4be7-8c4e-6b6e53dcc092",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bc84641-febd-4a57-8724-8e211d9e7922",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad41aa4b-e21f-42f5-8256-7fddf63c5dae",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57fbe9d3-69f6-427d-9b74-d896c90e309e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"name\": \"<string>\",\n  \"vercelProjectId\": \"<string>\",\n  \"access\": \"private\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0fc14d0a-0c8b-4423-b799-0733f0a8bc2b",
+          "name": "Find Vercel Projects",
+          "request": {
+            "name": "Find Vercel Projects",
+            "description": {
+              "content": "Retrieves a list of Vercel projects linked to your integration. Useful for associating chats, deployments, or hooks with specific Vercel projects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "vercel",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7399e881-285d-4b3e-8db1-5a947e3e4899",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fcd89d2b-7728-4a10-908f-0c8c036862e2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa9f4a04-a455-4774-a621-0fe2eb95b3a2",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72f785a9-932c-4fce-a100-dd197e0542e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df1ce673-b521-48bc-847c-cb3b7bf154ee",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e78cc6cf-808d-49e9-8c6c-cab5b57b2052",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d97922a1-8f92-4b66-a10d-cd72370247fc",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0cc020f-634f-4c4f-a5bd-2d0be771de3a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "006d90f7-325d-469c-8ff1-d781b27ee38c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d7b1637-990e-49dc-9012-ace0686f7299",
+          "name": "Create Vercel Project",
+          "request": {
+            "name": "Create Vercel Project",
+            "description": {
+              "content": "Links a Vercel project to an existing v0 project. Enables Vercel-related features and deployment integration within the v0 workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "vercel",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "75cbc987-9a37-4d72-ae91-7c2395ac1f12",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"string\",\n  \"name\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d970548-381d-4816-b2c0-d0de2166cd81",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bca4c25-8d9f-4714-bfa5-a0302efc237a",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "babfccfd-9538-4abe-98fd-bc44ada98074",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c172757-5666-46be-a571-93bf99adc754",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0306cc9f-a5b5-40d8-adde-d98e40973895",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50656868-39cc-40ab-acf3-ce1ea21ceeae",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff440337-f729-4506-8d6a-4190258156d2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adffdf74-192c-47a5-b2bb-6d0be023c7ff",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "vercel",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65b64963-96e7-4cf9-a75d-1668015ceaa7",
+          "name": "Update Data From Wizard",
+          "request": {
+            "name": "Update Data From Wizard",
+            "description": {
+              "content": "Update the wizard data for a specific block.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "wizard"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "464b91eb-5eac-44f8-9d77-57877117400a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"disabledAutoPrompt\": {\n    \"status\": \"string\"\n  },\n  \"setBannerDismissedResult\": {\n    \"status\": \"string\"\n  },\n  \"ranActions\": [\n    {\n      \"action\": \"supabase-chat-url\",\n      \"status\": \"string\"\n    },\n    {\n      \"action\": \"supabase-chat-url\",\n      \"status\": \"string\"\n    }\n  ],\n  \"setEnvironmentVariables\": {\n    \"keys\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"string\"\n  },\n  \"connectedIntegrations\": [\n    {\n      \"integrationId\": \"string\",\n      \"integrationName\": \"Neon\",\n      \"isPending\": true,\n      \"status\": \"string\",\n      \"redirectUrl\": \"https://MEhjfuumuTtnyybkn.gfDiYMUaanllSZJVMTt9KuWftW5DTNxGh,2ppC5NFWq8KlgjZPerwGeDm\",\n      \"acceptPolicies\": {\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"addendumLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"eulaLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"privacyLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"footerMD\": \"string\",\n        \"actionButtonText\": \"string\"\n      }\n    },\n    {\n      \"integrationId\": \"string\",\n      \"integrationName\": \"Supabase\",\n      \"isPending\": true,\n      \"status\": \"string\",\n      \"redirectUrl\": \"https://tOGlfMPgRjheCcYRaUpPpPCNULMPz.qmmtra0F6\",\n      \"acceptPolicies\": {\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"addendumLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"eulaLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"privacyLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"footerMD\": \"string\",\n        \"actionButtonText\": \"string\"\n      }\n    }\n  ],\n  \"createdV0Project\": {\n    \"projectId\": \"string\",\n    \"name\": \"string\",\n    \"settings\": {\n      \"color\": \"string\",\n      \"icon\": \"string\"\n    },\n    \"vercelProjectId\": \"string\",\n    \"isCreator\": false\n  },\n  \"createdVercelProjectId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccf441cd-feda-4127-a2fe-2ee18fce79fc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e33cd828-462f-4f48-b272-21a61c91c293",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43cdc773-5c6a-42ba-ab3c-6289c252c5ea",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8461ba90-00bb-4c59-aed7-7bec5a4441df",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6c887e8-156b-4abd-aefb-d1a73aeb11ba",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b51b1ee-639e-4adf-8700-b38ea062328d",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76c10a7d-f213-4ea8-ab36-408058b3e51c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "babe026d-8c3f-4abc-a19f-c097d040f8cb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"blockId\": \"<string>\",\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"runActions\": [\n    {\n      \"action\": \"<string>\"\n    },\n    {\n      \"action\": \"<string>\"\n    }\n  ],\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"disableAutoPrompt\": \"<boolean>\",\n  \"setBannerDismissed\": {\n    \"fingerprint\": \"<string>\",\n    \"dismissed\": \"<boolean>\"\n  },\n  \"autoCreateV0Project\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd36ecfb-4c38-4437-a002-c66f79820e1c",
+          "name": "Compute Wizard",
+          "request": {
+            "name": "Compute Wizard",
+            "description": {
+              "content": "Compute and retrieve the latest wizard data for a specific block.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "wizard"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "versionId",
+                  "value": "<string>",
+                  "description": "(Required) The unique identifier of the version to compute the wizard data for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "723c1c46-5699-45e3-a1cf-ff373c6bd724",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"data\": {\n    \"environmentVariables\": [\n      {\n        \"key\": \"string\",\n        \"keyCreationUrl\": \"http://BnmGFXCrzBjdyVVsiXRxM.fsvu,xMH.KYjjMg+\"\n      },\n      {\n        \"key\": \"string\",\n        \"keyCreationUrl\": \"http://HpBcGfAO.owucuX.3LmLzNDbWM\"\n      }\n    ],\n    \"integrations\": [\n      {\n        \"id\": \"string\",\n        \"isConnected\": true,\n        \"name\": \"Convex\",\n        \"lightIconUrl\": \"string\",\n        \"darkIconUrl\": \"string\",\n        \"description\": \"string\",\n        \"connectedInstanceName\": \"string\",\n        \"category\": \"string\",\n        \"isBeta\": true,\n        \"slug\": \"string\",\n        \"tooltip\": \"string\",\n        \"resourceId\": \"string\",\n        \"existingInstances\": [\n          {\n            \"isConnected\": false,\n            \"name\": \"string\",\n            \"id\": \"string\",\n            \"externalResourceId\": \"string\",\n            \"manageUrl\": \"http://ZxkWvKCdOKgbZkvcNis.egpHYPJKwaR5qioTxnzSYGeO93MTO4A\",\n            \"targets\": [\n              \"production\",\n              \"development\"\n            ],\n            \"connectedTargets\": [\n              \"production\",\n              \"preview\"\n            ]\n          },\n          {\n            \"isConnected\": true,\n            \"name\": \"string\",\n            \"id\": \"string\",\n            \"externalResourceId\": \"string\",\n            \"manageUrl\": \"http://oeyDqHPyeQXYjeFNhSiDlHXfdqsIkra.svoSiLHcmGHGPKAvB9QDTgwHtWHTTgRjDNjg\",\n            \"targets\": [\n              \"development\",\n              \"development\"\n            ],\n            \"connectedTargets\": [\n              \"production\",\n              \"production\"\n            ]\n          }\n        ],\n        \"manageUrls\": [\n          {\n            \"title\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"title\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"claimFlow\": {\n          \"url\": \"http://ebnCQJnokYBanjd.hqbTJ7aZAT454ucRRXb+Jg1P5ImdvcjPLbKmJ+ZDEs-Z8.Mcom82COk7gzbg,nG2K0PGQNdwiXO\",\n          \"learnMoreUrl\": \"string\",\n          \"description\": \"string\",\n          \"integrationConfigurationId\": \"string\",\n          \"resourceId\": \"string\"\n        },\n        \"supportsMcp\": true,\n        \"supportsImport\": false,\n        \"rbac\": {\n          \"create\": true,\n          \"update\": false\n        },\n        \"mcpPermission\": {\n          \"currentPermission\": \"disabled\"\n        },\n        \"providerResourceDashboardUrl\": \"string\",\n        \"metadata\": {\n          \"supabase\": {\n            \"status\": \"active\",\n            \"supabaseProjectUrl\": \"http://YbXtAUZXQiTdsz.kxgPVnI8t4MlLqrggo+K\"\n          }\n        },\n        \"pendingRedirect\": {\n          \"url\": \"https://PHYNeurdscwjZaAbMDc.ylXw5gOyWbMm0o-mb-DH6Iw0Iddxhh8NSBlwpNNiTTMWyl3F20zVmCQUAXONgN30\",\n          \"expiresAt\": 561.570262056984\n        },\n        \"policies\": {\n          \"eulaUrl\": \"string\",\n          \"privacyPolicyUrl\": \"string\",\n          \"vercelIntegrationMarketplaceEuaUrl\": \"string\"\n        }\n      },\n      {\n        \"id\": \"string\",\n        \"isConnected\": false,\n        \"name\": \"Upstash Search\",\n        \"lightIconUrl\": \"string\",\n        \"darkIconUrl\": \"string\",\n        \"description\": \"string\",\n        \"connectedInstanceName\": \"string\",\n        \"category\": \"string\",\n        \"isBeta\": false,\n        \"slug\": \"string\",\n        \"tooltip\": \"string\",\n        \"resourceId\": \"string\",\n        \"existingInstances\": [\n          {\n            \"isConnected\": false,\n            \"name\": \"string\",\n            \"id\": \"string\",\n            \"externalResourceId\": \"string\",\n            \"manageUrl\": \"https://JREgJlZIrVbKEUfoTGxFETHtkLTzT.qzN0MINMheUIXi0RAiFgLifU8bPmKwXLNOC-Ukm9,jGvNIAWeEVa\",\n            \"targets\": [\n              \"development\",\n              \"preview\"\n            ],\n            \"connectedTargets\": [\n              \"production\",\n              \"production\"\n            ]\n          },\n          {\n            \"isConnected\": true,\n            \"name\": \"string\",\n            \"id\": \"string\",\n            \"externalResourceId\": \"string\",\n            \"manageUrl\": \"http://WPjjxcqT.mvbtvCfbAvAKsJBtM9\",\n            \"targets\": [\n              \"development\",\n              \"preview\"\n            ],\n            \"connectedTargets\": [\n              \"production\",\n              \"preview\"\n            ]\n          }\n        ],\n        \"manageUrls\": [\n          {\n            \"title\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"title\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"claimFlow\": {\n          \"url\": \"http://mgREvfQ.dfkrB7BHOxvoTZHKzP2zM7acKYvR13alpbGCeaUPzgWa-TG\",\n          \"learnMoreUrl\": \"string\",\n          \"description\": \"string\",\n          \"integrationConfigurationId\": \"string\",\n          \"resourceId\": \"string\"\n        },\n        \"supportsMcp\": true,\n        \"supportsImport\": false,\n        \"rbac\": {\n          \"create\": false,\n          \"update\": true\n        },\n        \"mcpPermission\": {\n          \"currentPermission\": \"manual\"\n        },\n        \"providerResourceDashboardUrl\": \"string\",\n        \"metadata\": {\n          \"supabase\": {\n            \"status\": \"active\",\n            \"supabaseProjectUrl\": \"https://ahOuBqpSfFYYFTgQYVlWaIxoCFefnz.zftBTe8erCO31EtxF,qQHLmKFDYgHilhmJ5\"\n          }\n        },\n        \"pendingRedirect\": {\n          \"url\": \"http://VcjKlbbftLZdwIlQoyII.teaA-mlVAk6OhTn9EBSeTdc9Mek6CIkqO4\",\n          \"expiresAt\": 3013.735334713745\n        },\n        \"policies\": {\n          \"eulaUrl\": \"string\",\n          \"privacyPolicyUrl\": \"string\",\n          \"vercelIntegrationMarketplaceEuaUrl\": \"string\"\n        }\n      }\n    ],\n    \"scripts\": [\n      {\n        \"fileName\": \"string\"\n      },\n      {\n        \"fileName\": \"string\"\n      }\n    ],\n    \"actions\": [\n      {\n        \"action\": \"supabase-chat-url\",\n        \"title\": \"string\",\n        \"info\": \"string\"\n      },\n      {\n        \"action\": \"supabase-chat-url\",\n        \"title\": \"string\",\n        \"info\": \"string\"\n      }\n    ],\n    \"canShowWizard\": true,\n    \"fingerprint\": \"string\",\n    \"shouldPrompt\": false,\n    \"bannerDismissed\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3af82da-f70e-4096-acdf-f61ffe4ad75d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd203356-a912-4ce0-b75d-dbb4427d9897",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70982373-8ec2-44ee-8c0d-3551d4327cc2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5831e4f-923d-4604-8c7b-f0770b03f17a",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a4f7232-d04e-4da8-8456-ca778614ee46",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37ddd893-6322-40be-9f9c-0a8c58f34b9f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65d78151-0bc8-4cb8-812a-a203463a1323",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca1c26a4-bbf9-4888-b48e-f37a280a5f6a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "wizard"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "versionId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70b717cf-40ef-4e22-b2ee-252460079efe",
+          "name": "Connect Integrations For Project",
+          "request": {
+            "name": "Connect Integrations For Project",
+            "description": {
+              "content": "Connect integrations for a specific project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "21ab251e-9f81-4988-a603-dccaed6027b8",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdV0Project\": {\n    \"projectId\": \"string\",\n    \"name\": \"string\",\n    \"settings\": {\n      \"color\": \"string\",\n      \"icon\": \"string\"\n    },\n    \"vercelProjectId\": \"string\",\n    \"isCreator\": true\n  },\n  \"createdVercelProjectId\": \"string\",\n  \"connectedIntegrations\": [\n    {\n      \"integrationId\": \"string\",\n      \"integrationName\": \"Stripe\",\n      \"isPending\": false,\n      \"status\": \"string\",\n      \"redirectUrl\": \"https://Pn.adzxySYCACpv0hoG0rP-RQ,nmq69j0yl5VuIhr4pjobd7NIecuxEPXta\",\n      \"acceptPolicies\": {\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"addendumLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"eulaLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"privacyLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"footerMD\": \"string\",\n        \"actionButtonText\": \"string\"\n      }\n    },\n    {\n      \"integrationId\": \"string\",\n      \"integrationName\": \"Neon\",\n      \"isPending\": false,\n      \"status\": \"string\",\n      \"redirectUrl\": \"http://scD.wvwBQ5jSF3RO\",\n      \"acceptPolicies\": {\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"addendumLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"eulaLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"privacyLink\": {\n          \"url\": \"string\",\n          \"text\": \"string\"\n        },\n        \"footerMD\": \"string\",\n        \"actionButtonText\": \"string\"\n      }\n    }\n  ],\n  \"setEnvironmentVariables\": {\n    \"keys\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"string\"\n  },\n  \"updatedEnvironmentVariables\": {\n    \"ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"string\"\n  },\n  \"deletedEnvironmentVariables\": {\n    \"ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status\": \"string\"\n  },\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b869448-3bd9-451c-9c3c-19ff58a661a5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f81c94aa-2726-4fe6-be83-13352079fc2b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c23817e9-1fcf-4aea-9cf5-44d98a1250b3",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd61ada6-dbea-4e87-b433-3f3554b3e4e7",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e3da874-59ac-46b2-8bd9-8c962e969ebb",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b88faf5-d7d7-40e0-9cb4-e268dc57adf7",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63c481bd-69cf-4d5f-a161-0a95c06ef05a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7490e5b0-e545-4a3d-8cc1-1b7f2c29916e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chatId\": \"<string>\",\n  \"connectIntegrations\": [\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    },\n    {\n      \"integrationId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"existingInstanceId\": \"<string>\",\n      \"importExisting\": \"<boolean>\",\n      \"acceptedLinks\": {\n        \"eulaLink\": \"<boolean>\",\n        \"privacyLink\": \"<boolean>\"\n      },\n      \"useMarketplaceFlow\": \"<boolean>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"allowEnvOverride\": \"<boolean>\",\n      \"access\": \"<string>\",\n      \"region\": \"<string>\"\n    }\n  ],\n  \"setEnvironmentVariables\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"updateEnvironmentVariables\": [\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"key\": \"<string>\",\n      \"value\": \"<string>\",\n      \"targets\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"comment\": \"<string>\"\n    }\n  ],\n  \"deleteEnvironmentVariableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"v0ProjectId\": \"\",\n  \"vercelProjectId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2b547e9-c375-446e-875f-2c0962ca0e94",
+          "name": "Integrations Data For Project",
+          "request": {
+            "name": "Integrations Data For Project",
+            "description": {
+              "content": "Compute and retrieve the latest integrations data for a specific v0 Project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "integrations",
+                "project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chatId",
+                  "value": "<string>",
+                  "description": "The chat ID. If undefined, the v0ProjectId must be provided."
+                },
+                {
+                  "disabled": false,
+                  "key": "v0ProjectId",
+                  "value": "<string>",
+                  "description": "The v0 Project ID. If undefined, the chatId must be provided."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6c54aa34-b886-4d36-b046-e8bbc69939c2",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"isConnected\": true,\n      \"name\": \"Stripe\",\n      \"lightIconUrl\": \"string\",\n      \"darkIconUrl\": \"string\",\n      \"description\": \"string\",\n      \"connectedInstanceName\": \"string\",\n      \"category\": \"string\",\n      \"isBeta\": true,\n      \"slug\": \"string\",\n      \"tooltip\": \"string\",\n      \"resourceId\": \"string\",\n      \"existingInstances\": [\n        {\n          \"isConnected\": false,\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"externalResourceId\": \"string\",\n          \"manageUrl\": \"https://zphLEngPdcAhdF.nfhU8.bMXRURDvuk+BEzQw2UB+inJ5Lzl8CkjLDzMJnGNMcaq+\",\n          \"targets\": [\n            \"preview\",\n            \"preview\"\n          ],\n          \"connectedTargets\": [\n            \"development\",\n            \"preview\"\n          ]\n        },\n        {\n          \"isConnected\": false,\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"externalResourceId\": \"string\",\n          \"manageUrl\": \"https://onNtg.tmvivsYxhwyKsL\",\n          \"targets\": [\n            \"preview\",\n            \"preview\"\n          ],\n          \"connectedTargets\": [\n            \"preview\",\n            \"development\"\n          ]\n        }\n      ],\n      \"manageUrls\": [\n        {\n          \"title\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"title\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"claimFlow\": {\n        \"url\": \"http://RpmQQyaZCGcBFshwO.halkwUW3arhetlJZkuC0C1vwnOLTxk,1KQVM\",\n        \"learnMoreUrl\": \"string\",\n        \"description\": \"string\",\n        \"integrationConfigurationId\": \"string\",\n        \"resourceId\": \"string\"\n      },\n      \"supportsMcp\": true,\n      \"supportsImport\": false,\n      \"rbac\": {\n        \"create\": false,\n        \"update\": false\n      },\n      \"mcpPermission\": {\n        \"currentPermission\": \"disabled\"\n      },\n      \"providerResourceDashboardUrl\": \"string\",\n      \"metadata\": {\n        \"supabase\": {\n          \"status\": \"paused\",\n          \"supabaseProjectUrl\": \"https://wesnuSJq.aizhmsiRg23yB8xjOiUiQZjj-o5M6PN4gxkz5mfifl+O\"\n        }\n      },\n      \"pendingRedirect\": {\n        \"url\": \"https://iAUhGwpNwoktiGQnmbDyRRyCHx.mfVMe1cvMJA-3\",\n        \"expiresAt\": 8490.277314470057\n      },\n      \"policies\": {\n        \"eulaUrl\": \"string\",\n        \"privacyPolicyUrl\": \"string\",\n        \"vercelIntegrationMarketplaceEuaUrl\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"isConnected\": false,\n      \"name\": \"Snowflake\",\n      \"lightIconUrl\": \"string\",\n      \"darkIconUrl\": \"string\",\n      \"description\": \"string\",\n      \"connectedInstanceName\": \"string\",\n      \"category\": \"string\",\n      \"isBeta\": true,\n      \"slug\": \"string\",\n      \"tooltip\": \"string\",\n      \"resourceId\": \"string\",\n      \"existingInstances\": [\n        {\n          \"isConnected\": false,\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"externalResourceId\": \"string\",\n          \"manageUrl\": \"https://icRSWddWSnXTRSzjic.tijlbd19kcR7V3lB54GPO4DTlYojTLtVrioF0okfE,d6hx,U8gWm\",\n          \"targets\": [\n            \"production\",\n            \"production\"\n          ],\n          \"connectedTargets\": [\n            \"preview\",\n            \"preview\"\n          ]\n        },\n        {\n          \"isConnected\": false,\n          \"name\": \"string\",\n          \"id\": \"string\",\n          \"externalResourceId\": \"string\",\n          \"manageUrl\": \"http://uZoS.bfwK+S,f2MaVXcjvn3uPbl0.vFcny38L9Y19K0LyRZt3NKTex1dR5j0BQAYVuof\",\n          \"targets\": [\n            \"production\",\n            \"development\"\n          ],\n          \"connectedTargets\": [\n            \"preview\",\n            \"production\"\n          ]\n        }\n      ],\n      \"manageUrls\": [\n        {\n          \"title\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"title\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"claimFlow\": {\n        \"url\": \"https://lqoGI.fsUHuey5e5EIJWwYdTg-xke9OvL\",\n        \"learnMoreUrl\": \"string\",\n        \"description\": \"string\",\n        \"integrationConfigurationId\": \"string\",\n        \"resourceId\": \"string\"\n      },\n      \"supportsMcp\": false,\n      \"supportsImport\": false,\n      \"rbac\": {\n        \"create\": false,\n        \"update\": false\n      },\n      \"mcpPermission\": {\n        \"currentPermission\": \"manual\"\n      },\n      \"providerResourceDashboardUrl\": \"string\",\n      \"metadata\": {\n        \"supabase\": {\n          \"status\": \"active\",\n          \"supabaseProjectUrl\": \"https://VmmhWMmNwLYBOkIFJfUPtreeH.ipfGVcgUVrn7HrnGvUW0npnthMgCfc2vbwEU,6.5W+ygY\"\n        }\n      },\n      \"pendingRedirect\": {\n        \"url\": \"https://qqMwKiFiWphelzDiUUz.vznzQGB01CB2xYUTC\",\n        \"expiresAt\": 5179.877643724191\n      },\n      \"policies\": {\n        \"eulaUrl\": \"string\",\n        \"privacyPolicyUrl\": \"string\",\n        \"vercelIntegrationMarketplaceEuaUrl\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "389cb064-2e54-40d6-9898-ef8e5648001c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dab6c58-133c-49af-a295-33182b17156d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7321e0ae-9723-4c77-a178-1b179cd8f733",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dcb27a0-6d91-4125-8147-8e0b96317fc6",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d34a340-b5e4-496e-bd41-2851490854e4",
+              "name": "Payload Too Large",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52fa46b4-ce58-46ce-b5c3-c7a886d19772",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6595948-1efa-4514-a4b1-b36d0ec3666f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06a1c120-fad0-4221-88d4-42f66f00af95",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "integrations",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chatId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "v0ProjectId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.v0.dev/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2a6b7e64-7e83-41e1-a096-c3bab063b9ea",
+    "name": "v0 App agent integrations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Full stack vibe coding API",
+      "type": "text/plain"
+    }
+  }
+}
