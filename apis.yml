@@ -22,6 +22,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/v0.png
 tags:
+  - Artificial Intelligence
+  - App Builder
+  - Vercel
+  - Code Generation
+  - Platform API
+tags_raw:
   - AI
   - App Builder
   - Vercel
@@ -37,6 +43,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Agents
+  tags_raw:
   - agent
   properties:
   - type: OpenAPI
@@ -50,7 +58,8 @@ apis:
   description: The blankProject API from v0 — 1 operation(s) for blankproject.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
+  tags: []
+  tags_raw:
   - blankProject
   properties:
   - type: OpenAPI
@@ -65,6 +74,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Chats
+  tags_raw:
   - chats
   properties:
   - type: OpenAPI
@@ -78,7 +89,8 @@ apis:
   description: The chatScreenshots API from v0 — 1 operation(s) for chatscreenshots.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
+  tags: []
+  tags_raw:
   - chatScreenshots
   properties:
   - type: OpenAPI
@@ -93,6 +105,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Deployment
+  tags_raw:
   - deployments
   properties:
   - type: OpenAPI
@@ -107,6 +121,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Feedback
+  tags_raw:
   - feedback
   properties:
   - type: OpenAPI
@@ -121,6 +137,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Git
+  tags_raw:
   - git
   properties:
   - type: OpenAPI
@@ -135,6 +153,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Hooks
+  tags_raw:
   - hooks
   properties:
   - type: OpenAPI
@@ -163,6 +183,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Integration
+  tags_raw:
   - integrations
   properties:
   - type: OpenAPI
@@ -177,6 +199,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Magic Link
+  tags_raw:
   - magicLink
   properties:
   - type: OpenAPI
@@ -191,6 +215,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - MCP Servers
+  tags_raw:
   - mcpServers
   properties:
   - type: OpenAPI
@@ -204,7 +230,8 @@ apis:
   description: The nativeVersion API from v0 — 1 operation(s) for nativeversion.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
+  tags: []
+  tags_raw:
   - nativeVersion
   properties:
   - type: OpenAPI
@@ -219,6 +246,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Notification
+  tags_raw:
   - notifications
   properties:
   - type: OpenAPI
@@ -233,6 +262,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Plans
+  tags_raw:
   - plans
   properties:
   - type: OpenAPI
@@ -247,6 +278,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Product
+  tags_raw:
   - products
   properties:
   - type: OpenAPI
@@ -261,6 +294,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Project
+  tags_raw:
   - projects
   properties:
   - type: OpenAPI
@@ -275,6 +310,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Prompt Templates
+  tags_raw:
   - promptTemplates
   properties:
   - type: OpenAPI
@@ -289,6 +326,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Rate Limits
+  tags_raw:
   - rateLimits
   properties:
   - type: OpenAPI
@@ -303,6 +342,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Reports
+  tags_raw:
   - reports
   properties:
   - type: OpenAPI
@@ -317,6 +358,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Search
+  tags_raw:
   - search
   properties:
   - type: OpenAPI
@@ -331,6 +374,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - Terms
+  tags_raw:
   - terms
   properties:
   - type: OpenAPI
@@ -345,6 +390,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - User
+  tags_raw:
   - user
   properties:
   - type: OpenAPI
