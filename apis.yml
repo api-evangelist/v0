@@ -7,6 +7,18 @@ description: >-
   code-generation primitives that power the v0 web product so AI tools, IDEs, and pipelines can drive v0
   programmatically. An OpenAPI 3.1 spec is published at https://api.v0.app/openapi.json and a v0-sdk package is
   available for TypeScript.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
