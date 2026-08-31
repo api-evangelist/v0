@@ -55,7 +55,7 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
-  - Agents
+  - agent
   tags_raw:
   - agent
   properties:
@@ -149,7 +149,7 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
-  - Git
+  - git
   tags_raw:
   - git
   properties:
@@ -165,7 +165,7 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
-  - Hooks
+  - hooks
   tags_raw:
   - hooks
   properties:
@@ -210,8 +210,7 @@ apis:
   description: The magicLink API from v0 — 1 operation(s) for magiclink.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
-  - Magic Link
+  tags: []
   tags_raw:
   - magicLink
   properties:
@@ -226,8 +225,7 @@ apis:
   description: The mcpServers API from v0 — 3 operation(s) for mcpservers.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
-  - MCP Servers
+  tags: []
   tags_raw:
   - mcpServers
   properties:
@@ -321,8 +319,7 @@ apis:
   description: The promptTemplates API from v0 — 1 operation(s) for prompttemplates.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
-  - Prompt Templates
+  tags: []
   tags_raw:
   - promptTemplates
   properties:
@@ -337,8 +334,7 @@ apis:
   description: The rateLimits API from v0 — 1 operation(s) for ratelimits.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
-  tags:
-  - Rate Limits
+  tags: []
   tags_raw:
   - rateLimits
   properties:
@@ -386,7 +382,7 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
-  - Terms
+  - terms
   tags_raw:
   - terms
   properties:
