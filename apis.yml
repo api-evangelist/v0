@@ -40,7 +40,6 @@ tags:
   - Vercel
   - Code Generation
   - Platform API
-  - Developer Tools
 tags_raw:
   - AI
   - App Builder
@@ -207,38 +206,6 @@ apis:
     url: https://vercel.com/docs/v0/api
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
-- aid: v0:v0-magiclink-api
-  name: v0 magicLink API
-  description: The magicLink API from v0 — 1 operation(s) for magiclink.
-  humanURL: https://vercel.com/docs/v0/api
-  baseURL: https://api.v0.dev/v1
-  tags:
-  - Magic Link
-  tags_raw:
-  - magicLink
-  properties:
-  - type: OpenAPI
-    url: openapi/v0-magiclink-api-openapi.yml
-  - type: Documentation
-    url: https://vercel.com/docs/v0/api
-  - type: SDKs
-    url: https://www.npmjs.com/package/v0-sdk
-- aid: v0:v0-mcpservers-api
-  name: v0 mcpServers API
-  description: The mcpServers API from v0 — 3 operation(s) for mcpservers.
-  humanURL: https://vercel.com/docs/v0/api
-  baseURL: https://api.v0.dev/v1
-  tags:
-  - MCP Servers
-  tags_raw:
-  - mcpServers
-  properties:
-  - type: OpenAPI
-    url: openapi/v0-mcpservers-api-openapi.yml
-  - type: Documentation
-    url: https://vercel.com/docs/v0/api
-  - type: SDKs
-    url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-nativeversion-api
   name: v0 nativeVersion API
   description: The nativeVersion API from v0 — 1 operation(s) for nativeversion.
@@ -318,38 +285,6 @@ apis:
     url: https://vercel.com/docs/v0/api
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
-- aid: v0:v0-prompttemplates-api
-  name: v0 promptTemplates API
-  description: The promptTemplates API from v0 — 1 operation(s) for prompttemplates.
-  humanURL: https://vercel.com/docs/v0/api
-  baseURL: https://api.v0.dev/v1
-  tags:
-  - Prompt Templates
-  tags_raw:
-  - promptTemplates
-  properties:
-  - type: OpenAPI
-    url: openapi/v0-prompttemplates-api-openapi.yml
-  - type: Documentation
-    url: https://vercel.com/docs/v0/api
-  - type: SDKs
-    url: https://www.npmjs.com/package/v0-sdk
-- aid: v0:v0-ratelimits-api
-  name: v0 rateLimits API
-  description: The rateLimits API from v0 — 1 operation(s) for ratelimits.
-  humanURL: https://vercel.com/docs/v0/api
-  baseURL: https://api.v0.dev/v1
-  tags:
-  - Rate Limits
-  tags_raw:
-  - rateLimits
-  properties:
-  - type: OpenAPI
-    url: openapi/v0-ratelimits-api-openapi.yml
-  - type: Documentation
-    url: https://vercel.com/docs/v0/api
-  - type: SDKs
-    url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-reports-api
   name: v0 reports API
   description: The reports API from v0 — 2 operation(s) for reports.
@@ -410,6 +345,62 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/v0-user-api-openapi.yml
+  - type: Documentation
+    url: https://vercel.com/docs/v0/api
+  - type: SDKs
+    url: https://www.npmjs.com/package/v0-sdk
+- aid: v0:v0-magic-link-api
+  name: v0 Magic Link API
+  description: The Magic Link API from v0 — 1 operation(s) for magic link.
+  humanURL: https://vercel.com/docs/v0/api
+  baseURL: https://api.v0.dev/v1
+  tags:
+  - Magic Link
+  properties:
+  - type: OpenAPI
+    url: openapi/v0-magic-link-api-openapi.yml
+  - type: Documentation
+    url: https://vercel.com/docs/v0/api
+  - type: SDKs
+    url: https://www.npmjs.com/package/v0-sdk
+- aid: v0:v0-mcp-servers-api
+  name: v0 MCP Servers API
+  description: The MCP Servers API from v0 — 3 operation(s) for mcp servers.
+  humanURL: https://vercel.com/docs/v0/api
+  baseURL: https://api.v0.dev/v1
+  tags:
+  - MCP Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/v0-mcp-servers-api-openapi.yml
+  - type: Documentation
+    url: https://vercel.com/docs/v0/api
+  - type: SDKs
+    url: https://www.npmjs.com/package/v0-sdk
+- aid: v0:v0-prompt-templates-api
+  name: v0 Prompt Templates API
+  description: The Prompt Templates API from v0 — 1 operation(s) for prompt templates.
+  humanURL: https://vercel.com/docs/v0/api
+  baseURL: https://api.v0.dev/v1
+  tags:
+  - Prompt Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/v0-prompt-templates-api-openapi.yml
+  - type: Documentation
+    url: https://vercel.com/docs/v0/api
+  - type: SDKs
+    url: https://www.npmjs.com/package/v0-sdk
+- aid: v0:v0-rate-limits-api
+  name: v0 Rate Limits API
+  description: The Rate Limits API from v0 — 1 operation(s) for rate limits.
+  humanURL: https://vercel.com/docs/v0/api
+  baseURL: https://api.v0.dev/v1
+  tags:
+  - Rate Limits
+  properties:
+  - type: OpenAPI
+    url: openapi/v0-rate-limits-api-openapi.yml
   - type: Documentation
     url: https://vercel.com/docs/v0/api
   - type: SDKs
