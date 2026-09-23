@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: v0 App agent deployments API
+  title: v0 App Deployments API
   version: '0'
   description: Full stack vibe coding API
   termsOfService: https://vercel.com/legal/api-terms
 servers:
 - url: https://api.v0.dev/v1
 tags:
-- name: deployments
+- name: Deployments
 paths:
   /deployments:
     get:
@@ -15,7 +15,7 @@ paths:
       description: Find deployments by project and chat IDs. This will return a list of deployments for the given project and chat IDs.
       operationId: deployments.find
       tags:
-      - deployments
+      - Deployments
       responses:
         '200':
           description: Success
@@ -149,7 +149,7 @@ paths:
       description: Create a new deployment for a specific chat and version. This will trigger a deployment to Vercel.
       operationId: deployments.create
       tags:
-      - deployments
+      - Deployments
       requestBody:
         required: true
         content:
@@ -267,7 +267,7 @@ paths:
       description: Get a deployment by ID. This will return the details of the deployment, including the inspector URL, chat ID, project ID, version ID, API URL, and web URL.
       operationId: deployments.getById
       tags:
-      - deployments
+      - Deployments
       responses:
         '200':
           description: Success
@@ -374,7 +374,7 @@ paths:
       description: Delete a deployment by ID. This will delete the deployment from Vercel.
       operationId: deployments.delete
       tags:
-      - deployments
+      - Deployments
       responses:
         '200':
           description: Success
@@ -459,7 +459,7 @@ paths:
       description: Retrieves logs for a specific deployment. Supports filtering by timestamp to fetch only recent logs.
       operationId: deployments.findLogs
       tags:
-      - deployments
+      - Deployments
       responses:
         '200':
           description: Success
@@ -593,7 +593,7 @@ paths:
       description: Retrieves a list of errors that occurred during a specific deployment. Useful for diagnosing and debugging deployment issues.
       operationId: deployments.findErrors
       tags:
-      - deployments
+      - Deployments
       responses:
         '200':
           description: Success
@@ -668,7 +668,7 @@ paths:
       - apiKey: []
 components:
   schemas:
-    InternalServerError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -678,7 +678,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -704,6 +704,42 @@ components:
       required:
       - error
       additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -715,24 +751,6 @@ components:
             type:
               type: string
               const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
           required:
           - message
           - type
@@ -787,24 +805,6 @@ components:
             type:
               type: string
               const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
           required:
           - message
           - type

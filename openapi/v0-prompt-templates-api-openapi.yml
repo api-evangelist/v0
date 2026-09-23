@@ -1,60 +1,81 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: v0 App agent rateLimits API
+  title: v0 App Prompt Templates API
   version: '0'
   description: Full stack vibe coding API
   termsOfService: https://vercel.com/legal/api-terms
 servers:
 - url: https://api.v0.dev/v1
 tags:
-- name: rateLimits
+- name: Prompt Templates
 paths:
-  /rate-limits:
+  /prompt-templates:
     get:
-      summary: Find Rate Limit
-      description: Retrieves rate limit information for a given scope. Useful for monitoring usage limits and avoiding throttling.
-      operationId: rateLimits.find
+      summary: Find Prompt Templates
+      description: Returns a list of prompt templates that can be used to quickly start new chats. These are pre-defined prompts that help users get started with common use cases.
+      operationId: promptTemplates.find
       tags:
-      - rateLimits
+      - Prompt Templates
       responses:
         '200':
           description: Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  remaining:
-                    type: number
-                  reset:
-                    type: number
-                  limit:
-                    type: number
-                  dailyLimit:
-                    description: Daily message limit information for free users.
-                    type: object
-                    properties:
-                      limit:
-                        type: number
-                        description: The maximum number of daily messages allowed for free users.
-                      remaining:
-                        type: number
-                        description: The number of messages the user has remaining for the day.
-                      reset:
-                        type: number
-                        description: Unix timestamp (in milliseconds) when the daily limit resets.
-                      isWithinGracePeriod:
-                        type: boolean
-                        description: Whether the user is within the 48-hour grace period for new users, during which usage tracking is disabled.
-                    required:
-                    - limit
-                    - remaining
-                    - reset
-                    - isWithinGracePeriod
-                    additionalProperties: false
-                required:
-                - limit
-                additionalProperties: false
+                type: array
+                items:
+                  type: object
+                  properties:
+                    messageId:
+                      type: string
+                      description: Unique identifier for the template message
+                    chatTitle:
+                      type: string
+                      description: Display title for the template
+                    name:
+                      type: string
+                      description: Internal name identifier for the template
+                    prompt:
+                      type: string
+                      description: The full prompt text to use when selected
+                    shortDescription:
+                      type: string
+                      description: A short description of the template
+                    mobileAsset:
+                      description: Mobile assets for the template
+                      anyOf:
+                      - type: object
+                        properties:
+                          type:
+                            type: string
+                            const: sfSymbol
+                          name:
+                            type: string
+                          weight:
+                            type: string
+                        required:
+                        - type
+                        - name
+                        - weight
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          type:
+                            type: string
+                            const: image
+                          url:
+                            type: string
+                        required:
+                        - type
+                        - url
+                        additionalProperties: false
+                  required:
+                  - messageId
+                  - chatTitle
+                  - name
+                  - prompt
+                  - shortDescription
+                  additionalProperties: false
         '401':
           description: Unauthorized
           content:
@@ -103,19 +124,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
-      parameters:
-      - name: scope
-        in: query
-        required: false
-        schema:
-          description: The context or namespace to check rate limits for (e.g., a project slug or feature area).
-          type: string
-        description: The context or namespace to check rate limits for (e.g., a project slug or feature area).
       security:
       - apiKey: []
 components:
   schemas:
-    InternalServerError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -125,7 +138,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -151,6 +164,42 @@ components:
       required:
       - error
       additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -162,24 +211,6 @@ components:
             type:
               type: string
               const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
           required:
           - message
           - type
@@ -234,24 +265,6 @@ components:
             type:
               type: string
               const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
           required:
           - message
           - type

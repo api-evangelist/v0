@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: v0 App agent chats API
+  title: v0 App Chats API
   version: '0'
   description: Full stack vibe coding API
   termsOfService: https://vercel.com/legal/api-terms
 servers:
 - url: https://api.v0.dev/v1
 tags:
-- name: chats
+- name: Chats
   description: Chats
 paths:
   /chats:
@@ -16,7 +16,7 @@ paths:
       description: Creates a new chat using a user message, optional system context, and model configuration. Useful for prompting the model within the scope of a specific project.
       operationId: chats.create
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -184,7 +184,7 @@ paths:
       description: Retrieves a list of existing chats, with support for pagination and filtering by favorite status, Vercel project, or Git branch. Helps manage and navigate chat history.
       operationId: chats.find
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -417,7 +417,7 @@ paths:
       description: Initializes a new chat from source content such as files, repositories, registries, or zip archives. Enables context-rich conversations based on code or assets.
       operationId: chats.init
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -642,7 +642,7 @@ paths:
       description: Deletes a specific chat based on the provided chatId. This operation is irreversible and permanently removes the chat and its contents.
       operationId: chats.delete
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -726,7 +726,7 @@ paths:
       description: Retrieves the full details of a specific chat using its `chatId`. Includes messages, metadata, and associated configuration.
       operationId: chats.getById
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -808,7 +808,7 @@ paths:
       description: Updates the metadata of an existing chat using its `chatId`. Supports changes to the chat name and privacy setting.
       operationId: chats.update
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -913,7 +913,7 @@ paths:
       description: Marks or unmarks a chat as a favorite using its `chatId`. This helps with organizing and quickly accessing important chats.
       operationId: chats.favorite
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -1015,7 +1015,7 @@ paths:
       description: Creates a new chat fork (duplicate) from a specific version within an existing chat. Useful for branching off alternate directions without modifying the original conversation.
       operationId: chats.fork
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -1108,7 +1108,7 @@ paths:
       description: Retrieves a list of all messages for a specific chat, ordered by creation date (newest first). Supports cursor-based pagination and includes message content, role, and type information.
       operationId: chats.findMessages
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -1220,7 +1220,7 @@ paths:
       description: Creates a new message in an existing chat. Triggers a model response using the provided prompt, with optional attachments and configuration settings.
       operationId: chats.sendMessage
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -1378,7 +1378,7 @@ paths:
       description: Retrieves detailed information about a specific message within a chat, including content, files, model configuration, and demo URLs.
       operationId: chats.getMessage
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -1763,7 +1763,7 @@ paths:
       description: Deletes a specific message from a chat.
       operationId: chats.{chatId}.messages.{messageId}.delete
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -1854,7 +1854,7 @@ paths:
       description: Retrieves a list of all versions (iterations) for a specific chat, ordered by creation date (newest first). Supports cursor-based pagination and includes version status and demo URLs.
       operationId: chats.findVersions
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2014,7 +2014,7 @@ paths:
       description: Get the iframe for a version
       operationId: chats.findIframe
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2140,7 +2140,7 @@ paths:
       description: Get the VM server logs for a version
       operationId: chats.findVmLogs
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2251,7 +2251,7 @@ paths:
       description: Clear the VM server logs for a version
       operationId: chats.vmLogs
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2334,7 +2334,7 @@ paths:
       description: Retrieves detailed information about a specific version of a chat, including all files with their content and lock status.
       operationId: chats.getVersion
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2420,7 +2420,7 @@ paths:
       description: Updates the source files of a specific chat version (block) manually. This allows editing generated files directly through the API.
       operationId: chats.updateVersion
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -2526,7 +2526,7 @@ paths:
       description: Download all files for a specific chat version as a zip or tarball archive. Use includeDefaultFiles=true to include all deployment files (package.json, configuration files, etc.) or false/omitted to return only the generated source files.
       operationId: chats.downloadVersion
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2631,7 +2631,7 @@ paths:
       description: Retrieves line-level diff statistics (additions and removals) for each file changed in a specific version.
       operationId: chats.getVersionDiffStats
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2733,7 +2733,7 @@ paths:
       description: Retrieves the unified diff patch for a file changed in a specific version.
       operationId: chats.getVersionDiffPatch
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -2828,7 +2828,7 @@ paths:
       description: Deletes source files from a specific chat version (block). Files are removed from the version and a new source version is created.
       operationId: chats.deleteVersionFiles
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -2920,7 +2920,7 @@ paths:
       description: Get the metadata for a chat
       operationId: chats.getMetadata
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -3012,7 +3012,7 @@ paths:
       description: Upload a file to a chat
       operationId: chats.upload
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -3100,7 +3100,7 @@ paths:
       description: Resumes processing of a previously interrupted or incomplete message in a chat. Useful for continuing generation when a message was paused or stopped.
       operationId: chats.resume
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -3486,7 +3486,7 @@ paths:
       description: Stops an in-flight message generation in a chat. Useful for cancelling a streaming response that is still being generated.
       operationId: chats.stop
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -3570,7 +3570,7 @@ paths:
       description: Resolves a pending task in a chat, continuing the conversation. The latest message in the active chat fork must be an assistant message currently blocked on a matching task (integration setup, plan approval, question answers, or permission grants).
       operationId: chats.resolveTask
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -3871,7 +3871,7 @@ paths:
       description: Restores a block to a specific version.
       operationId: chats.restore
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -3948,7 +3948,7 @@ paths:
       description: Recreate the VM sandbox for a version
       operationId: chats.recreate
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4029,7 +4029,7 @@ paths:
     get:
       operationId: chats.findVersionPicker
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4111,11 +4111,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats find version picker
+      x-summary-source: derived
   /chats/{chatId}/git/activity:
     get:
       operationId: chats.{chatId}.git.activity.find
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4208,11 +4210,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} git activity find
+      x-summary-source: derived
   /chats/{chatId}/git/status:
     get:
       operationId: chats.{chatId}.git.status.find
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4535,11 +4539,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} git status find
+      x-summary-source: derived
   /chats/{chatId}/git/connection:
     get:
       operationId: chats.{chatId}.git.connection.find
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4853,11 +4859,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} git connection find
+      x-summary-source: derived
   /chats/{chatId}/git/pull-request:
     post:
       operationId: chats.{chatId}.git.pullRequest.create
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -4999,11 +5007,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} git pull request create
+      x-summary-source: derived
   /chats/{chatId}/git/merge-pull-request:
     post:
       operationId: chats.{chatId}.git.mergePullRequest.create
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -5101,11 +5111,13 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} git merge pull request create
+      x-summary-source: derived
   /chats/{chatId}/git/pull-changes:
     post:
       operationId: chats.{chatId}.git.pullChanges.create
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -5182,11 +5194,13 @@ paths:
         description: The chat ID to pull changes into.
       security:
       - apiKey: []
+      summary: Chats {chat id} git pull changes create
+      x-summary-source: derived
   /chats/{chatId}/git/deployment:
     get:
       operationId: chats.{chatId}.git.deployment.find
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -5345,11 +5359,13 @@ paths:
         description: Query parameter "sha"
       security:
       - apiKey: []
+      summary: Chats {chat id} git deployment find
+      x-summary-source: derived
   /chats/{chatId}/agent/logs:
     post:
       operationId: chats.{chatId}.agent.logs.create
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -5448,13 +5464,15 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats {chat id} agent logs create
+      x-summary-source: derived
   /chats/{chatId}/deployments:
     get:
       summary: Find Deployments
       description: Find deployments by chat ID. This will return a list of deployments for the given chat. Uses the vercelProjectId from the chat.
       operationId: chats.findDeployments
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -5577,7 +5595,7 @@ paths:
       description: Create a new deployment for a specific chat and version. This will trigger a deployment to Vercel. Uses the vercelProjectId from the chat.
       operationId: chats.deployments
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -5695,7 +5713,7 @@ paths:
       description: Retrieves all environment variables for a given chat. Uses the vercelProjectId from the chat.
       operationId: chats.findEnvVars
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -5787,7 +5805,7 @@ paths:
       description: Creates new environment variables for a given chat. Uses the vercelProjectId from the chat.
       operationId: chats.envVars
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -5910,7 +5928,7 @@ paths:
       description: Deletes multiple environment variables for a given chat by their IDs. Uses the vercelProjectId from the chat.
       operationId: chats.{chatId}.envVars.delete.create
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -6023,7 +6041,7 @@ paths:
       description: Creates a new Vercel project and links it to the specified chat.
       operationId: chats.vercelProject
       tags:
-      - chats
+      - Chats
       requestBody:
         required: true
         content:
@@ -6117,7 +6135,7 @@ paths:
     get:
       operationId: chats.findVercel
       tags:
-      - chats
+      - Chats
       responses:
         '200':
           description: Success
@@ -6269,8 +6287,111 @@ paths:
         description: Path parameter "chatId"
       security:
       - apiKey: []
+      summary: Chats find vercel
+      x-summary-source: derived
 components:
   schemas:
+    EnvironmentVariableSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Summary information for an environment variable.
+    VersionDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the version.
+        object:
+          type: string
+          const: version
+          description: Fixed value identifying this object as a version.
+        status:
+          type: string
+          enum:
+          - pending
+          - completed
+          - failed
+          description: The current status of the version generation process.
+        demoUrl:
+          description: Optional URL for previewing the generated output.
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The date and time when the version was created, in ISO 8601 format.
+        updatedAt:
+          description: The date and time when the version was last updated, in ISO 8601 format.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                const: file
+                description: Fixed value identifying this object as a file.
+              name:
+                type: string
+                description: The name of the file, including its extension.
+              content:
+                type: string
+                description: The full contents of the file as a raw string.
+              locked:
+                type: boolean
+                description: Whether the file is locked to prevent AI from overwriting it during new version generation.
+            required:
+            - object
+            - name
+            - content
+            - locked
+            additionalProperties: false
+            description: Detailed representation of a file, including its content and lock status.
+          description: A list of files that were generated or included in this version.
+        screenshotUrl:
+          type: string
+          description: URL to retrieve a screenshot of this version.
+      required:
+      - id
+      - object
+      - status
+      - createdAt
+      - files
+      additionalProperties: false
+      description: Detailed version data including file contents.
     MessageSummary:
       type: object
       properties:
@@ -6578,6 +6699,60 @@ components:
       - authorId
       additionalProperties: false
       description: Summary of a single message within a chat, including role, content, type, timestamp, and API URL.
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     ChatDetail:
       type: object
       properties:
@@ -7102,132 +7277,6 @@ components:
       - metadata
       additionalProperties: false
       description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     ChatDetail_AppApi:
       type: object
       properties:
@@ -7600,107 +7649,6 @@ components:
       - cursor
       additionalProperties: false
       description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
-    EnvironmentVariableSummarySchema:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the environment variable.
-        object:
-          type: string
-          const: environment_variable
-          description: The object type.
-        key:
-          type: string
-          description: The name of the environment variable.
-        value:
-          type: string
-          description: The value of the environment variable.
-        decrypted:
-          type: boolean
-          description: Whether the value is decrypted or encrypted.
-        createdAt:
-          type: number
-          description: The timestamp when the environment variable was created.
-        updatedAt:
-          description: The timestamp when the environment variable was last updated.
-          type: number
-      required:
-      - id
-      - object
-      - key
-      - value
-      - decrypted
-      - createdAt
-      additionalProperties: false
-      description: Summary information for an environment variable.
-    VersionDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the version.
-        object:
-          type: string
-          const: version
-          description: Fixed value identifying this object as a version.
-        status:
-          type: string
-          enum:
-          - pending
-          - completed
-          - failed
-          description: The current status of the version generation process.
-        demoUrl:
-          description: Optional URL for previewing the generated output.
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The date and time when the version was created, in ISO 8601 format.
-        updatedAt:
-          description: The date and time when the version was last updated, in ISO 8601 format.
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              object:
-                type: string
-                const: file
-                description: Fixed value identifying this object as a file.
-              name:
-                type: string
-                description: The name of the file, including its extension.
-              content:
-                type: string
-                description: The full contents of the file as a raw string.
-              locked:
-                type: boolean
-                description: Whether the file is locked to prevent AI from overwriting it during new version generation.
-            required:
-            - object
-            - name
-            - content
-            - locked
-            additionalProperties: false
-            description: Detailed representation of a file, including its content and lock status.
-          description: A list of files that were generated or included in this version.
-        screenshotUrl:
-          type: string
-          description: URL to retrieve a screenshot of this version.
-      required:
-      - id
-      - object
-      - status
-      - createdAt
-      - files
-      additionalProperties: false
-      description: Detailed version data including file contents.
     ConflictError:
       type: object
       properties:
@@ -7712,6 +7660,78 @@ components:
             type:
               type: string
               const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
           required:
           - message
           - type

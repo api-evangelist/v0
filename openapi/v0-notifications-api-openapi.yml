@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: v0 App agent notifications API
+  title: v0 App Notifications API
   version: '0'
   description: Full stack vibe coding API
   termsOfService: https://vercel.com/legal/api-terms
 servers:
 - url: https://api.v0.dev/v1
 tags:
-- name: notifications
+- name: Notifications
 paths:
   /notifications/device-token:
     post:
       operationId: notifications.deviceToken.create
       tags:
-      - notifications
+      - Notifications
       requestBody:
         required: true
         content:
@@ -106,11 +106,13 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       security:
       - apiKey: []
+      summary: Notifications device token create
+      x-summary-source: derived
   /notifications/device-token/{deviceId}:
     delete:
       operationId: notifications.deviceToken.{deviceId}.delete
       tags:
-      - notifications
+      - Notifications
       responses:
         '200':
           description: Success
@@ -197,11 +199,13 @@ paths:
         description: Query parameter "bundleId"
       security:
       - apiKey: []
+      summary: Notifications device token {device id} delete
+      x-summary-source: derived
   /notifications/live-activity-update-token:
     post:
       operationId: notifications.liveActivityUpdateToken.create
       tags:
-      - notifications
+      - Notifications
       requestBody:
         required: true
         content:
@@ -280,9 +284,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       security:
       - apiKey: []
+      summary: Notifications live activity update token create
+      x-summary-source: derived
 components:
   schemas:
-    InternalServerError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -292,7 +298,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -318,6 +324,42 @@ components:
       required:
       - error
       additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -329,24 +371,6 @@ components:
             type:
               type: string
               const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
           required:
           - message
           - type
@@ -401,24 +425,6 @@ components:
             type:
               type: string
               const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
           required:
           - message
           - type

@@ -1,13 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: v0 App agent API
+  title: v0 App Agent API
   version: '0'
   description: Full stack vibe coding API
   termsOfService: https://vercel.com/legal/api-terms
 servers:
 - url: https://api.v0.dev/v1
 tags:
-- name: agent
+- name: Agent
 paths:
   /agent/runtime-errors:
     post:
@@ -15,7 +15,7 @@ paths:
       description: Sends and stores agent runtime errors for a specific block
       operationId: agent.runtime-errors.send
       tags:
-      - agent
+      - Agent
       requestBody:
         required: true
         content:
@@ -101,7 +101,7 @@ paths:
       - apiKey: []
 components:
   schemas:
-    InternalServerError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -111,7 +111,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -137,6 +137,42 @@ components:
       required:
       - error
       additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -148,24 +184,6 @@ components:
             type:
               type: string
               const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
           required:
           - message
           - type
@@ -220,24 +238,6 @@ components:
             type:
               type: string
               const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
           required:
           - message
           - type
