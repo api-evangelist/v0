@@ -51,7 +51,7 @@ modified: '2026-05-19'
 specificationVersion: '0.23'
 apis:
 - aid: v0:v0-agent-api
-  name: v0 agent API
+  name: v0 Agent API
   description: The agent API from v0 — 1 operation(s) for agent.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -67,7 +67,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-blankproject-api
-  name: v0 blankProject API
+  name: v0 Blank Project API
   description: The blankProject API from v0 — 1 operation(s) for blankproject.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -82,7 +82,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-chats-api
-  name: v0 chats API
+  name: v0 Chats API
   description: Chats
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -98,7 +98,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-chatscreenshots-api
-  name: v0 chatScreenshots API
+  name: v0 Chat Screenshots API
   description: The chatScreenshots API from v0 — 1 operation(s) for chatscreenshots.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -113,7 +113,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-deployments-api
-  name: v0 deployments API
+  name: v0 Deployments API
   description: The deployments API from v0 — 4 operation(s) for deployments.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -129,7 +129,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-feedback-api
-  name: v0 feedback API
+  name: v0 Feedback API
   description: The feedback API from v0 — 1 operation(s) for feedback.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -145,7 +145,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-git-api
-  name: v0 git API
+  name: v0 Git API
   description: The git API from v0 — 8 operation(s) for git.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -161,7 +161,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-hooks-api
-  name: v0 hooks API
+  name: v0 Hooks API
   description: The hooks API from v0 — 2 operation(s) for hooks.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -177,7 +177,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-iap-api
-  name: v0 iap API
+  name: v0 Iap API
   description: The iap API from v0 — 1 operation(s) for iap.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -191,7 +191,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-integrations-api
-  name: v0 integrations API
+  name: v0 Integrations API
   description: The integrations API from v0 — 4 operation(s) for integrations.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -207,7 +207,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-nativeversion-api
-  name: v0 nativeVersion API
+  name: v0 Native Version API
   description: The nativeVersion API from v0 — 1 operation(s) for nativeversion.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -222,7 +222,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-notifications-api
-  name: v0 notifications API
+  name: v0 Notifications API
   description: The notifications API from v0 — 3 operation(s) for notifications.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -238,7 +238,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-plans-api
-  name: v0 plans API
+  name: v0 Plans API
   description: The plans API from v0 — 1 operation(s) for plans.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -254,7 +254,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-products-api
-  name: v0 products API
+  name: v0 Products API
   description: The products API from v0 — 1 operation(s) for products.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -270,7 +270,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-projects-api
-  name: v0 projects API
+  name: v0 Projects API
   description: The projects API from v0 — 9 operation(s) for projects.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -286,7 +286,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-reports-api
-  name: v0 reports API
+  name: v0 Reports API
   description: The reports API from v0 — 2 operation(s) for reports.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -302,7 +302,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-search-api
-  name: v0 search API
+  name: v0 Search API
   description: The search API from v0 — 1 operation(s) for search.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -318,7 +318,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-terms-api
-  name: v0 terms API
+  name: v0 Terms API
   description: The terms API from v0 — 2 operation(s) for terms.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -334,7 +334,7 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 - aid: v0:v0-user-api
-  name: v0 user API
+  name: v0 User API
   description: The user API from v0 — 8 operation(s) for user.
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
@@ -369,8 +369,6 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
-  - MCP Server
-  tags_raw:
   - MCP Servers
   properties:
   - type: OpenAPI

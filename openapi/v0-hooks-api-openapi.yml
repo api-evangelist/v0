@@ -456,6 +456,24 @@ components:
       required:
       - error
       additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     HookSummary:
       type: object
       properties:
@@ -475,7 +493,7 @@ components:
       - name
       additionalProperties: false
       description: Summary of a webhook, including its ID and display name.
-    InternalServerError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -485,7 +503,25 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
           required:
           - message
           - type
@@ -511,7 +547,7 @@ components:
       required:
       - error
       additionalProperties: false
-    ConflictError:
+    InternalServerError:
       type: object
       properties:
         error:
@@ -521,7 +557,7 @@ components:
               type: string
             type:
               type: string
-              const: conflict_error
+              const: internal_server_error
           required:
           - message
           - type
@@ -587,42 +623,6 @@ components:
       - url
       additionalProperties: false
       description: Full configuration details for a webhook, including its scope and subscription.
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     PayloadTooLargeError:
       type: object
       properties:

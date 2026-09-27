@@ -75,6 +75,24 @@ paths:
       - apiKey: []
 components:
   schemas:
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     ProductListSchema:
       type: object
       properties:
@@ -121,7 +139,7 @@ components:
       - data
       additionalProperties: false
       description: List of available marketplace and store products.
-    TooManyRequestsError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -131,7 +149,43 @@ components:
               type: string
             type:
               type: string
-              const: too_many_requests_error
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
           required:
           - message
           - type
@@ -175,24 +229,6 @@ components:
       required:
       - error
       additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -204,42 +240,6 @@ components:
             type:
               type: string
               const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
           required:
           - message
           - type

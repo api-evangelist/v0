@@ -411,43 +411,6 @@ paths:
       - apiKey: []
 components:
   schemas:
-    UserSummarySchema:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the user.
-        object:
-          type: string
-          const: user
-          description: Fixed value identifying this object as a user.
-        name:
-          description: Optional full name of the user.
-          type: string
-        email:
-          type: string
-          description: The user's email address.
-        avatar:
-          type: string
-          description: URL to the user's avatar image.
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The ISO timestamp representing when the user was created.
-        updatedAt:
-          description: The ISO timestamp of the last update to the user.
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - id
-      - object
-      - email
-      - avatar
-      - createdAt
-      additionalProperties: false
-      description: Details of the authenticated user, including profile and contact information.
     TooManyRequestsError:
       type: object
       properties:
@@ -459,6 +422,60 @@ components:
             type:
               type: string
               const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
           required:
           - message
           - type
@@ -502,24 +519,6 @@ components:
       required:
       - error
       additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     NotFoundError:
       type: object
       properties:
@@ -538,42 +537,43 @@ components:
       required:
       - error
       additionalProperties: false
-    UnauthorizedError:
+    UserSummarySchema:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
+        id:
+          type: string
+          description: A unique identifier for the user.
+        object:
+          type: string
+          const: user
+          description: Fixed value identifying this object as a user.
+        name:
+          description: Optional full name of the user.
+          type: string
+        email:
+          type: string
+          description: The user's email address.
+        avatar:
+          type: string
+          description: URL to the user's avatar image.
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the user was created.
+        updatedAt:
+          description: The ISO timestamp of the last update to the user.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
-      - error
+      - id
+      - object
+      - email
+      - avatar
+      - createdAt
       additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
+      description: Details of the authenticated user, including profile and contact information.
     PayloadTooLargeError:
       type: object
       properties:

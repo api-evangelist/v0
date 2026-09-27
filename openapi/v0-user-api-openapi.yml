@@ -828,43 +828,6 @@ paths:
       - apiKey: []
 components:
   schemas:
-    UserSummarySchema:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the user.
-        object:
-          type: string
-          const: user
-          description: Fixed value identifying this object as a user.
-        name:
-          description: Optional full name of the user.
-          type: string
-        email:
-          type: string
-          description: The user's email address.
-        avatar:
-          type: string
-          description: URL to the user's avatar image.
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The ISO timestamp representing when the user was created.
-        updatedAt:
-          description: The ISO timestamp of the last update to the user.
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - id
-      - object
-      - email
-      - avatar
-      - createdAt
-      additionalProperties: false
-      description: Details of the authenticated user, including profile and contact information.
     TooManyRequestsError:
       type: object
       properties:
@@ -883,7 +846,7 @@ components:
       required:
       - error
       additionalProperties: false
-    ForbiddenError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -893,7 +856,7 @@ components:
               type: string
             type:
               type: string
-              const: forbidden_error
+              const: unprocessable_entity_error
           required:
           - message
           - type
@@ -901,7 +864,7 @@ components:
       required:
       - error
       additionalProperties: false
-    InternalServerError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -911,7 +874,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
+              const: conflict_error
           required:
           - message
           - type
@@ -955,7 +918,43 @@ components:
       - preferences
       additionalProperties: false
       description: Response schema for updating user preferences.
-    ConflictError:
+    UserPreferencesResponseSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: user_preferences
+          description: Object type identifier.
+        preferences:
+          anyOf:
+          - type: object
+            properties:
+              notifications:
+                type: object
+                properties:
+                  liveActivity:
+                    type: boolean
+                    description: Whether the user wants to receive live activities.
+                  pushNotifications:
+                    type: boolean
+                    description: Whether the user wants to receive push notifications.
+                required:
+                - liveActivity
+                - pushNotifications
+                additionalProperties: false
+                description: The user's preferred method for receiving notifications.
+            required:
+            - notifications
+            additionalProperties: false
+            description: User preferences configuration including notification settings.
+          - type: 'null'
+          description: The user's current preferences, or null if errored.
+      required:
+      - object
+      - preferences
+      additionalProperties: false
+      description: Response schema for retrieving user preferences.
+    ForbiddenError:
       type: object
       properties:
         error:
@@ -965,7 +964,43 @@ components:
               type: string
             type:
               type: string
-              const: conflict_error
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
           required:
           - message
           - type
@@ -1009,42 +1044,43 @@ components:
       - object
       additionalProperties: false
       description: Basic information about a workspace or identity context for projects and chats.
-    UnauthorizedError:
+    UserSummarySchema:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
+        id:
+          type: string
+          description: A unique identifier for the user.
+        object:
+          type: string
+          const: user
+          description: Fixed value identifying this object as a user.
+        name:
+          description: Optional full name of the user.
+          type: string
+        email:
+          type: string
+          description: The user's email address.
+        avatar:
+          type: string
+          description: URL to the user's avatar image.
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the user was created.
+        updatedAt:
+          description: The ISO timestamp of the last update to the user.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
-      - error
+      - id
+      - object
+      - email
+      - avatar
+      - createdAt
       additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
+      description: Details of the authenticated user, including profile and contact information.
     PayloadTooLargeError:
       type: object
       properties:
@@ -1063,42 +1099,6 @@ components:
       required:
       - error
       additionalProperties: false
-    UserPreferencesResponseSchema:
-      type: object
-      properties:
-        object:
-          type: string
-          const: user_preferences
-          description: Object type identifier.
-        preferences:
-          anyOf:
-          - type: object
-            properties:
-              notifications:
-                type: object
-                properties:
-                  liveActivity:
-                    type: boolean
-                    description: Whether the user wants to receive live activities.
-                  pushNotifications:
-                    type: boolean
-                    description: Whether the user wants to receive push notifications.
-                required:
-                - liveActivity
-                - pushNotifications
-                additionalProperties: false
-                description: The user's preferred method for receiving notifications.
-            required:
-            - notifications
-            additionalProperties: false
-            description: User preferences configuration including notification settings.
-          - type: 'null'
-          description: The user's current preferences, or null if errored.
-      required:
-      - object
-      - preferences
-      additionalProperties: false
-      description: Response schema for retrieving user preferences.
   securitySchemes:
     apiKey:
       type: apiKey

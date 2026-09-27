@@ -6291,40 +6291,60 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EnvironmentVariableSummarySchema:
+    TooManyRequestsError:
       type: object
       properties:
-        id:
-          type: string
-          description: A unique identifier for the environment variable.
-        object:
-          type: string
-          const: environment_variable
-          description: The object type.
-        key:
-          type: string
-          description: The name of the environment variable.
-        value:
-          type: string
-          description: The value of the environment variable.
-        decrypted:
-          type: boolean
-          description: Whether the value is decrypted or encrypted.
-        createdAt:
-          type: number
-          description: The timestamp when the environment variable was created.
-        updatedAt:
-          description: The timestamp when the environment variable was last updated.
-          type: number
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
       required:
-      - id
-      - object
-      - key
-      - value
-      - decrypted
-      - createdAt
+      - error
       additionalProperties: false
-      description: Summary information for an environment variable.
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     VersionDetail:
       type: object
       properties:
@@ -6392,6 +6412,94 @@ components:
       - files
       additionalProperties: false
       description: Detailed version data including file contents.
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    EnvironmentVariableSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Summary information for an environment variable.
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     MessageSummary:
       type: object
       properties:
@@ -6699,7 +6807,7 @@ components:
       - authorId
       additionalProperties: false
       description: Summary of a single message within a chat, including role, content, type, timestamp, and API URL.
-    TooManyRequestsError:
+    NotFoundError:
       type: object
       properties:
         error:
@@ -6709,43 +6817,7 @@ components:
               type: string
             type:
               type: string
-              const: too_many_requests_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
+              const: not_found_error
           required:
           - message
           - type
@@ -7277,6 +7349,24 @@ components:
       - metadata
       additionalProperties: false
       description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     ChatDetail_AppApi:
       type: object
       properties:
@@ -7649,96 +7739,6 @@ components:
       - cursor
       additionalProperties: false
       description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
   securitySchemes:
     apiKey:
       type: apiKey
