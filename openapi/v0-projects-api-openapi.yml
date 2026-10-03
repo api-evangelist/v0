@@ -1994,110 +1994,6 @@ paths:
       - apiKey: []
 components:
   schemas:
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ProjectSummary:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the project.
-        object:
-          type: string
-          const: project
-          description: Fixed value identifying this object as a project.
-        name:
-          type: string
-          description: The name of the project as defined by the user.
-        privacy:
-          type: string
-          enum:
-          - private
-          - team
-          description: The privacy setting for the project - either private or team.
-        vercelProjectId:
-          description: Optional ID of the linked Vercel project, if connected.
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The ISO timestamp representing when the project was created.
-        updatedAt:
-          description: The ISO timestamp of the most recent update, if available.
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        apiUrl:
-          type: string
-          format: uri
-          description: The API endpoint URL for accessing this project programmatically.
-        webUrl:
-          type: string
-          format: uri
-          description: The web URL where the project can be viewed or managed.
-      required:
-      - id
-      - object
-      - name
-      - privacy
-      - createdAt
-      - apiUrl
-      - webUrl
-      additionalProperties: false
-      description: Summary of a project, including metadata, timestamps, and optional Vercel linkage.
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     IntegrationConnectionListSchema:
       type: object
       properties:
@@ -2156,7 +2052,7 @@ components:
       - data
       additionalProperties: false
       description: List response containing integration connections.
-    ForbiddenError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -2166,7 +2062,7 @@ components:
               type: string
             type:
               type: string
-              const: forbidden_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -2174,7 +2070,7 @@ components:
       required:
       - error
       additionalProperties: false
-    UnauthorizedError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -2184,7 +2080,7 @@ components:
               type: string
             type:
               type: string
-              const: unauthorized_error
+              const: unprocessable_entity_error
           required:
           - message
           - type
@@ -2192,107 +2088,6 @@ components:
       required:
       - error
       additionalProperties: false
-    EnvironmentVariableSummarySchema:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the environment variable.
-        object:
-          type: string
-          const: environment_variable
-          description: The object type.
-        key:
-          type: string
-          description: The name of the environment variable.
-        value:
-          type: string
-          description: The value of the environment variable.
-        decrypted:
-          type: boolean
-          description: Whether the value is decrypted or encrypted.
-        createdAt:
-          type: number
-          description: The timestamp when the environment variable was created.
-        updatedAt:
-          description: The timestamp when the environment variable was last updated.
-          type: number
-      required:
-      - id
-      - object
-      - key
-      - value
-      - decrypted
-      - createdAt
-      additionalProperties: false
-      description: Summary information for an environment variable.
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    IntegrationConnectionDetailSchema:
-      type: object
-      properties:
-        object:
-          type: string
-          const: integration_connection
-          description: The object type.
-        id:
-          type: string
-          description: 'The unique ID of the integration connection (format: {projectId}_{integrationId}).'
-        connected:
-          type: boolean
-          description: Whether the integration is connected to the project.
-        integration:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The ID of the integration.
-            object:
-              type: string
-              const: integration
-              description: The object type.
-            slug:
-              type: string
-              description: The slug of the integration.
-            name:
-              type: string
-              description: The name of the integration.
-          required:
-          - id
-          - object
-          - slug
-          - name
-          additionalProperties: false
-          description: Information about the connected integration.
-        metadata:
-          description: Additional metadata about the integration connection.
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties: {}
-      required:
-      - object
-      - id
-      - connected
-      - integration
-      additionalProperties: false
-      description: Detailed information about an integration connection to a project.
     NotFoundError:
       type: object
       properties:
@@ -2345,6 +2140,105 @@ components:
       - createdAt
       additionalProperties: false
       description: Detailed information for an environment variable including its value.
+    ProjectSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the project.
+        object:
+          type: string
+          const: project
+          description: Fixed value identifying this object as a project.
+        name:
+          type: string
+          description: The name of the project as defined by the user.
+        privacy:
+          type: string
+          enum:
+          - private
+          - team
+          description: The privacy setting for the project - either private or team.
+        vercelProjectId:
+          description: Optional ID of the linked Vercel project, if connected.
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the project was created.
+        updatedAt:
+          description: The ISO timestamp of the most recent update, if available.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        apiUrl:
+          type: string
+          format: uri
+          description: The API endpoint URL for accessing this project programmatically.
+        webUrl:
+          type: string
+          format: uri
+          description: The web URL where the project can be viewed or managed.
+      required:
+      - id
+      - object
+      - name
+      - privacy
+      - createdAt
+      - apiUrl
+      - webUrl
+      additionalProperties: false
+      description: Summary of a project, including metadata, timestamps, and optional Vercel linkage.
+    IntegrationConnectionDetailSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: integration_connection
+          description: The object type.
+        id:
+          type: string
+          description: 'The unique ID of the integration connection (format: {projectId}_{integrationId}).'
+        connected:
+          type: boolean
+          description: Whether the integration is connected to the project.
+        integration:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the integration.
+            object:
+              type: string
+              const: integration
+              description: The object type.
+            slug:
+              type: string
+              description: The slug of the integration.
+            name:
+              type: string
+              description: The name of the integration.
+          required:
+          - id
+          - object
+          - slug
+          - name
+          additionalProperties: false
+          description: Information about the connected integration.
+        metadata:
+          description: Additional metadata about the integration connection.
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+      required:
+      - object
+      - id
+      - connected
+      - integration
+      additionalProperties: false
+      description: Detailed information about an integration connection to a project.
     PayloadTooLargeError:
       type: object
       properties:
@@ -2356,6 +2250,112 @@ components:
             type:
               type: string
               const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    EnvironmentVariableSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Summary information for an environment variable.
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
           required:
           - message
           - type

@@ -864,7 +864,25 @@ components:
       required:
       - error
       additionalProperties: false
-    ConflictError:
+    ScopeSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the scope (e.g., user or team workspace).
+        object:
+          type: string
+          const: scope
+          description: Fixed value identifying this object as a scope.
+        name:
+          description: An optional human-readable name for the scope.
+          type: string
+      required:
+      - id
+      - object
+      additionalProperties: false
+      description: Basic information about a workspace or identity context for projects and chats.
+    NotFoundError:
       type: object
       properties:
         error:
@@ -874,7 +892,7 @@ components:
               type: string
             type:
               type: string
-              const: conflict_error
+              const: not_found_error
           required:
           - message
           - type
@@ -882,42 +900,6 @@ components:
       required:
       - error
       additionalProperties: false
-    UserPreferencesPostResponseSchema:
-      type: object
-      properties:
-        object:
-          type: string
-          const: user_preferences
-          description: Object type identifier.
-        preferences:
-          anyOf:
-          - type: object
-            properties:
-              notifications:
-                type: object
-                properties:
-                  liveActivity:
-                    type: boolean
-                    description: Whether the user wants to receive live activities.
-                  pushNotifications:
-                    type: boolean
-                    description: Whether the user wants to receive push notifications.
-                required:
-                - liveActivity
-                - pushNotifications
-                additionalProperties: false
-                description: The user's preferred method for receiving notifications.
-            required:
-            - notifications
-            additionalProperties: false
-            description: User preferences configuration including notification settings.
-          - type: 'null'
-          description: The updated preferences if successful, or null if failed.
-      required:
-      - object
-      - preferences
-      additionalProperties: false
-      description: Response schema for updating user preferences.
     UserPreferencesResponseSchema:
       type: object
       properties:
@@ -954,96 +936,6 @@ components:
       - preferences
       additionalProperties: false
       description: Response schema for retrieving user preferences.
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ScopeSummary:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the scope (e.g., user or team workspace).
-        object:
-          type: string
-          const: scope
-          description: Fixed value identifying this object as a scope.
-        name:
-          description: An optional human-readable name for the scope.
-          type: string
-      required:
-      - id
-      - object
-      additionalProperties: false
-      description: Basic information about a workspace or identity context for projects and chats.
     UserSummarySchema:
       type: object
       properties:
@@ -1081,6 +973,60 @@ components:
       - createdAt
       additionalProperties: false
       description: Details of the authenticated user, including profile and contact information.
+    UserPreferencesPostResponseSchema:
+      type: object
+      properties:
+        object:
+          type: string
+          const: user_preferences
+          description: Object type identifier.
+        preferences:
+          anyOf:
+          - type: object
+            properties:
+              notifications:
+                type: object
+                properties:
+                  liveActivity:
+                    type: boolean
+                    description: Whether the user wants to receive live activities.
+                  pushNotifications:
+                    type: boolean
+                    description: Whether the user wants to receive push notifications.
+                required:
+                - liveActivity
+                - pushNotifications
+                additionalProperties: false
+                description: The user's preferred method for receiving notifications.
+            required:
+            - notifications
+            additionalProperties: false
+            description: User preferences configuration including notification settings.
+          - type: 'null'
+          description: The updated preferences if successful, or null if failed.
+      required:
+      - object
+      - preferences
+      additionalProperties: false
+      description: Response schema for updating user preferences.
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     PayloadTooLargeError:
       type: object
       properties:
@@ -1092,6 +1038,60 @@ components:
             type:
               type: string
               const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
           required:
           - message
           - type

@@ -6309,6 +6309,378 @@ components:
       required:
       - error
       additionalProperties: false
+    ChatDetail_AppApi:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat.
+        object:
+          type: string
+          const: chat
+          description: Fixed value identifying this object as a chat.
+        shareable:
+          type: boolean
+          description: 'Deprecated: Use the `privacy` field instead. A chat is shareable when privacy is public or unlisted.'
+          deprecated: true
+        privacy:
+          type: string
+          enum:
+          - public
+          - private
+          - team
+          - team-edit
+          - unlisted
+          description: Defines the visibility of the chat—private, team-only, or public.
+        name:
+          description: An optional name assigned to the chat by the user.
+          type: string
+        title:
+          type: string
+          description: Deprecated title field preserved for backward compatibility.
+          deprecated: true
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The ISO timestamp representing when the chat was created.
+        updatedAt:
+          description: The ISO timestamp of the last update to the chat.
+          type: string
+        favorite:
+          type: boolean
+          description: Indicates whether the chat is marked as a favorite.
+        authorId:
+          type: string
+          description: The ID of the user who created the chat.
+        projectId:
+          description: Optional ID of the v0 project associated with this chat.
+          type: string
+        webUrl:
+          type: string
+          description: Web URL to view this chat in the browser.
+        apiUrl:
+          type: string
+          description: API URL to access this chat via the API.
+        latestVersion:
+          description: Full details of the most recent generated version, if available.
+          type: object
+          properties:
+            id:
+              type: string
+              description: A unique identifier for the version.
+            object:
+              type: string
+              const: version
+              description: Fixed value identifying this object as a version.
+            status:
+              type: string
+              enum:
+              - pending
+              - completed
+              - failed
+              description: The current status of the version generation process.
+            demoUrl:
+              description: Optional URL for previewing the generated output.
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              description: The date and time when the version was created, in ISO 8601 format.
+            updatedAt:
+              description: The date and time when the version was last updated, in ISO 8601 format.
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            files:
+              type: array
+              items:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    const: file
+                    description: Fixed value identifying this object as a file.
+                  name:
+                    type: string
+                    description: The name of the file, including its extension.
+                  content:
+                    type: string
+                    description: The full contents of the file as a raw string.
+                  locked:
+                    type: boolean
+                    description: Whether the file is locked to prevent AI from overwriting it during new version generation.
+                required:
+                - object
+                - name
+                - content
+                - locked
+                additionalProperties: false
+                description: Detailed representation of a file, including its content and lock status.
+              description: A list of files that were generated or included in this version.
+            screenshotUrl:
+              type: string
+              description: URL to retrieve a screenshot of this version.
+          required:
+          - id
+          - object
+          - status
+          - createdAt
+          - files
+          additionalProperties: false
+        url:
+          type: string
+          description: The canonical URL to access this chat.
+          deprecated: true
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: A unique identifier for the message.
+              object:
+                type: string
+                const: message
+                description: Fixed value identifying this object as a message.
+              content:
+                description: The parsed content of the message as an array structure containing AST nodes. This is an experimental field that may change.
+                anyOf:
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      const: parts
+                    version:
+                      type: number
+                    parts:
+                      type: array
+                      items: {}
+                  required:
+                  - type
+                  - version
+                  - parts
+                  additionalProperties: false
+                  description: Parts-based message content with structured parts array. Used for user messages.
+                - type: object
+                  properties:
+                    type:
+                      type: string
+                      const: message-binary-format
+                    value:
+                      type: array
+                      items:
+                        anyOf:
+                        - type: array
+                          prefixItems:
+                          - type: number
+                            const: 0
+                          - type: array
+                            items: {}
+                          description: AST content section containing parsed markdown/MDX nodes
+                        - type: array
+                          prefixItems:
+                          - type: number
+                            const: 1
+                          - anyOf:
+                            - type: object
+                              properties:
+                                title:
+                                  type: string
+                              additionalProperties: false
+                            - type: 'null'
+                          description: Metadata section containing title and other properties
+                  required:
+                  - type
+                  - value
+                  additionalProperties: false
+                  description: Binary format message content with nested arrays
+              createdAt:
+                type: string
+                description: The ISO timestamp representing when the message was created.
+              updatedAt:
+                description: The ISO timestamp representing when the message was last updated.
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              type:
+                type: string
+                enum:
+                - message
+                - forked-block
+                - forked-chat
+                - open-in-v0
+                - refinement
+                - added-environment-variables
+                - added-integration
+                - deleted-file
+                - moved-file
+                - renamed-file
+                - edited-file
+                - replace-src
+                - reverted-block
+                - fix-with-v0
+                - auto-fix-with-v0
+                - sync-git
+                - pull-changes
+                - fix-cve
+                - answered-questions
+                - cloned-repo
+                - manual-commit
+                - design-mode
+                description: Indicates the format or category of the message, such as plain text or code.
+              role:
+                type: string
+                enum:
+                - user
+                - assistant
+                - system
+                - tool
+                description: Specifies whether the message was sent by the user or the assistant.
+              finishReason:
+                description: The reason why the message generation finished.
+                type: string
+                enum:
+                - stop
+                - length
+                - content-filter
+                - tool-calls
+                - error
+                - other
+              apiUrl:
+                type: string
+                description: API URL to access this message via the API.
+              authorId:
+                description: The ID of the user who sent the message.
+                type:
+                - string
+                - 'null'
+              parentId:
+                description: The ID of the parent message.
+                type:
+                - string
+                - 'null'
+              attachments:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    url:
+                      type: string
+                      description: The URL where the attachment file can be accessed.
+                    name:
+                      description: The original filename of the attachment.
+                      type: string
+                    contentType:
+                      description: The MIME type of the attachment file (e.g., image/png, application/pdf).
+                      type: string
+                    size:
+                      type: number
+                      description: The size of the attachment file in bytes.
+                    content:
+                      description: The base64-encoded content of the attachment file, if available.
+                      type: string
+                    type:
+                      description: Optional v0-specific attachment type for enhanced processing.
+                      type: string
+                      enum:
+                      - screenshot
+                      - figma
+                      - zip
+                  required:
+                  - url
+                  - size
+                  additionalProperties: false
+            required:
+            - id
+            - object
+            - createdAt
+            - type
+            - role
+            - apiUrl
+            - authorId
+            additionalProperties: false
+            description: Summary of a single message within a chat, including role, content, type, timestamp, and API URL.
+          description: All messages exchanged in the chat, including user and assistant entries.
+        files:
+          description: Optional array of files associated with the chat context.
+          type: array
+          items:
+            type: object
+            properties:
+              lang:
+                type: string
+                description: Programming language used in the file (e.g., JavaScript, Python).
+              meta:
+                type: object
+                propertyNames:
+                  type: string
+                additionalProperties:
+                  type: string
+                description: A key-value map of metadata associated with the file (e.g., path, type).
+              source:
+                type: string
+                description: The origin or identifier of the file source (e.g., path or upload label).
+            required:
+            - lang
+            - meta
+            - source
+            additionalProperties: false
+        modelConfiguration:
+          type: object
+          properties:
+            modelId:
+              default: v0-pro
+              description: Model to use for the generation.
+              type: string
+              enum:
+              - v0-auto
+              - v0-opus-4.7
+              - v0-mini
+              - v0-pro
+              - v0-max
+              - v0-max-fast
+            imageGenerations:
+              default: false
+              type: boolean
+              description: Enables image generations to generate up to 5 images per version.
+            thinking:
+              default: false
+              type: boolean
+              description: Enables thinking to generate a response in multiple steps.
+          additionalProperties: false
+          description: The configuration used to generate responses in this chat.
+        permissions:
+          type: object
+          properties:
+            write:
+              type: boolean
+              description: If true, the user has write access to the chat.
+          required:
+          - write
+          additionalProperties: false
+        cursor:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - object
+      - shareable
+      - privacy
+      - createdAt
+      - favorite
+      - authorId
+      - webUrl
+      - apiUrl
+      - url
+      - messages
+      - permissions
+      - cursor
+      additionalProperties: false
+      description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
     UnprocessableEntityError:
       type: object
       properties:
@@ -6320,179 +6692,6 @@ components:
             type:
               type: string
               const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    VersionDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the version.
-        object:
-          type: string
-          const: version
-          description: Fixed value identifying this object as a version.
-        status:
-          type: string
-          enum:
-          - pending
-          - completed
-          - failed
-          description: The current status of the version generation process.
-        demoUrl:
-          description: Optional URL for previewing the generated output.
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The date and time when the version was created, in ISO 8601 format.
-        updatedAt:
-          description: The date and time when the version was last updated, in ISO 8601 format.
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              object:
-                type: string
-                const: file
-                description: Fixed value identifying this object as a file.
-              name:
-                type: string
-                description: The name of the file, including its extension.
-              content:
-                type: string
-                description: The full contents of the file as a raw string.
-              locked:
-                type: boolean
-                description: Whether the file is locked to prevent AI from overwriting it during new version generation.
-            required:
-            - object
-            - name
-            - content
-            - locked
-            additionalProperties: false
-            description: Detailed representation of a file, including its content and lock status.
-          description: A list of files that were generated or included in this version.
-        screenshotUrl:
-          type: string
-          description: URL to retrieve a screenshot of this version.
-      required:
-      - id
-      - object
-      - status
-      - createdAt
-      - files
-      additionalProperties: false
-      description: Detailed version data including file contents.
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    EnvironmentVariableSummarySchema:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the environment variable.
-        object:
-          type: string
-          const: environment_variable
-          description: The object type.
-        key:
-          type: string
-          description: The name of the environment variable.
-        value:
-          type: string
-          description: The value of the environment variable.
-        decrypted:
-          type: boolean
-          description: Whether the value is decrypted or encrypted.
-        createdAt:
-          type: number
-          description: The timestamp when the environment variable was created.
-        updatedAt:
-          description: The timestamp when the environment variable was last updated.
-          type: number
-      required:
-      - id
-      - object
-      - key
-      - value
-      - decrypted
-      - createdAt
-      additionalProperties: false
-      description: Summary information for an environment variable.
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
           required:
           - message
           - type
@@ -6818,6 +7017,42 @@ components:
             type:
               type: string
               const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
           required:
           - message
           - type
@@ -7349,7 +7584,108 @@ components:
       - metadata
       additionalProperties: false
       description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
-    PayloadTooLargeError:
+    EnvironmentVariableSummarySchema:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the environment variable.
+        object:
+          type: string
+          const: environment_variable
+          description: The object type.
+        key:
+          type: string
+          description: The name of the environment variable.
+        value:
+          type: string
+          description: The value of the environment variable.
+        decrypted:
+          type: boolean
+          description: Whether the value is decrypted or encrypted.
+        createdAt:
+          type: number
+          description: The timestamp when the environment variable was created.
+        updatedAt:
+          description: The timestamp when the environment variable was last updated.
+          type: number
+      required:
+      - id
+      - object
+      - key
+      - value
+      - decrypted
+      - createdAt
+      additionalProperties: false
+      description: Summary information for an environment variable.
+    VersionDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the version.
+        object:
+          type: string
+          const: version
+          description: Fixed value identifying this object as a version.
+        status:
+          type: string
+          enum:
+          - pending
+          - completed
+          - failed
+          description: The current status of the version generation process.
+        demoUrl:
+          description: Optional URL for previewing the generated output.
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: The date and time when the version was created, in ISO 8601 format.
+        updatedAt:
+          description: The date and time when the version was last updated, in ISO 8601 format.
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              object:
+                type: string
+                const: file
+                description: Fixed value identifying this object as a file.
+              name:
+                type: string
+                description: The name of the file, including its extension.
+              content:
+                type: string
+                description: The full contents of the file as a raw string.
+              locked:
+                type: boolean
+                description: Whether the file is locked to prevent AI from overwriting it during new version generation.
+            required:
+            - object
+            - name
+            - content
+            - locked
+            additionalProperties: false
+            description: Detailed representation of a file, including its content and lock status.
+          description: A list of files that were generated or included in this version.
+        screenshotUrl:
+          type: string
+          description: URL to retrieve a screenshot of this version.
+      required:
+      - id
+      - object
+      - status
+      - createdAt
+      - files
+      additionalProperties: false
+      description: Detailed version data including file contents.
+    UnauthorizedError:
       type: object
       properties:
         error:
@@ -7359,7 +7695,7 @@ components:
               type: string
             type:
               type: string
-              const: payload_too_large_error
+              const: unauthorized_error
           required:
           - message
           - type
@@ -7367,378 +7703,42 @@ components:
       required:
       - error
       additionalProperties: false
-    ChatDetail_AppApi:
+    ForbiddenError:
       type: object
       properties:
-        id:
-          type: string
-          description: A unique identifier for the chat.
-        object:
-          type: string
-          const: chat
-          description: Fixed value identifying this object as a chat.
-        shareable:
-          type: boolean
-          description: 'Deprecated: Use the `privacy` field instead. A chat is shareable when privacy is public or unlisted.'
-          deprecated: true
-        privacy:
-          type: string
-          enum:
-          - public
-          - private
-          - team
-          - team-edit
-          - unlisted
-          description: Defines the visibility of the chat—private, team-only, or public.
-        name:
-          description: An optional name assigned to the chat by the user.
-          type: string
-        title:
-          type: string
-          description: Deprecated title field preserved for backward compatibility.
-          deprecated: true
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          description: The ISO timestamp representing when the chat was created.
-        updatedAt:
-          description: The ISO timestamp of the last update to the chat.
-          type: string
-        favorite:
-          type: boolean
-          description: Indicates whether the chat is marked as a favorite.
-        authorId:
-          type: string
-          description: The ID of the user who created the chat.
-        projectId:
-          description: Optional ID of the v0 project associated with this chat.
-          type: string
-        webUrl:
-          type: string
-          description: Web URL to view this chat in the browser.
-        apiUrl:
-          type: string
-          description: API URL to access this chat via the API.
-        latestVersion:
-          description: Full details of the most recent generated version, if available.
+        error:
           type: object
           properties:
-            id:
+            message:
               type: string
-              description: A unique identifier for the version.
-            object:
+            type:
               type: string
-              const: version
-              description: Fixed value identifying this object as a version.
-            status:
-              type: string
-              enum:
-              - pending
-              - completed
-              - failed
-              description: The current status of the version generation process.
-            demoUrl:
-              description: Optional URL for previewing the generated output.
-              type: string
-            createdAt:
-              type: string
-              format: date-time
-              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-              description: The date and time when the version was created, in ISO 8601 format.
-            updatedAt:
-              description: The date and time when the version was last updated, in ISO 8601 format.
-              type: string
-              format: date-time
-              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-            files:
-              type: array
-              items:
-                type: object
-                properties:
-                  object:
-                    type: string
-                    const: file
-                    description: Fixed value identifying this object as a file.
-                  name:
-                    type: string
-                    description: The name of the file, including its extension.
-                  content:
-                    type: string
-                    description: The full contents of the file as a raw string.
-                  locked:
-                    type: boolean
-                    description: Whether the file is locked to prevent AI from overwriting it during new version generation.
-                required:
-                - object
-                - name
-                - content
-                - locked
-                additionalProperties: false
-                description: Detailed representation of a file, including its content and lock status.
-              description: A list of files that were generated or included in this version.
-            screenshotUrl:
-              type: string
-              description: URL to retrieve a screenshot of this version.
+              const: forbidden_error
           required:
-          - id
-          - object
-          - status
-          - createdAt
-          - files
+          - message
+          - type
           additionalProperties: false
-        url:
-          type: string
-          description: The canonical URL to access this chat.
-          deprecated: true
-        messages:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: A unique identifier for the message.
-              object:
-                type: string
-                const: message
-                description: Fixed value identifying this object as a message.
-              content:
-                description: The parsed content of the message as an array structure containing AST nodes. This is an experimental field that may change.
-                anyOf:
-                - type: object
-                  properties:
-                    type:
-                      type: string
-                      const: parts
-                    version:
-                      type: number
-                    parts:
-                      type: array
-                      items: {}
-                  required:
-                  - type
-                  - version
-                  - parts
-                  additionalProperties: false
-                  description: Parts-based message content with structured parts array. Used for user messages.
-                - type: object
-                  properties:
-                    type:
-                      type: string
-                      const: message-binary-format
-                    value:
-                      type: array
-                      items:
-                        anyOf:
-                        - type: array
-                          prefixItems:
-                          - type: number
-                            const: 0
-                          - type: array
-                            items: {}
-                          description: AST content section containing parsed markdown/MDX nodes
-                        - type: array
-                          prefixItems:
-                          - type: number
-                            const: 1
-                          - anyOf:
-                            - type: object
-                              properties:
-                                title:
-                                  type: string
-                              additionalProperties: false
-                            - type: 'null'
-                          description: Metadata section containing title and other properties
-                  required:
-                  - type
-                  - value
-                  additionalProperties: false
-                  description: Binary format message content with nested arrays
-              createdAt:
-                type: string
-                description: The ISO timestamp representing when the message was created.
-              updatedAt:
-                description: The ISO timestamp representing when the message was last updated.
-                type: string
-                format: date-time
-                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-              type:
-                type: string
-                enum:
-                - message
-                - forked-block
-                - forked-chat
-                - open-in-v0
-                - refinement
-                - added-environment-variables
-                - added-integration
-                - deleted-file
-                - moved-file
-                - renamed-file
-                - edited-file
-                - replace-src
-                - reverted-block
-                - fix-with-v0
-                - auto-fix-with-v0
-                - sync-git
-                - pull-changes
-                - fix-cve
-                - answered-questions
-                - cloned-repo
-                - manual-commit
-                - design-mode
-                description: Indicates the format or category of the message, such as plain text or code.
-              role:
-                type: string
-                enum:
-                - user
-                - assistant
-                - system
-                - tool
-                description: Specifies whether the message was sent by the user or the assistant.
-              finishReason:
-                description: The reason why the message generation finished.
-                type: string
-                enum:
-                - stop
-                - length
-                - content-filter
-                - tool-calls
-                - error
-                - other
-              apiUrl:
-                type: string
-                description: API URL to access this message via the API.
-              authorId:
-                description: The ID of the user who sent the message.
-                type:
-                - string
-                - 'null'
-              parentId:
-                description: The ID of the parent message.
-                type:
-                - string
-                - 'null'
-              attachments:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    url:
-                      type: string
-                      description: The URL where the attachment file can be accessed.
-                    name:
-                      description: The original filename of the attachment.
-                      type: string
-                    contentType:
-                      description: The MIME type of the attachment file (e.g., image/png, application/pdf).
-                      type: string
-                    size:
-                      type: number
-                      description: The size of the attachment file in bytes.
-                    content:
-                      description: The base64-encoded content of the attachment file, if available.
-                      type: string
-                    type:
-                      description: Optional v0-specific attachment type for enhanced processing.
-                      type: string
-                      enum:
-                      - screenshot
-                      - figma
-                      - zip
-                  required:
-                  - url
-                  - size
-                  additionalProperties: false
-            required:
-            - id
-            - object
-            - createdAt
-            - type
-            - role
-            - apiUrl
-            - authorId
-            additionalProperties: false
-            description: Summary of a single message within a chat, including role, content, type, timestamp, and API URL.
-          description: All messages exchanged in the chat, including user and assistant entries.
-        files:
-          description: Optional array of files associated with the chat context.
-          type: array
-          items:
-            type: object
-            properties:
-              lang:
-                type: string
-                description: Programming language used in the file (e.g., JavaScript, Python).
-              meta:
-                type: object
-                propertyNames:
-                  type: string
-                additionalProperties:
-                  type: string
-                description: A key-value map of metadata associated with the file (e.g., path, type).
-              source:
-                type: string
-                description: The origin or identifier of the file source (e.g., path or upload label).
-            required:
-            - lang
-            - meta
-            - source
-            additionalProperties: false
-        modelConfiguration:
-          type: object
-          properties:
-            modelId:
-              default: v0-pro
-              description: Model to use for the generation.
-              type: string
-              enum:
-              - v0-auto
-              - v0-opus-4.7
-              - v0-mini
-              - v0-pro
-              - v0-max
-              - v0-max-fast
-            imageGenerations:
-              default: false
-              type: boolean
-              description: Enables image generations to generate up to 5 images per version.
-            thinking:
-              default: false
-              type: boolean
-              description: Enables thinking to generate a response in multiple steps.
-          additionalProperties: false
-          description: The configuration used to generate responses in this chat.
-        permissions:
-          type: object
-          properties:
-            write:
-              type: boolean
-              description: If true, the user has write access to the chat.
-          required:
-          - write
-          additionalProperties: false
-        cursor:
-          type:
-          - string
-          - 'null'
       required:
-      - id
-      - object
-      - shareable
-      - privacy
-      - createdAt
-      - favorite
-      - authorId
-      - webUrl
-      - apiUrl
-      - url
-      - messages
-      - permissions
-      - cursor
+      - error
       additionalProperties: false
-      description: Detailed representation of a chat, including its messages, files, versions, and model configuration.
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
   securitySchemes:
     apiKey:
       type: apiKey

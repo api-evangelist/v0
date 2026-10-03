@@ -474,6 +474,24 @@ components:
       required:
       - error
       additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     HookSummary:
       type: object
       properties:
@@ -493,60 +511,6 @@ components:
       - name
       additionalProperties: false
       description: Summary of a webhook, including its ID and display name.
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     InternalServerError:
       type: object
       properties:
@@ -565,7 +529,7 @@ components:
       required:
       - error
       additionalProperties: false
-    NotFoundError:
+    PayloadTooLargeError:
       type: object
       properties:
         error:
@@ -575,7 +539,7 @@ components:
               type: string
             type:
               type: string
-              const: not_found_error
+              const: payload_too_large_error
           required:
           - message
           - type
@@ -623,7 +587,7 @@ components:
       - url
       additionalProperties: false
       description: Full configuration details for a webhook, including its scope and subscription.
-    PayloadTooLargeError:
+    UnauthorizedError:
       type: object
       properties:
         error:
@@ -633,7 +597,43 @@ components:
               type: string
             type:
               type: string
-              const: payload_too_large_error
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: conflict_error
           required:
           - message
           - type

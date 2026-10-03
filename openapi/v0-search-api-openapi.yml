@@ -163,24 +163,6 @@ components:
       required:
       - error
       additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     SearchResultItem:
       type: object
       properties:
@@ -221,7 +203,7 @@ components:
       - webUrl
       additionalProperties: false
       description: Generic result returned from a search query, representing either a chat or a project.
-    ConflictError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -231,7 +213,61 @@ components:
               type: string
             type:
               type: string
-              const: conflict_error
+              const: unprocessable_entity_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
           required:
           - message
           - type
@@ -275,7 +311,7 @@ components:
       required:
       - error
       additionalProperties: false
-    InternalServerError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -285,43 +321,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
+              const: conflict_error
           required:
           - message
           - type
