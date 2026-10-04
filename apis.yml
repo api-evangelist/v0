@@ -369,6 +369,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - MCP Server
+  tags_raw:
   - MCP Servers
   properties:
   - type: OpenAPI
@@ -406,6 +408,9 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 common:
+  - type: CapabilityMap
+    url: capabilities/v0-capability-edges.yml
+    name: v0 Business Capability Map
   - type: AgenticAccess
     url: agentic-access/v0-agentic-access.yml
   - type: VulnerabilityDisclosure
