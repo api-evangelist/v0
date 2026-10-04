@@ -2134,7 +2134,7 @@ paths:
       - apiKey: []
 components:
   schemas:
-    TooManyRequestsError:
+    ForbiddenError:
       type: object
       properties:
         error:
@@ -2144,7 +2144,79 @@ components:
               type: string
             type:
               type: string
-              const: too_many_requests_error
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    VercelProjectDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the linked Vercel project.
+        object:
+          type: string
+          const: vercel_project
+          description: Fixed value identifying this object as a Vercel project.
+        name:
+          type: string
+          description: The name of the Vercel project.
+      required:
+      - id
+      - object
+      - name
+      additionalProperties: false
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: internal_server_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
           required:
           - message
           - type
@@ -2171,7 +2243,7 @@ components:
       - name
       additionalProperties: false
       description: Basic metadata about a Vercel project connected to a v0 project.
-    UnprocessableEntityError:
+    UnauthorizedError:
       type: object
       properties:
         error:
@@ -2181,7 +2253,7 @@ components:
               type: string
             type:
               type: string
-              const: unprocessable_entity_error
+              const: unauthorized_error
           required:
           - message
           - type
@@ -2189,7 +2261,7 @@ components:
       required:
       - error
       additionalProperties: false
-    NotFoundError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -2199,7 +2271,7 @@ components:
               type: string
             type:
               type: string
-              const: not_found_error
+              const: conflict_error
           required:
           - message
           - type
@@ -2207,7 +2279,7 @@ components:
       required:
       - error
       additionalProperties: false
-    InternalServerError:
+    TooManyRequestsError:
       type: object
       properties:
         error:
@@ -2217,25 +2289,7 @@ components:
               type: string
             type:
               type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
+              const: too_many_requests_error
           required:
           - message
           - type
@@ -2289,25 +2343,7 @@ components:
       - data
       additionalProperties: false
       description: List of available integrations.
-    VercelProjectDetail:
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the linked Vercel project.
-        object:
-          type: string
-          const: vercel_project
-          description: Fixed value identifying this object as a Vercel project.
-        name:
-          type: string
-          description: The name of the Vercel project.
-      required:
-      - id
-      - object
-      - name
-      additionalProperties: false
-    UnauthorizedError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -2317,43 +2353,7 @@ components:
               type: string
             type:
               type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
+              const: unprocessable_entity_error
           required:
           - message
           - type

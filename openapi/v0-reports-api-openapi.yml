@@ -411,7 +411,7 @@ paths:
       - apiKey: []
 components:
   schemas:
-    TooManyRequestsError:
+    ForbiddenError:
       type: object
       properties:
         error:
@@ -421,7 +421,7 @@ components:
               type: string
             type:
               type: string
-              const: too_many_requests_error
+              const: forbidden_error
           required:
           - message
           - type
@@ -429,7 +429,7 @@ components:
       required:
       - error
       additionalProperties: false
-    UnprocessableEntityError:
+    InternalServerError:
       type: object
       properties:
         error:
@@ -439,7 +439,7 @@ components:
               type: string
             type:
               type: string
-              const: unprocessable_entity_error
+              const: internal_server_error
           required:
           - message
           - type
@@ -458,6 +458,42 @@ components:
             type:
               type: string
               const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    PayloadTooLargeError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
           required:
           - message
           - type
@@ -502,78 +538,6 @@ components:
       - createdAt
       additionalProperties: false
       description: Details of the authenticated user, including profile and contact information.
-    InternalServerError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: forbidden_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
     ConflictError:
       type: object
       properties:
@@ -585,6 +549,42 @@ components:
             type:
               type: string
               const: conflict_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    UnprocessableEntityError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unprocessable_entity_error
           required:
           - message
           - type
