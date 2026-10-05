@@ -1,0 +1,26 @@
+slug: v0
+provider: v0
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Deployments
+  spec_file: v0-deployments-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.82
+  evidence: POST /deployments "Create Deployment", GET /deployments/{deploymentId}/logs "Find Deployment
+    Logs", GET /deployments/{deploymentId}/errors "Find Deployment Errors"
+  reason: Operations create, inspect and delete deployments of generated applications — deployment of
+    software changes to a running environment, i.e. Deployment Orchestration. Some ambiguity with release
+    engineering, but deployment is explicit.
