@@ -47,7 +47,7 @@ tags_raw:
   - Code Generation
   - Platform API
 created: '2026-05-08'
-modified: '2026-05-19'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: v0:v0-agent-api
@@ -406,6 +406,8 @@ apis:
   - type: SDKs
     url: https://www.npmjs.com/package/v0-sdk
 common:
+  - url: https://v0.app/blog
+    type: Blog
   - type: CapabilityMap
     url: capabilities/v0-capability-edges.yml
     name: v0 Business Capability Map
