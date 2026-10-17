@@ -828,7 +828,7 @@ paths:
       - apiKey: []
 components:
   schemas:
-    ForbiddenError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -838,7 +838,7 @@ components:
               type: string
             type:
               type: string
-              const: forbidden_error
+              const: conflict_error
           required:
           - message
           - type
@@ -857,42 +857,6 @@ components:
             type:
               type: string
               const: internal_server_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: not_found_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    PayloadTooLargeError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: payload_too_large_error
           required:
           - message
           - type
@@ -936,7 +900,7 @@ components:
       - preferences
       additionalProperties: false
       description: Response schema for retrieving user preferences.
-    UnauthorizedError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -946,7 +910,7 @@ components:
               type: string
             type:
               type: string
-              const: unauthorized_error
+              const: unprocessable_entity_error
           required:
           - message
           - type
@@ -954,24 +918,42 @@ components:
       required:
       - error
       additionalProperties: false
-    ScopeSummary:
+    PayloadTooLargeError:
       type: object
       properties:
-        id:
-          type: string
-          description: A unique identifier for the scope (e.g., user or team workspace).
-        object:
-          type: string
-          const: scope
-          description: Fixed value identifying this object as a scope.
-        name:
-          description: An optional human-readable name for the scope.
-          type: string
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: payload_too_large_error
+          required:
+          - message
+          - type
+          additionalProperties: false
       required:
-      - id
-      - object
+      - error
       additionalProperties: false
-      description: Basic information about a workspace or identity context for projects and chats.
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     UserPreferencesPostResponseSchema:
       type: object
       properties:
@@ -1008,6 +990,78 @@ components:
       - preferences
       additionalProperties: false
       description: Response schema for updating user preferences.
+    ScopeSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the scope (e.g., user or team workspace).
+        object:
+          type: string
+          const: scope
+          description: Fixed value identifying this object as a scope.
+        name:
+          description: An optional human-readable name for the scope.
+          type: string
+      required:
+      - id
+      - object
+      additionalProperties: false
+      description: Basic information about a workspace or identity context for projects and chats.
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: unauthorized_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    TooManyRequestsError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: too_many_requests_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: forbidden_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     UserSummarySchema:
       type: object
       properties:
@@ -1045,60 +1099,6 @@ components:
       - createdAt
       additionalProperties: false
       description: Details of the authenticated user, including profile and contact information.
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    TooManyRequestsError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: too_many_requests_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    UnprocessableEntityError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: unprocessable_entity_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
   securitySchemes:
     apiKey:
       type: apiKey

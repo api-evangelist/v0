@@ -288,7 +288,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ForbiddenError:
+    ConflictError:
       type: object
       properties:
         error:
@@ -298,7 +298,7 @@ components:
               type: string
             type:
               type: string
-              const: forbidden_error
+              const: conflict_error
           required:
           - message
           - type
@@ -324,7 +324,7 @@ components:
       required:
       - error
       additionalProperties: false
-    NotFoundError:
+    UnprocessableEntityError:
       type: object
       properties:
         error:
@@ -334,7 +334,7 @@ components:
               type: string
             type:
               type: string
-              const: not_found_error
+              const: unprocessable_entity_error
           required:
           - message
           - type
@@ -360,6 +360,24 @@ components:
       required:
       - error
       additionalProperties: false
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            type:
+              type: string
+              const: not_found_error
+          required:
+          - message
+          - type
+          additionalProperties: false
+      required:
+      - error
+      additionalProperties: false
     UnauthorizedError:
       type: object
       properties:
@@ -371,24 +389,6 @@ components:
             type:
               type: string
               const: unauthorized_error
-          required:
-          - message
-          - type
-          additionalProperties: false
-      required:
-      - error
-      additionalProperties: false
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-            type:
-              type: string
-              const: conflict_error
           required:
           - message
           - type
@@ -414,7 +414,7 @@ components:
       required:
       - error
       additionalProperties: false
-    UnprocessableEntityError:
+    ForbiddenError:
       type: object
       properties:
         error:
@@ -424,7 +424,7 @@ components:
               type: string
             type:
               type: string
-              const: unprocessable_entity_error
+              const: forbidden_error
           required:
           - message
           - type
