@@ -369,6 +369,8 @@ apis:
   humanURL: https://vercel.com/docs/v0/api
   baseURL: https://api.v0.dev/v1
   tags:
+  - MCP Server
+  tags_raw:
   - MCP Servers
   properties:
   - type: OpenAPI
